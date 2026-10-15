@@ -17,25 +17,21 @@ import {
 export const Footer: React.FC = () => {
   return (
     <>
-      <footer className="bg-slate-950 text-slate-300 text-sm pt-16 pb-12 border-t border-slate-800">
+      <footer className="bg-gradient-to-br from-forest-950 via-slate-950 to-slate-950 text-slate-300 text-sm pt-16 pb-12 border-t border-forest-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           {/* 4-Column Footer Layout matching Nav Menu_Sitemap_VirajIT_Website.xlsx */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             {/* Column 1: About VirajIT (Text, Address, Social Media Icons, YT | G Reviews) */}
             <div className="space-y-4">
               <Link href="/" className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-white p-1 flex items-center justify-center shrink-0 shadow-md">
+                <div className="w-40 h-12 rounded-xl bg-white px-2 py-1 flex items-center justify-center shrink-0 shadow-md">
                   <Image
-                    src="/logo.png"
+                    src="/viraj-infotech-logo.jpeg"
                     alt="Viraj Infotech"
-                    width={48}
-                    height={48}
+                    width={320}
+                    height={96}
                     className="w-full h-full object-contain"
                   />
-                </div>
-                <div className="flex items-baseline gap-1">
-                  <span className="font-black text-xl text-white">Viraj</span>
-                  <span className="font-black text-xl text-lime-400">Infotech</span>
                 </div>
               </Link>
 
@@ -44,7 +40,7 @@ export const Footer: React.FC = () => {
               </p>
 
               <div className="flex items-start gap-2.5 text-xs text-slate-300 pt-1">
-                <MapPin className="w-4 h-4 text-lime-400 shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-pink-300 shrink-0 mt-0.5" />
                 <span>
                   Viraj Infotech, Shop No. 4, Near Railway Station, S.V. Road, Kandivali West, Mumbai - 400067
                 </span>
@@ -57,7 +53,7 @@ export const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="YouTube"
-                  className="w-9 h-9 rounded-full border border-slate-700 hover:border-lime-400 hover:text-lime-400 flex items-center justify-center transition-colors"
+                  className="w-9 h-9 rounded-full border border-slate-700 hover:border-pink-300 hover:text-pink-300 flex items-center justify-center transition-colors"
                 >
                   <Youtube className="w-4 h-4" />
                 </a>
@@ -66,7 +62,7 @@ export const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
-                  className="w-9 h-9 rounded-full border border-slate-700 hover:border-lime-400 hover:text-lime-400 flex items-center justify-center transition-colors"
+                  className="w-9 h-9 rounded-full border border-slate-700 hover:border-pink-300 hover:text-pink-300 flex items-center justify-center transition-colors"
                 >
                   <Instagram className="w-4 h-4" />
                 </a>
@@ -75,7 +71,7 @@ export const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
-                  className="w-9 h-9 rounded-full border border-slate-700 hover:border-lime-400 hover:text-lime-400 flex items-center justify-center transition-colors"
+                  className="w-9 h-9 rounded-full border border-slate-700 hover:border-pink-300 hover:text-pink-300 flex items-center justify-center transition-colors"
                 >
                   <Facebook className="w-4 h-4" />
                 </a>
@@ -84,7 +80,7 @@ export const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="w-9 h-9 rounded-full border border-slate-700 hover:border-lime-400 hover:text-lime-400 flex items-center justify-center transition-colors"
+                  className="w-9 h-9 rounded-full border border-slate-700 hover:border-pink-300 hover:text-pink-300 flex items-center justify-center transition-colors"
                 >
                   <Linkedin className="w-4 h-4" />
                 </a>
@@ -120,7 +116,7 @@ export const Footer: React.FC = () => {
                 <li>
                   <Link
                     href="/refurbished-laptops-catalogue"
-                    className="hover:text-lime-400 transition-colors"
+                    className="hover:text-pink-300 transition-colors"
                   >
                     Refurbished Laptops
                   </Link>
@@ -128,7 +124,7 @@ export const Footer: React.FC = () => {
                 <li>
                   <Link
                     href="/laptop-on-rent-mumbai"
-                    className="hover:text-lime-400 transition-colors"
+                    className="hover:text-pink-300 transition-colors"
                   >
                     Laptop on Rent
                   </Link>
@@ -136,7 +132,7 @@ export const Footer: React.FC = () => {
                 <li>
                   <Link
                     href="/laptop-repair-store-in-mumbai#amc"
-                    className="hover:text-lime-400 transition-colors"
+                    className="hover:text-pink-300 transition-colors"
                   >
                     Laptop AMC
                   </Link>
@@ -144,7 +140,7 @@ export const Footer: React.FC = () => {
                 <li>
                   <Link
                     href="/laptop-repair-store-in-mumbai"
-                    className="hover:text-lime-400 transition-colors"
+                    className="hover:text-pink-300 transition-colors"
                   >
                     Laptop Repair
                   </Link>
@@ -152,7 +148,7 @@ export const Footer: React.FC = () => {
                 <li>
                   <Link
                     href="/virajit-laptop-store-kandivali-west"
-                    className="hover:text-lime-400 transition-colors"
+                    className="hover:text-pink-300 transition-colors"
                   >
                     Visit Store
                   </Link>
@@ -160,7 +156,7 @@ export const Footer: React.FC = () => {
                 <li>
                   <Link
                     href="/refurbished-laptops-on-emi"
-                    className="hover:text-lime-400 transition-colors flex items-center gap-1 text-lime-400 font-bold"
+                    className="hover:text-pink-300 transition-colors flex items-center gap-1 text-pink-300 font-bold"
                   >
                     <span>Laptops on Easy EMI</span>
                     <ExternalLink className="w-3 h-3" />
@@ -177,12 +173,12 @@ export const Footer: React.FC = () => {
 
               <div className="space-y-3 text-xs">
                 <div className="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-1.5">
-                  <div className="text-[11px] font-black uppercase tracking-wider text-lime-400">
+                  <div className="text-[11px] font-black uppercase tracking-wider text-pink-300">
                     For Sales:
                   </div>
                   <a
                     href="tel:+919876543210"
-                    className="flex items-center gap-2 text-white font-bold hover:text-lime-400 transition-colors"
+                    className="flex items-center gap-2 text-white font-bold hover:text-pink-300 transition-colors"
                   >
                     <Phone className="w-3.5 h-3.5 text-slate-400" />
                     <span>Phone: +91 98765 43210</span>
@@ -225,22 +221,22 @@ export const Footer: React.FC = () => {
               </h3>
               <ul className="space-y-2 text-xs font-medium text-slate-400">
                 <li>
-                  <Link href="/about-us" className="hover:text-lime-400 transition-colors">
+                  <Link href="/about-us" className="hover:text-pink-300 transition-colors">
                     About us
                   </Link>
                 </li>
                 <li>
-                  <Link href="/terms-of-service" className="hover:text-lime-400 transition-colors">
+                  <Link href="/terms-of-service" className="hover:text-pink-300 transition-colors">
                     Terms of service
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy-policy" className="hover:text-lime-400 transition-colors">
+                  <Link href="/privacy-policy" className="hover:text-pink-300 transition-colors">
                     Privacy policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog" className="hover:text-lime-400 transition-colors">
+                  <Link href="/blog" className="hover:text-pink-300 transition-colors">
                     Laptop Buying Guides
                   </Link>
                 </li>
@@ -253,25 +249,25 @@ export const Footer: React.FC = () => {
                 <div className="flex flex-wrap gap-1.5 text-[11px]">
                   <Link
                     href="/refurbished-laptops-kandivali"
-                    className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 hover:border-lime-400/50 text-slate-300"
+                    className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 hover:border-pink-300/50 text-slate-300"
                   >
                     Kandivali
                   </Link>
                   <Link
                     href="/refurbished-laptops-under-rs-20000"
-                    className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 hover:border-lime-400/50 text-slate-300"
+                    className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 hover:border-pink-300/50 text-slate-300"
                   >
                     Under Rs.25,000
                   </Link>
                   <Link
                     href="/refurbished-laptops-under-rs-30000"
-                    className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 hover:border-lime-400/50 text-slate-300"
+                    className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 hover:border-pink-300/50 text-slate-300"
                   >
                     Under Rs.35,000
                   </Link>
                   <Link
                     href="/refurbished-laptops-under-rs-40000"
-                    className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 hover:border-lime-400/50 text-slate-300"
+                    className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 hover:border-pink-300/50 text-slate-300"
                   >
                     Under Rs.45,000
                   </Link>

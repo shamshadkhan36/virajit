@@ -201,7 +201,7 @@ export default function HomePage() {
   return (
     <div className="space-y-16">
       {/* 1. HERO SECTION (Updated per Project Brief_VirajIT_Website.docx) */}
-      <section className="relative overflow-hidden pt-8 pb-14 px-4 sm:px-6 lg:px-8 bg-cream-100">
+      <section className="relative overflow-hidden pt-8 pb-14 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-cream-50 to-cream-100">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
           {/* Left Hero Content */}
           <div className="max-w-2xl space-y-6 text-left">
@@ -213,7 +213,7 @@ export default function HomePage() {
             {/* Replaced Premium laptops. Smarter prices. with Laptop First-Class. Price Budget-Wala. */}
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.06]">
               Laptop First-Class. <br />
-              <span className="text-brand-600">Price Budget-Wala.</span>
+              <span className="bg-gradient-to-r from-brand-700 via-brand-600 to-fuchsia-500 bg-clip-text text-transparent">Price Budget-Wala.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl font-normal">
@@ -264,14 +264,20 @@ export default function HomePage() {
 
           {/* Right Hero Laptop Graphic with Orbs & Floating Badges */}
           <div className="relative w-full max-w-lg flex items-center justify-center py-6">
-            {/* Soft Green Orb Background */}
-            <div className="w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-emerald-200/70 blur-2xl absolute -z-0" />
-            <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-full bg-gradient-to-tr from-emerald-300 to-lime-200 absolute -z-0" />
+            {/* Soft brand-color glow */}
+            <div className="w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-fuchsia-200/70 blur-2xl absolute -z-0" />
+            <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-full bg-gradient-to-tr from-brand-300 to-violet-200 absolute -z-0" />
 
             {/* Laptop Mockup Box: Replaced VI with Viraj Infotech & Removed Built for what's next. */}
             <div className="relative z-10 w-full max-w-[420px] rounded-2xl bg-forest-900 border-8 border-slate-800 shadow-2xl p-10 text-center space-y-3">
-              <div className="px-6 py-4 rounded-2xl bg-forest-800 border border-forest-800 inline-flex items-center justify-center mx-auto text-lime-400 font-black text-2xl sm:text-3xl tracking-wide shadow-inner">
-                Viraj Infotech
+              <div className="px-5 py-4 rounded-2xl bg-white/95 border border-white/70 inline-flex items-center justify-center mx-auto shadow-inner">
+                <Image
+                  src="/viraj-infotech-logo.jpeg"
+                  alt="Viraj Infotech"
+                  width={360}
+                  height={120}
+                  className="w-64 sm:w-72 h-auto object-contain"
+                />
               </div>
             </div>
 
@@ -301,7 +307,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5 sm:p-6 rounded-3xl bg-forest-900 text-white shadow-xl border border-forest-800">
           <div className="flex items-center gap-3.5 p-2">
-            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-lime-400 shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-pink-300 shrink-0">
               <Truck className="w-6 h-6" />
             </div>
             <div>
@@ -311,7 +317,7 @@ export default function HomePage() {
           </div>
 
           <div className="flex items-center gap-3.5 p-2">
-            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-lime-400 shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-pink-300 shrink-0">
               <Laptop className="w-6 h-6" />
             </div>
             <div>
@@ -321,7 +327,7 @@ export default function HomePage() {
           </div>
 
           <div className="flex items-center gap-3.5 p-2">
-            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-lime-400 shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-pink-300 shrink-0">
               <Wrench className="w-6 h-6" />
             </div>
             <div>
@@ -331,7 +337,7 @@ export default function HomePage() {
           </div>
 
           <div className="flex items-center gap-3.5 p-2">
-            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-lime-400 shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-pink-300 shrink-0">
               <Gift className="w-6 h-6" />
             </div>
             <div>
@@ -387,7 +393,7 @@ export default function HomePage() {
               </span>
               <IndianRupee
                 className={`w-5 h-5 ${
-                  selectedPriceRange === "UNDER_25K" ? "text-lime-300" : "text-brand-600"
+                  selectedPriceRange === "UNDER_25K" ? "text-pink-200" : "text-brand-600"
                 }`}
               />
             </div>
@@ -437,7 +443,7 @@ export default function HomePage() {
               </span>
               <IndianRupee
                 className={`w-5 h-5 ${
-                  selectedPriceRange === "25K_40K" ? "text-lime-300" : "text-brand-600"
+                  selectedPriceRange === "25K_40K" ? "text-pink-200" : "text-brand-600"
                 }`}
               />
             </div>
@@ -489,7 +495,7 @@ export default function HomePage() {
               </span>
               <IndianRupee
                 className={`w-5 h-5 ${
-                  selectedPriceRange === "ABOVE_40K" ? "text-lime-300" : "text-brand-600"
+                  selectedPriceRange === "ABOVE_40K" ? "text-pink-200" : "text-brand-600"
                 }`}
               />
             </div>
@@ -577,7 +583,7 @@ export default function HomePage() {
         <div className="p-6 sm:p-10 rounded-[32px] bg-gradient-to-br from-cream-200 via-cream-100 to-emerald-50 border border-cream-300 space-y-8 shadow-sm">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cream-300 pb-5">
             <div>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-900 text-lime-400 text-[11px] font-black uppercase tracking-wider mb-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-900 text-pink-300 text-[11px] font-black uppercase tracking-wider mb-2">
                 <Sparkles className="w-3.5 h-3.5" />
                 High-Spec Touch Screen &amp; Core i7 Series
               </span>
@@ -614,7 +620,7 @@ export default function HomePage() {
       <section id="why-us" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="p-8 sm:p-14 rounded-[32px] bg-forest-900 text-white shadow-2xl space-y-10">
           <div className="max-w-2xl space-y-2">
-            <span className="text-xs font-black uppercase tracking-widest text-lime-400 block">
+            <span className="text-xs font-black uppercase tracking-widest text-pink-300 block">
               THE VIRAJ INFOTECH ADVANTAGE
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
@@ -628,7 +634,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Pillar 1: Local Store */}
             <div className="p-6 rounded-2xl bg-forest-800/90 border border-white/10 space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-lime-400/15 text-lime-400 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-xl bg-pink-300/15 text-pink-300 flex items-center justify-center">
                 <Store className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-black text-white">Local Store in Mumbai</h3>
@@ -639,7 +645,7 @@ export default function HomePage() {
 
             {/* Pillar 2: Two Decades of Legacy */}
             <div className="p-6 rounded-2xl bg-forest-800/90 border border-white/10 space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-lime-400/15 text-lime-400 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-xl bg-pink-300/15 text-pink-300 flex items-center justify-center">
                 <Award className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-black text-white">Two Decades of Legacy</h3>
@@ -650,7 +656,7 @@ export default function HomePage() {
 
             {/* Pillar 3: Rated 4.9 on Google */}
             <div className="p-6 rounded-2xl bg-forest-800/90 border border-white/10 space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-lime-400/15 text-amber-400 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-xl bg-pink-300/15 text-amber-400 flex items-center justify-center">
                 <Star className="w-6 h-6 fill-amber-400" />
               </div>
               <h3 className="text-lg font-black text-white">
@@ -663,7 +669,7 @@ export default function HomePage() {
 
             {/* Pillar 4: Authorised Partner */}
             <div className="p-6 rounded-2xl bg-forest-800/90 border border-white/10 space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-lime-400/15 text-lime-400 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-xl bg-pink-300/15 text-pink-300 flex items-center justify-center">
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-black text-white">
@@ -671,7 +677,7 @@ export default function HomePage() {
               </h3>
               <p className="text-xs text-slate-300 leading-relaxed">
                 Authorised Partner and Distributors of leading global brands including{" "}
-                <strong className="text-lime-400">MSI, DELL, EPSON, and ACER</strong>.
+                <strong className="text-pink-300">MSI, DELL, EPSON, and ACER</strong>.
               </p>
             </div>
           </div>
@@ -893,7 +899,7 @@ export default function HomePage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6 text-white space-y-1">
-              <span className="px-3 py-1 rounded-full bg-lime-400 text-slate-950 text-[10px] font-black uppercase tracking-wider">
+              <span className="px-3 py-1 rounded-full bg-pink-300 text-slate-950 text-[10px] font-black uppercase tracking-wider">
                 Experience In-Store
               </span>
               <h3 className="text-xl font-black pt-1">Viraj Infotech • Kandivali West</h3>

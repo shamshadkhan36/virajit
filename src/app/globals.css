@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --background: #f6f5ef;
+  --background: #fbf8fc;
   --foreground: #111827;
+  --brand-pink: #d6298b;
+  --brand-purple: #4c1d5f;
 }
 
 body {
@@ -13,6 +15,16 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #d6298b;
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 3px solid #e879b9;
+  outline-offset: 2px;
 }
 
 /* Clean modern scrollbar */

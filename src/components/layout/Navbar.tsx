@@ -53,9 +53,9 @@ export const Navbar: React.FC = () => {
                   ? "/laptop-repair-store-in-mumbai"
                   : "/refurbished-laptops-catalogue"
               }
-              className="inline-flex items-center gap-2.5 hover:text-lime-400 transition-colors"
+              className="inline-flex items-center gap-2.5 hover:text-pink-300 transition-colors"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-lime-400 shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-pink-300 shrink-0" />
               <span>{item}</span>
             </Link>
           ))}
@@ -67,28 +67,15 @@ export const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           {/* LOGO - Viraj Infotech */}
           <Link href="/" className="flex items-center gap-3 group shrink-0">
-            <div className="w-12 h-12 rounded-xl bg-white p-1 border border-cream-300 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+            <div className="w-32 sm:w-40 h-12 rounded-xl bg-white px-2 py-1 border border-cream-300/80 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-[1.02] transition-transform">
               <Image
-                src="/logo.png"
+                src="/viraj-infotech-logo.jpeg"
                 alt="Viraj Infotech"
-                width={48}
-                height={48}
+                width={320}
+                height={96}
                 priority
                 className="w-full h-full object-contain"
               />
-            </div>
-            <div className="flex flex-col">
-              <div className="flex items-baseline gap-1">
-                <span className="font-black text-xl tracking-tight text-slate-900">
-                  Viraj
-                </span>
-                <span className="font-black text-xl tracking-tight text-brand-600">
-                  Infotech
-                </span>
-              </div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 -mt-1">
-                Kandivali West • Mumbai
-              </span>
             </div>
           </Link>
 
