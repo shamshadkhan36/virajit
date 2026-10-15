@@ -15,6 +15,7 @@ import {
   Package,
   Wrench,
   Zap,
+  MessageCircle,
 } from "lucide-react";
 
 interface ProductModalProps {
@@ -193,35 +194,19 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
               Close
             </button>
 
-            {isLockedByMe ? (
-              <button
-                onClick={() => {
-                  onClose();
-                  openCheckout(product);
-                }}
-                className="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-md transition-all"
-              >
-                Proceed to Checkout
-              </button>
-            ) : availableStock > 0 ? (
-              <button
-                onClick={async () => {
-                  const ok = await lockProduct(product);
-                  if (ok) onClose();
-                }}
-                className="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-black text-sm shadow-md shadow-brand-600/20 transition-all flex items-center gap-2"
-              >
-                <Lock className="w-4 h-4" />
-                Lock Unit & Buy Now
-              </button>
-            ) : (
-              <button
-                disabled
-                className="px-6 py-2.5 rounded-xl bg-cream-200 text-slate-400 text-xs font-bold cursor-not-allowed"
-              >
-                Out of Stock
-              </button>
-            )}
+            <a
+              href={`https://wa.me/919876543210?text=${encodeURIComponent(
+                `Hello Viraj Infotech, I am interested in ${product.name} (Price: ₹${product.price.toLocaleString(
+                  "en-IN"
+                )}). Is it currently available at your Kandivali West store?`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm shadow-md shadow-emerald-600/20 transition-all flex items-center gap-2"
+            >
+              <MessageCircle className="w-4 h-4 fill-white" />
+              <span>Enquire on WhatsApp</span>
+            </a>
           </div>
         </div>
       </div>

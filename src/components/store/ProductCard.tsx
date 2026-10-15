@@ -260,43 +260,25 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
             )}
           </div>
 
-          {/* Action Buttons: View/Enquire + Lock/Buy */}
+          {/* Action Buttons: WhatsApp Enquire + View Details */}
           <div className="grid grid-cols-2 gap-2">
             <a
               href={`https://wa.me/919876543210?text=${whatsappText}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-2.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-extrabold text-xs transition-all flex items-center justify-center gap-1.5"
+              className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-sm transition-all flex items-center justify-center gap-1.5"
             >
-              <MessageCircle className="w-3.5 h-3.5 fill-emerald-600 text-emerald-600" />
+              <MessageCircle className="w-3.5 h-3.5 fill-white" />
               <span>WhatsApp</span>
             </a>
 
-            {isLockedByMe ? (
-              <button
-                onClick={handleActionClick}
-                className="py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-sm transition-all flex items-center justify-center gap-1"
-              >
-                <span>Checkout</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            ) : isOutOfStock || isHeldByOthers ? (
-              <Link
-                href={productHref}
-                className="py-2.5 px-3 rounded-xl bg-cream-200 text-slate-700 font-bold text-xs flex items-center justify-center"
-              >
-                Details
-              </Link>
-            ) : (
-              <button
-                onClick={handleActionClick}
-                disabled={isLoadingLock}
-                className="py-2.5 px-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-black text-xs shadow-sm transition-all flex items-center justify-center gap-1.5"
-              >
-                <Lock className="w-3.5 h-3.5" />
-                <span>Reserve / Buy</span>
-              </button>
-            )}
+            <Link
+              href={productHref}
+              className="py-2.5 px-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-black text-xs shadow-sm transition-all flex items-center justify-center gap-1"
+            >
+              <span>View Details</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </div>

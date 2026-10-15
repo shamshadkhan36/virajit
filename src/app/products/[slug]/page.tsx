@@ -320,37 +320,18 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Customer Journey Step 7: Enquire through WhatsApp, Phone, Store Visit or Reserve */}
+          {/* Customer Action: Enquire through WhatsApp, Phone, Store Visit */}
           <div className="space-y-3 pt-2">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
               <a
                 href={`https://wa.me/919876543210?text=${whatsappText}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-3.5 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2 transition-all"
+                className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2.5 transition-all"
               >
-                <MessageCircle className="w-4 h-4 fill-white" />
+                <MessageCircle className="w-5 h-5 fill-white" />
                 <span>Enquire on WhatsApp</span>
               </a>
-
-              {isLockedByMe ? (
-                <button
-                  onClick={() => openCheckout(product)}
-                  className="py-3.5 px-5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-md flex items-center justify-center gap-2 transition-all"
-                >
-                  <Clock className="w-4 h-4" />
-                  <span>Complete Order ({formatTime(lockSeconds)})</span>
-                </button>
-              ) : (
-                <button
-                  onClick={() => lockProduct(product)}
-                  disabled={isLoadingLock || availableStock <= 0}
-                  className="py-3.5 px-5 rounded-2xl bg-brand-600 hover:bg-brand-500 disabled:bg-slate-300 text-white font-black text-sm shadow-md flex items-center justify-center gap-2 transition-all"
-                >
-                  <Lock className="w-4 h-4" />
-                  <span>Lock Unit &amp; Buy Online</span>
-                </button>
-              )}
             </div>
 
             <div className="grid grid-cols-2 gap-3">
