@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { DEFAULT_BLOGS } from "@/lib/catalogue-data";
 
 export const dynamic = "force-dynamic";
 
@@ -17,18 +18,28 @@ export async function GET(req: NextRequest) {
       where.category = category;
     }
 
-    const blogs = await prisma.blogPost.findMany({
-      where,
-      orderBy: { publishedAt: "desc" },
-    });
+    let blogs: any[] = [];
+    try {
+      blogs = await prisma.blogPost.findMany({
+        where,
+        orderBy: { publishedAt: "desc" },
+      });
+    } catch (e) {
+      console.warn("Prisma blogs query warning:", e);
+    }
+
+    if (!blogs || blogs.length === 0) {
+      let filtered = [...DEFAULT_BLOGS];
+      if (category && category !== "All") {
+        filtered = filtered.filter((b) => b.category === category);
+      }
+      return NextResponse.json({ success: true, blogs: filtered });
+    }
 
     return NextResponse.json({ success: true, blogs });
   } catch (error: any) {
     console.error("Blogs list error:", error);
-    return NextResponse.json(
-      { success: false, error: error.message },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: true, blogs: DEFAULT_BLOGS });
   }
 }
 

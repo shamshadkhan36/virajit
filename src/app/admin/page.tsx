@@ -23,6 +23,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -115,11 +116,18 @@ export default function AdminPage() {
       <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md bg-white rounded-3xl border border-cream-300 shadow-xl shadow-brand-900/5 p-8 space-y-6">
           <div className="text-center space-y-2">
-            <div className="w-14 h-14 bg-brand-50 border border-brand-200 text-brand-600 rounded-2xl flex items-center justify-center mx-auto shadow-inner">
-              <KeyRound className="w-7 h-7" />
+            <div className="w-16 h-16 bg-white border border-cream-300 rounded-2xl flex items-center justify-center mx-auto shadow-sm p-1.5">
+              <Image
+                src="/logo.png"
+                alt="Viraj Infotech"
+                width={56}
+                height={56}
+                priority
+                className="w-full h-full object-contain"
+              />
             </div>
             <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-              VirajIT Admin Login
+              Viraj Infotech Admin
             </h1>
             <p className="text-xs text-slate-500 font-medium">
               Enter your manager credentials to access store controls & inventory

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   MessageCircle,
   MapPin,
@@ -23,8 +24,14 @@ export const Footer: React.FC = () => {
             {/* Column 1: About VirajIT (Text, Address, Social Media Icons, YT | G Reviews) */}
             <div className="space-y-4">
               <Link href="/" className="flex items-center gap-3">
-                <div className="px-3 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-black text-xs shadow-md tracking-wider">
-                  VirajIT
+                <div className="w-12 h-12 rounded-xl bg-white p-1 flex items-center justify-center shrink-0 shadow-md">
+                  <Image
+                    src="/logo.png"
+                    alt="Viraj Infotech"
+                    width={48}
+                    height={48}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div className="flex items-baseline gap-1">
                   <span className="font-black text-xl text-white">Viraj</span>

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useStockLock } from "@/context/LockContext";
 import {
@@ -66,8 +67,15 @@ export const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           {/* LOGO - Viraj Infotech */}
           <Link href="/" className="flex items-center gap-3 group shrink-0">
-            <div className="px-3 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-black text-xs shadow-md group-hover:scale-105 transition-transform tracking-wider">
-              VirajIT
+            <div className="w-12 h-12 rounded-xl bg-white p-1 border border-cream-300 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <Image
+                src="/logo.png"
+                alt="Viraj Infotech"
+                width={48}
+                height={48}
+                priority
+                className="w-full h-full object-contain"
+              />
             </div>
             <div className="flex flex-col">
               <div className="flex items-baseline gap-1">

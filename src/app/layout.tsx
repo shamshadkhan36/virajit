@@ -10,6 +10,10 @@ export const metadata: Metadata = {
   title: "Viraj Infotech | Certified Refurbished Laptops & Real-Time Stock Locks",
   description:
     "Professionally tested refurbished laptops for work, study and gaming — backed by real warranty and local support with 10-minute stock locks.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
