@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id                  String      @id @default(cuid())
+  slug                String      @unique @default(cuid())
+  name                String
+  brand               String
+  model               String
+  processor           String
+  ram                 String
+  storage             String
+  screen              String
+  gpu                 String      @default("Intel Integrated Graphics")
+  touchScreen         String      @default("No")
+  color               String      @default("Black")
+  bestFor             String      @default("Office")
+  warrantyText        String      @default("Warranty Included")
+  warrantyDuration    String      @default("1 MONTH")
+  batteryHealth       Int         @default(95)
+  conditionGrade      String      @default("Grade A+ (Pristine)")
+  price               Float
+  originalPrice       Float
+  stock               Int         @default(1)
+  warrantyMonths      Int         @default(12)
+  includedAccessories String      @default("Original Fast Charger, Free Laptop Bag & Mouse, Quality Inspection Certificate")
+  description         String
+  images              String      @default("[]") // JSON string of image URLs
+  isFeatured          Boolean     @default(false)
+  isPremium           Boolean     @default(false)
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  locks               StockLock[]
+  orders              Order[]
+}
+
+model StockLock {
+  id           String   @id @default(cuid())
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sessionToken String
+  customerIp   String?
+  lockedAt     DateTime @default(now())
+  lockedUntil  DateTime
+  status       String   @default("ACTIVE") // ACTIVE, EXPIRED, PURCHASED, RELEASED
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([productId, status, lockedUntil])
+  @@index([sessionToken, status])
+}
+
+model Order {
+  id              String   @id @default(cuid())
+  orderNumber     String   @unique
+  productId       String
+  product         Product  @relation(fields: [productId], references: [id])
+  quantity        Int      @default(1)
+  customerName    String
+  customerEmail   String
+  customerPhone   String
+  shippingAddress String
+  city            String
+  postalCode      String
+  totalAmount     Float
+  paymentMethod   String   @default("Card / Online")
+  status          String   @default("CONFIRMED") // CONFIRMED, PROCESSING, SHIPPED, DELIVERED, CANCELLED
+  sessionToken    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String
+  coverImage  String
+  category    String   @default("Buying Guides")
+  author      String   @default("Editorial Team")
+  readTime    String   @default("5 min read")
+  isPublished Boolean  @default(true)
+  blocks      String   // JSON formatted array of block builder components
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
