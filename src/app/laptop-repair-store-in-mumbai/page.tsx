@@ -61,7 +61,7 @@ export default function LaptopRepairPage() {
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <a
-              href="https://wa.me/919876543210?text=Hi%20Viraj%20Infotech,%20I%20need%20laptop%20repair%20service"
+              href="https://wa.me/918928715729?text=Hi%20Viraj%20Infotech,%20I%20need%20laptop%20repair%20service"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg"
@@ -70,11 +70,11 @@ export default function LaptopRepairPage() {
               <span>Book Repair on WhatsApp</span>
             </a>
             <a
-              href="tel:+919876543211"
+              href="tel:+918928715729"
               className="px-6 py-3.5 rounded-xl bg-white text-slate-900 font-black text-xs sm:text-sm flex items-center gap-2"
             >
               <Phone className="w-4 h-4 text-brand-600" />
-              <span>Call Support: +91 98765 43211</span>
+              <span>Call Support: +91 89287 15729</span>
             </a>
           </div>
         </div>

@@ -53,7 +53,7 @@ export default function LaptopOnRentPage() {
         </p>
         <div className="flex flex-wrap gap-3 pt-2">
           <a
-            href="https://wa.me/919876543210?text=Hi%20Viraj%20Infotech,%20I'm%20looking%20for%20a%20Laptop%20on%20Rent%20in%20Mumbai"
+            href="https://wa.me/918928715729?text=Hi%20Viraj%20Infotech,%20I'm%20looking%20for%20a%20Laptop%20on%20Rent%20in%20Mumbai"
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg"
@@ -62,11 +62,11 @@ export default function LaptopOnRentPage() {
             <span>Get Rental Quote on WhatsApp</span>
           </a>
           <a
-            href="tel:+919876543210"
+            href="tel:+918928715729"
             className="px-6 py-3.5 rounded-xl bg-white text-slate-900 font-black text-xs sm:text-sm flex items-center gap-2"
           >
             <Phone className="w-4 h-4 text-brand-600" />
-            <span>Call Rental Desk: +91 98765 43210</span>
+            <span>Call Rental Desk: +91 89287 15729</span>
           </a>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function LaptopOnRentPage() {
             </div>
 
             <a
-              href={`https://wa.me/919876543210?text=${encodeURIComponent(
+              href={`https://wa.me/918928715729?text=${encodeURIComponent(
                 `Hi Viraj Infotech, please share rental rates for: ${plan.title}`
               )}`}
               target="_blank"

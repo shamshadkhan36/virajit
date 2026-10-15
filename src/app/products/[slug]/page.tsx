@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import { Product } from "@/types";
 import { useStockLock } from "@/context/LockContext";
 import { ProductCard } from "@/components/store/ProductCard";
+import { QuickEnquiryForm } from "@/components/store/QuickEnquiryForm";
 import {
   Cpu,
   HardDrive,
@@ -324,7 +325,7 @@ export default function ProductDetailPage() {
           <div className="space-y-3 pt-2">
             <div>
               <a
-                href={`https://wa.me/919876543210?text=${whatsappText}`}
+                href={`https://wa.me/918928715729?text=${whatsappText}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2.5 transition-all"
@@ -336,11 +337,11 @@ export default function ProductDetailPage() {
 
             <div className="grid grid-cols-2 gap-3">
               <a
-                href="tel:+919876543210"
+                href="tel:+918928715729"
                 className="py-3 px-4 rounded-xl bg-cream-100 hover:bg-cream-200 border border-cream-300 text-slate-900 font-extrabold text-xs flex items-center justify-center gap-2 transition-colors"
               >
                 <Phone className="w-4 h-4 text-brand-600" />
-                <span>Call: +91 98765 43210</span>
+                <span>Call: +91 89287 15729</span>
               </a>
               <Link
                 href="/virajit-laptop-store-kandivali-west"
@@ -356,6 +357,14 @@ export default function ProductDetailPage() {
           <div className="p-4 rounded-2xl bg-cream-50 border border-cream-200 text-xs sm:text-sm text-slate-600 leading-relaxed">
             {product.description}
           </div>
+
+          {/* Quick Callback Inquiry Form */}
+          <QuickEnquiryForm
+            compact={true}
+            productName={`${product.brand} ${product.model}`}
+            title="Request Instant Callback &amp; Best Price"
+            subtitle="Share your name, number &amp; location — our Kandivali team will call you back right away."
+          />
         </div>
       </div>
 

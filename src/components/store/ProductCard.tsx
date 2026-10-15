@@ -189,10 +189,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
 
         {/* Pricing & Action Section */}
         <div className="pt-3 border-t border-cream-200 space-y-3">
-          {/* Price display in INR */}
-          <div className="flex items-end justify-between">
-            <div>
-              <div className="flex items-baseline gap-2">
+          {/* Price display on Right & Warranty on Left */}
+          <div className="flex items-end justify-between gap-2">
+            <div className="text-left">
+              <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-brand-700 bg-brand-50 px-2 py-1 rounded-md border border-brand-200">
+                <ShieldCheck className="w-3 h-3 text-brand-600" />
+                {product.warrantyText || "Warranty Included"}
+              </span>
+              {product.warrantyDuration && (
+                <div className="text-[10px] text-slate-500 font-bold mt-0.5">
+                  {product.warrantyDuration}
+                </div>
+              )}
+            </div>
+
+            <div className="text-right">
+              <div className="flex items-baseline justify-end gap-2">
                 <span className="text-2xl font-black text-slate-900 font-sans">
                   ₹{inrPrice.toLocaleString("en-IN")}
                 </span>
@@ -205,18 +217,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
               {savingsAmount > 0 && (
                 <div className="text-[11px] font-bold text-emerald-700">
                   Save ₹{savingsAmount.toLocaleString("en-IN")} ({savingsPercent}% OFF)
-                </div>
-              )}
-            </div>
-
-            <div className="text-right">
-              <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-brand-700 bg-brand-50 px-2 py-1 rounded-md border border-brand-200">
-                <ShieldCheck className="w-3 h-3 text-brand-600" />
-                {product.warrantyText || "Warranty Included"}
-              </span>
-              {product.warrantyDuration && (
-                <div className="text-[10px] text-slate-500 font-bold mt-0.5">
-                  {product.warrantyDuration}
                 </div>
               )}
             </div>
@@ -245,17 +245,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
                 <span>Out of Stock</span>
               </div>
             ) : (
-              <div className="flex items-center justify-between w-full text-brand-700 font-semibold">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-600" />
-                  <span>In Stock</span>
-                </span>
-                <Link
-                  href={productHref}
-                  className="text-[11px] font-extrabold text-slate-700 hover:text-brand-600 underline"
-                >
-                  View Full Specs →
-                </Link>
+              <div className="flex items-center gap-1.5 text-brand-700 font-semibold">
+                <span className="w-2 h-2 rounded-full bg-emerald-600" />
+                <span>In Stock</span>
               </div>
             )}
           </div>
@@ -263,7 +255,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
           {/* Action Buttons: WhatsApp Enquire + View Details */}
           <div className="grid grid-cols-2 gap-2">
             <a
-              href={`https://wa.me/919876543210?text=${whatsappText}`}
+              href={`https://wa.me/918928715729?text=${whatsappText}`}
               target="_blank"
               rel="noopener noreferrer"
               className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-sm transition-all flex items-center justify-center gap-1.5"

@@ -83,7 +83,7 @@ export default function VisitStorePage() {
                 <Phone className="w-4 h-4" />
                 <span>For Sales</span>
               </div>
-              <p className="text-xs sm:text-sm text-slate-800 font-bold">Phone: +91 98765 43210</p>
+              <p className="text-xs sm:text-sm text-slate-800 font-bold">Phone: +91 89287 15729</p>
               <p className="text-xs text-slate-600">Email: sales@virajit.com</p>
             </div>
 
@@ -92,7 +92,7 @@ export default function VisitStorePage() {
                 <Mail className="w-4 h-4" />
                 <span>For Support &amp; Repair</span>
               </div>
-              <p className="text-xs sm:text-sm text-slate-800 font-bold">Phone: +91 98765 43211</p>
+              <p className="text-xs sm:text-sm text-slate-800 font-bold">Phone: +91 89287 15729</p>
               <p className="text-xs text-slate-600">Email: support@virajit.com</p>
             </div>
           </div>
@@ -100,15 +100,15 @@ export default function VisitStorePage() {
           {/* 3 Primary CTAs */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
             <a
-              href="tel:+919876543210"
+              href="tel:+918928715729"
               className="py-3.5 px-5 rounded-2xl bg-brand-600 hover:bg-brand-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md"
             >
               <Phone className="w-4 h-4" />
-              <span>Call Store</span>
+              <span>Call: +91 89287 15729</span>
             </a>
 
             <a
-              href="https://wa.me/919876543210?text=Hi%20Viraj%20Infotech,%20I%20want%20to%20visit%20your%20Kandivali%20West%20store"
+              href="https://wa.me/918928715729?text=Hi%20Viraj%20Infotech,%20I%20want%20to%20visit%20your%20Kandivali%20West%20store"
               target="_blank"
               rel="noopener noreferrer"
               className="py-3.5 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md"
@@ -118,7 +118,7 @@ export default function VisitStorePage() {
             </a>
 
             <a
-              href="https://www.google.com/maps/search/?api=1&query=Viraj+Infotech+Kandivali+West+Mumbai"
+              href="https://share.google/SCAKjT9NThGEm3CPB"
               target="_blank"
               rel="noopener noreferrer"
               className="py-3.5 px-5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md"

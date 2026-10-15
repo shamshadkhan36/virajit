@@ -39,12 +39,17 @@ export const Footer: React.FC = () => {
                 Mumbai&apos;s trusted refurbished laptop &amp; chip-level repair store with over two decades of legacy. Authorised partner &amp; distributor for leading brands including MSI, Dell, Epson, and Acer.
               </p>
 
-              <div className="flex items-start gap-2.5 text-xs text-slate-300 pt-1">
-                <MapPin className="w-4 h-4 text-pink-300 shrink-0 mt-0.5" />
+              <a
+                href="https://share.google/SCAKjT9NThGEm3CPB"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-2.5 text-xs text-slate-300 hover:text-pink-300 pt-1 transition-colors group"
+              >
+                <MapPin className="w-4 h-4 text-pink-300 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                 <span>
-                  Viraj Infotech, Shop No. 4, Near Railway Station, S.V. Road, Kandivali West, Mumbai - 400067
+                  Viraj Infotech, Shop No. 4, Near Railway Station, S.V. Road, Kandivali West, Mumbai - 400067 ↗
                 </span>
-              </div>
+              </a>
 
               {/* Social Media Icons */}
               <div className="flex items-center gap-2.5 pt-2">
@@ -177,11 +182,11 @@ export const Footer: React.FC = () => {
                     For Sales:
                   </div>
                   <a
-                    href="tel:+919876543210"
+                    href="tel:+918928715729"
                     className="flex items-center gap-2 text-white font-bold hover:text-pink-300 transition-colors"
                   >
                     <Phone className="w-3.5 h-3.5 text-slate-400" />
-                    <span>Phone: +91 98765 43210</span>
+                    <span>Phone: +91 89287 15729</span>
                   </a>
                   <a
                     href="mailto:sales@virajit.com"
@@ -296,7 +301,7 @@ export const Footer: React.FC = () => {
 
       {/* Floating WhatsApp Action Pill on Bottom Right */}
       <a
-        href="https://wa.me/919876543210?text=Hi%20Viraj%20Infotech,%20I'm%20interested%20in%20a%20refurbished%20laptop"
+        href="https://wa.me/918928715729?text=Hi%20Viraj%20Infotech,%20I'm%20interested%20in%20a%20refurbished%20laptop"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-2xl shadow-emerald-600/40 hover:scale-105 transition-all"

@@ -120,3 +120,16 @@ export interface BlogPost {
   createdAt: string | Date;
   updatedAt: string | Date;
 }
+
+export interface Enquiry {
+  id: string;
+  name: string;
+  phone: string;
+  location: string;
+  message?: string;
+  productName?: string;
+  status: "NEW" | "CONTACTED" | "CONVERTED" | "CLOSED";
+  createdAt: string | Date;
+  updatedAt: string | Date;
+}
+

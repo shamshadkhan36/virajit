@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Product, BlogPost } from "@/types";
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductModal } from "@/components/store/ProductModal";
+import { QuickEnquiryForm } from "@/components/store/QuickEnquiryForm";
 import { useStockLock } from "@/context/LockContext";
 import {
   Laptop,
@@ -231,7 +232,7 @@ export default function HomePage() {
               </Link>
 
               <a
-                href="https://wa.me/919876543210?text=Hi%20Viraj%20Infotech,%20I'm%20looking%20for%20a%20refurbished%20laptop"
+                href="https://wa.me/918928715729?text=Hi%20Viraj%20Infotech,%20I'm%20looking%20for%20a%20refurbished%20laptop"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3.5 rounded-xl bg-white hover:bg-cream-50 text-slate-900 border border-slate-300 text-sm font-bold shadow-sm transition-colors flex items-center gap-2"
@@ -886,6 +887,46 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* QUICK INQUIRY SECTION (Name, Number, Location) */}
+      <section id="quick-enquiry" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 sm:p-12 rounded-[32px] bg-gradient-to-br from-brand-900 via-forest-900 to-slate-900 text-white shadow-2xl border border-white/10">
+          <div className="lg:col-span-6 space-y-4">
+            <span className="px-3 py-1 rounded-full bg-pink-400/20 text-pink-300 text-xs font-black uppercase tracking-wider inline-flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" />
+              Direct Store Callback Service
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+              Looking for a Specific Laptop or Best Price Quote?
+            </h2>
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+              Tell us what you need. Fill out this small inquiry form with your name, phone number, and location — our Kandivali West hardware technicians will check live inventory and call you with available stock and exclusive store pricing.
+            </p>
+            <div className="grid grid-cols-2 gap-3 pt-2 text-xs font-bold text-slate-200">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0" />
+                <span>Instant Phone / WhatsApp Quote</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0" />
+                <span>40-Point Hardware Tested</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0" />
+                <span>Warranty &amp; Free Accessories</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0" />
+                <span>Fast Mumbai Doorstep Delivery</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-6">
+            <QuickEnquiryForm />
+          </div>
+        </div>
+      </section>
+
       {/* 8. VISIT THE STORE (Kandivali West location | Store photograph | Opening hours | Call | WhatsApp | Get Directions) */}
       <section id="contact" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2">
         <div className="rounded-[32px] bg-white border border-cream-300 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12">
@@ -955,15 +996,15 @@ export default function HomePage() {
             {/* Call Button | WhatsApp Button | Get Directions Button */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
               <a
-                href="tel:+919876543210"
+                href="tel:+918928715729"
                 className="py-3.5 px-5 rounded-2xl bg-brand-600 hover:bg-brand-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all"
               >
                 <Phone className="w-4 h-4" />
-                <span>Call Store</span>
+                <span>Call: +91 89287 15729</span>
               </a>
 
               <a
-                href="https://wa.me/919876543210?text=Hi%20Viraj%20Infotech,%20I%20would%20like%20to%20visit%20your%20Kandivali%20West%20store"
+                href="https://wa.me/918928715729?text=Hi%20Viraj%20Infotech,%20I%20would%20like%20to%20visit%20your%20Kandivali%20West%20store"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="py-3.5 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all"
@@ -973,7 +1014,7 @@ export default function HomePage() {
               </a>
 
               <a
-                href="https://www.google.com/maps/search/?api=1&query=Viraj+Infotech+Kandivali+West+Mumbai"
+                href="https://share.google/SCAKjT9NThGEm3CPB"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="py-3.5 px-5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all"

@@ -8,6 +8,7 @@ import { AdminLockMonitor } from "@/components/admin/AdminLockMonitor";
 import { AdminOrders } from "@/components/admin/AdminOrders";
 import { AdminBlogsList } from "@/components/admin/AdminBlogsList";
 import { AdminPageBuilder } from "@/components/admin/AdminPageBuilder";
+import { AdminEnquiries } from "@/components/admin/AdminEnquiries";
 import {
   LayoutDashboard,
   Laptop,
@@ -21,9 +22,16 @@ import {
   Eye,
   EyeOff,
   Sparkles,
+  ChevronRight,
+  Menu,
+  X,
+  Store,
+  MessageSquareText,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+
+type AdminTab = "overview" | "inventory" | "locks" | "orders" | "enquiries" | "blogs" | "builder";
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -33,11 +41,9 @@ export default function AdminPage() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loginError, setLoginError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState<boolean>(false);
 
-  const [activeTab, setActiveTab] = useState<
-    "overview" | "inventory" | "locks" | "orders" | "blogs" | "builder"
-  >("overview");
-
+  const [activeTab, setActiveTab] = useState<AdminTab>("overview");
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
 
   useEffect(() => {
@@ -215,139 +221,217 @@ export default function AdminPage() {
     );
   }
 
+  const navMenuItems = [
+    {
+      id: "overview" as AdminTab,
+      label: "Dashboard",
+      description: "Overview & key metrics",
+      icon: LayoutDashboard,
+      badge: "Summary",
+    },
+    {
+      id: "inventory" as AdminTab,
+      label: "Refurbished Inventory",
+      description: "Stock, CSV bulk upload & add",
+      icon: Laptop,
+      badge: "Products",
+    },
+    {
+      id: "locks" as AdminTab,
+      label: "Live Stock Locks",
+      description: "Shopper reservation monitor",
+      icon: Lock,
+      badge: "Real-time",
+    },
+    {
+      id: "orders" as AdminTab,
+      label: "Orders & Fulfillment",
+      description: "Customer orders & payments",
+      icon: ShoppingBag,
+      badge: "Orders",
+    },
+    {
+      id: "enquiries" as AdminTab,
+      label: "Customer Enquiries",
+      description: "Website lead form submissions",
+      icon: MessageSquareText,
+      badge: "Leads",
+    },
+    {
+      id: "blogs" as AdminTab,
+      label: "Page Builder Blogs",
+      description: "Articles & visual page builder",
+      icon: BookOpen,
+      badge: "Content",
+    },
+  ];
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 text-slate-900">
-      {/* Top Admin Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-cream-300 pb-6">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-200 text-xs font-black uppercase tracking-wider">
-              Administration Control Hub
-            </span>
-            <span className="text-xs text-slate-500 font-medium">• Real-Time Stock & Page Builder</span>
+    <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 text-slate-900">
+      {/* Top Header Strip */}
+      <div className="flex items-center justify-between gap-4 border-b border-cream-300 pb-5 mb-6">
+        <div className="flex items-center gap-3">
+          {/* Mobile sidebar toggle button */}
+          <button
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+            className="lg:hidden p-2 rounded-xl bg-white border border-cream-300 text-slate-700 hover:bg-cream-100"
+            aria-label="Toggle Navigation Sidebar"
+          >
+            {mobileSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200 text-[11px] font-black uppercase tracking-wider">
+                Administration Control Hub
+              </span>
+              <span className="hidden sm:inline text-xs text-slate-500 font-medium">
+                • Kandivali West Store Management
+              </span>
+            </div>
+            <h1 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
+              Viraj Infotech Management Hub
+            </h1>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 mt-1.5 tracking-tight">
-            Viraj Infotech Management Hub
-          </h1>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5 shrink-0">
           <button
             onClick={handleLogout}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold transition-all shadow-sm"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold transition-all shadow-sm"
           >
             <LogOut className="w-3.5 h-3.5" />
-            <span>Lock & Sign Out</span>
+            <span className="hidden sm:inline">Lock &amp; Sign Out</span>
           </button>
 
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white hover:bg-cream-50 text-slate-700 hover:text-slate-900 border border-cream-300 text-xs font-bold transition-all shadow-sm"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-cream-50 text-slate-700 hover:text-slate-900 border border-cream-300 text-xs font-bold transition-all shadow-sm"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Storefront</span>
+            <span className="hidden sm:inline">Back to Storefront</span>
           </Link>
         </div>
       </div>
 
-      {/* Admin Tab Navigation */}
-      {activeTab !== "builder" && (
-        <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-white border border-cream-300 text-xs font-bold shadow-sm">
-          <button
-            onClick={() => setActiveTab("overview")}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all ${
-              activeTab === "overview"
-                ? "bg-brand-600 text-white font-black shadow-md shadow-brand-600/20"
-                : "text-slate-600 hover:text-slate-900 hover:bg-cream-100"
-            }`}
-          >
-            <LayoutDashboard className="w-4 h-4" />
-            <span>Dashboard</span>
-          </button>
+      {/* Main Two-Column Layout with Vertical Sidebar on Left */}
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
+        {/* Left Vertical Sidebar */}
+        <aside
+          className={`${
+            mobileSidebarOpen ? "block" : "hidden"
+          } lg:block w-full lg:w-64 xl:w-72 shrink-0 bg-white rounded-2xl border border-cream-300 shadow-sm p-3 space-y-4 lg:sticky lg:top-24 z-20`}
+        >
+          {/* Sidebar Section Header */}
+          <div className="px-3 py-2 border-b border-cream-200 flex items-center justify-between">
+            <span className="text-[11px] font-black uppercase tracking-wider text-slate-400">
+              Admin Navigation
+            </span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          </div>
 
-          <button
-            onClick={() => setActiveTab("inventory")}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all ${
-              activeTab === "inventory"
-                ? "bg-brand-600 text-white font-black shadow-md shadow-brand-600/20"
-                : "text-slate-600 hover:text-slate-900 hover:bg-cream-100"
-            }`}
-          >
-            <Laptop className="w-4 h-4" />
-            <span>Refurbished Inventory</span>
-          </button>
+          {/* Vertical Menu Buttons */}
+          <nav className="space-y-1.5">
+            {navMenuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
 
-          <button
-            onClick={() => setActiveTab("locks")}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all ${
-              activeTab === "locks"
-                ? "bg-amber-500 text-slate-950 font-black shadow-md shadow-amber-500/20"
-                : "text-amber-800 hover:text-amber-900 hover:bg-amber-50"
-            }`}
-          >
-            <Lock className="w-4 h-4" />
-            <span>Live Stock Locks Monitor</span>
-          </button>
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveTab(item.id);
+                    setMobileSidebarOpen(false);
+                  }}
+                  className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all group ${
+                    isActive
+                      ? "bg-brand-600 text-white font-black shadow-md shadow-brand-600/25"
+                      : "text-slate-700 hover:text-slate-900 hover:bg-cream-100 font-bold"
+                  }`}
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div
+                      className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
+                        isActive
+                          ? "bg-white/20 text-white"
+                          : "bg-cream-100 text-slate-700 group-hover:bg-cream-200 group-hover:text-brand-600"
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs truncate">{item.label}</div>
+                      <div
+                        className={`text-[10px] truncate font-medium ${
+                          isActive ? "text-white/80" : "text-slate-400"
+                        }`}
+                      >
+                        {item.description}
+                      </div>
+                    </div>
+                  </div>
 
-          <button
-            onClick={() => setActiveTab("orders")}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all ${
-              activeTab === "orders"
-                ? "bg-slate-900 text-white font-black shadow-md shadow-slate-900/20"
-                : "text-slate-600 hover:text-slate-900 hover:bg-cream-100"
-            }`}
-          >
-            <ShoppingBag className="w-4 h-4" />
-            <span>Orders & Fulfillment</span>
-          </button>
+                  <ChevronRight
+                    className={`w-4 h-4 shrink-0 transition-transform ${
+                      isActive
+                        ? "text-white translate-x-0.5"
+                        : "text-slate-300 group-hover:text-slate-600 group-hover:translate-x-0.5"
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </nav>
 
-          <button
-            onClick={() => setActiveTab("blogs")}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all ${
-              activeTab === "blogs"
-                ? "bg-brand-600 text-white font-black shadow-md shadow-brand-600/20"
-                : "text-slate-600 hover:text-slate-900 hover:bg-cream-100"
-            }`}
-          >
-            <BookOpen className="w-4 h-4" />
-            <span>Page Builder Blogs</span>
-          </button>
-        </div>
-      )}
+          {/* Quick Store Info Card */}
+          <div className="p-3.5 rounded-xl bg-cream-50 border border-cream-200 text-xs space-y-1.5">
+            <div className="flex items-center gap-1.5 text-slate-900 font-black">
+              <Store className="w-3.5 h-3.5 text-brand-600" />
+              <span>Store Presence</span>
+            </div>
+            <p className="text-[11px] text-slate-500 leading-relaxed font-medium">
+              S.V. Road, Kandivali West, Mumbai. All product stock updates sync instantly.
+            </p>
+          </div>
+        </aside>
 
-      {/* Main Tab Content */}
-      <div className="pt-2">
-        {activeTab === "overview" && (
-          <AdminDashboard
-            onNavigate={(tab) => {
-              if (tab === "inventory") setActiveTab("inventory");
-              else if (tab === "locks") setActiveTab("locks");
-              else if (tab === "orders") setActiveTab("orders");
-              else if (tab === "builder") handleCreateNewBlog();
-            }}
-          />
-        )}
+        {/* Right Main Content Area */}
+        <main className="flex-1 min-w-0 w-full">
+          {activeTab === "overview" && (
+            <AdminDashboard
+              onNavigate={(tab) => {
+                if (tab === "inventory") setActiveTab("inventory");
+                else if (tab === "locks") setActiveTab("locks");
+                else if (tab === "orders") setActiveTab("orders");
+                else if (tab === "enquiries") setActiveTab("enquiries");
+                else if (tab === "builder") handleCreateNewBlog();
+              }}
+            />
+          )}
 
-        {activeTab === "inventory" && <AdminInventory />}
+          {activeTab === "inventory" && <AdminInventory />}
 
-        {activeTab === "locks" && <AdminLockMonitor />}
+          {activeTab === "locks" && <AdminLockMonitor />}
 
-        {activeTab === "orders" && <AdminOrders />}
+          {activeTab === "orders" && <AdminOrders />}
 
-        {activeTab === "blogs" && (
-          <AdminBlogsList
-            onCreateNew={handleCreateNewBlog}
-            onEditPost={handleEditBlogInBuilder}
-          />
-        )}
+          {activeTab === "enquiries" && <AdminEnquiries />}
 
-        {activeTab === "builder" && (
-          <AdminPageBuilder
-            initialPost={editingPost}
-            onSaved={handleBuilderSaved}
-            onCancel={handleBuilderCancel}
-          />
-        )}
+          {activeTab === "blogs" && (
+            <AdminBlogsList
+              onCreateNew={handleCreateNewBlog}
+              onEditPost={handleEditBlogInBuilder}
+            />
+          )}
+
+          {activeTab === "builder" && (
+            <AdminPageBuilder
+              initialPost={editingPost}
+              onSaved={handleBuilderSaved}
+              onCancel={handleBuilderCancel}
+            />
+          )}
+        </main>
       </div>
     </div>
   );

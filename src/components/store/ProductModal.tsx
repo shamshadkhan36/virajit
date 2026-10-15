@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { Product } from "@/types";
 import { useStockLock } from "@/context/LockContext";
+import { QuickEnquiryForm } from "./QuickEnquiryForm";
 import {
   X,
   Cpu,
@@ -172,6 +173,16 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
               <p className="text-slate-700 mt-0.5">{product.includedAccessories}</p>
             </div>
           </div>
+
+          {/* Quick Callback Inquiry Form */}
+          <div className="pt-2 border-t border-cream-200">
+            <QuickEnquiryForm
+              compact={true}
+              productName={`${product.brand} ${product.model}`}
+              title="Request a Phone Callback"
+              subtitle="Prefer a quick call? Share your details and our Kandivali West team will reach out:"
+            />
+          </div>
         </div>
 
         {/* Footer Actions */}
@@ -195,7 +206,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
             </button>
 
             <a
-              href={`https://wa.me/919876543210?text=${encodeURIComponent(
+              href={`https://wa.me/918928715729?text=${encodeURIComponent(
                 `Hello Viraj Infotech, I am interested in ${product.name} (Price: ₹${product.price.toLocaleString(
                   "en-IN"
                 )}). Is it currently available at your Kandivali West store?`

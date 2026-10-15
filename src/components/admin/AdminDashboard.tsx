@@ -8,6 +8,7 @@ import {
   BookOpen,
   ArrowUpRight,
   Plus,
+  MessageSquareText,
 } from "lucide-react";
 
 interface AdminDashboardProps {
@@ -22,6 +23,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
     totalOrders: 0,
     totalRevenue: 0,
     totalBlogs: 0,
+    totalEnquiries: 0,
+    newEnquiries: 0,
   });
 
   const [recentLocks, setRecentLocks] = useState<any[]>([]);
@@ -82,12 +85,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
           }));
         }
       });
+
+    // Fetch enquiries
+    fetch("/api/enquiries")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.enquiries) {
+          const newCount = data.enquiries.filter((e: any) => e.status === "NEW").length;
+          setStats((prev) => ({
+            ...prev,
+            totalEnquiries: data.enquiries.length,
+            newEnquiries: newCount,
+          }));
+        }
+      });
   }, []);
 
   return (
     <div className="space-y-8 text-slate-900">
       {/* Top Metric Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {/* Total Hardware Inventory */}
         <div className="p-6 rounded-3xl bg-white border border-cream-300 shadow-sm space-y-3">
           <div className="flex items-center justify-between text-slate-500">
@@ -99,6 +116,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
           <div>
             <div className="text-3xl font-black text-slate-900 font-sans">{stats.availableUnits}</div>
             <p className="text-xs text-slate-500 mt-1 font-medium">Across {stats.totalProducts} laptop configurations</p>
+          </div>
+        </div>
+
+        {/* Customer Enquiries */}
+        <div
+          onClick={() => onNavigate("enquiries")}
+          className="p-6 rounded-3xl bg-brand-50/70 border border-brand-200 shadow-sm space-y-3 cursor-pointer hover:border-brand-500 transition-all group"
+        >
+          <div className="flex items-center justify-between text-brand-700">
+            <span className="text-xs font-bold uppercase tracking-wider text-brand-700">Website Leads</span>
+            <div className="p-2 rounded-xl bg-white text-brand-700 shadow-sm group-hover:bg-brand-600 group-hover:text-white transition-colors">
+              <MessageSquareText className="w-5 h-5" />
+            </div>
+          </div>
+          <div>
+            <div className="text-3xl font-black text-brand-800 font-sans">{stats.totalEnquiries}</div>
+            <p className="text-xs text-brand-600 mt-1 font-medium">{stats.newEnquiries} new awaiting callback</p>
           </div>
         </div>
 
@@ -148,14 +182,30 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
       </div>
 
       {/* Quick Action Banners */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <button
+          onClick={() => onNavigate("enquiries")}
+          className="p-6 rounded-3xl bg-white border border-brand-300 hover:border-brand-600 transition-all text-left group flex items-center justify-between shadow-sm hover:shadow-md"
+        >
+          <div>
+            <div className="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">
+              Customer Leads {stats.newEnquiries > 0 ? `(${stats.newEnquiries} New)` : ""}
+            </div>
+            <h4 className="font-extrabold text-slate-900 text-sm">Review Enquiries</h4>
+            <p className="text-xs text-slate-500 mt-0.5">Quick call/WhatsApp replies for lead submissions</p>
+          </div>
+          <div className="p-2.5 rounded-xl bg-brand-50 group-hover:bg-brand-600 group-hover:text-white transition-colors text-brand-700">
+            <MessageSquareText className="w-5 h-5" />
+          </div>
+        </button>
+
         <button
           onClick={() => onNavigate("inventory")}
           className="p-6 rounded-3xl bg-white border border-cream-300 hover:border-brand-600 transition-all text-left group flex items-center justify-between shadow-sm hover:shadow-md"
         >
           <div>
             <div className="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Inventory</div>
-            <h4 className="font-extrabold text-slate-900 text-sm">Add New Refurbished Model</h4>
+            <h4 className="font-extrabold text-slate-900 text-sm">Add Refurbished Model</h4>
             <p className="text-xs text-slate-500 mt-0.5">Configure CPU, RAM, battery %, condition grade</p>
           </div>
           <div className="p-2.5 rounded-xl bg-cream-100 group-hover:bg-brand-600 group-hover:text-white transition-colors text-slate-700">

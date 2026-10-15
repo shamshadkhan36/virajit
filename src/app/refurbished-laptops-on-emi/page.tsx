@@ -41,7 +41,7 @@ export default function RefurbishedLaptopsOnEmiPage() {
               <ExternalLink className="w-4 h-4" />
             </a>
             <a
-              href="https://wa.me/919876543210?text=Hi%20Viraj%20Infotech,%20I%20want%20to%20buy%20a%20refurbished%20laptop%20on%20EMI"
+              href="https://wa.me/918928715729?text=Hi%20Viraj%20Infotech,%20I%20want%20to%20buy%20a%20refurbished%20laptop%20on%20EMI"
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm flex items-center gap-2"

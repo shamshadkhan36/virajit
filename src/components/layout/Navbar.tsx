@@ -109,7 +109,7 @@ export const Navbar: React.FC = () => {
           {/* Right Actions: Call Store / Shortlist / Active Lock */}
           <div className="flex items-center gap-2.5">
             <a
-              href="tel:+919876543210"
+              href="tel:+918928715729"
               className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 text-xs font-extrabold transition-colors"
             >
               <Phone className="w-3.5 h-3.5" />
@@ -174,10 +174,10 @@ export const Navbar: React.FC = () => {
                 Admin Studio
               </Link>
               <a
-                href="tel:+919876543210"
+                href="tel:+918928715729"
                 className="text-xs font-black text-brand-600 flex items-center gap-1"
               >
-                <Phone className="w-3.5 h-3.5" /> +91 98765 43210
+                <Phone className="w-3.5 h-3.5" /> +91 89287 15729
               </a>
             </div>
           </div>
