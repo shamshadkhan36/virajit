@@ -66,15 +66,15 @@ export const Navbar: React.FC = () => {
       <div className="backdrop-blur-md bg-cream-50/95 border-b border-cream-300/80 text-slate-900 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           {/* LOGO - Viraj Infotech */}
-          <Link href="/" className="flex items-center gap-3 group shrink-0">
-            <div className="w-32 sm:w-40 h-12 rounded-xl bg-white px-2 py-1 border border-cream-300/80 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-[1.02] transition-transform">
+          <Link href="/" className="flex items-center group shrink-0 py-1">
+            <div className="relative h-12 w-36 sm:w-48 flex items-center transition-transform group-hover:scale-[1.02]">
               <Image
-                src="/viraj-infotech-logo.jpeg"
+                src="/viraj-infotech-logo.png"
                 alt="Viraj Infotech"
-                width={320}
-                height={96}
+                width={240}
+                height={80}
                 priority
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain object-left"
               />
             </div>
           </Link>

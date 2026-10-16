@@ -122,12 +122,12 @@ export default function AdminPage() {
       <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md bg-white rounded-3xl border border-cream-300 shadow-xl shadow-brand-900/5 p-8 space-y-6">
           <div className="text-center space-y-2">
-            <div className="w-16 h-16 bg-white border border-cream-300 rounded-2xl flex items-center justify-center mx-auto shadow-sm p-1.5">
+            <div className="w-44 h-16 bg-white border border-cream-300 rounded-2xl flex items-center justify-center mx-auto shadow-sm p-2">
               <Image
-                src="/logo.png"
+                src="/viraj-infotech-logo.png"
                 alt="Viraj Infotech"
-                width={56}
-                height={56}
+                width={200}
+                height={64}
                 priority
                 className="w-full h-full object-contain"
               />

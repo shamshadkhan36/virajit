@@ -5,13 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types";
 import { useStockLock } from "@/context/LockContext";
+import { useEnquiryModal } from "@/context/EnquiryModalContext";
 import {
-  Lock,
   ArrowRight,
   Eye,
   Heart,
-  Clock,
-  AlertCircle,
   MessageCircle,
   ShieldCheck,
 } from "lucide-react";
@@ -22,16 +20,15 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails }) => {
-  const { lockProduct, openCheckout, isLoadingLock, formatTime, activeLocks } = useStockLock();
+  const { activeLocks } = useStockLock();
+  const { openEnquiryModal } = useEnquiryModal();
   const [isShortlisted, setIsShortlisted] = useState(false);
 
   const myLock = activeLocks.find((l) => l.productId === product.id);
   const isLockedByMe = !!myLock || product.isLockedByMe;
-  const lockSeconds = myLock ? myLock.secondsRemaining : product.lockSecondsRemaining || 0;
 
   const availableStock = product.availableStock !== undefined ? product.availableStock : product.stock;
   const isHeldByOthers = availableStock <= 0 && (product.activeLocksCount || 0) > 0 && !isLockedByMe;
-  const isOutOfStock = product.stock <= 0;
 
   let images: string[] = [];
   try {
@@ -61,18 +58,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
     : savingsPercent >= 45
     ? `SAVE ${savingsPercent}%`
     : "BEST VALUE";
-
-  const whatsappText = encodeURIComponent(
-    `Hi Viraj Infotech, I want to enquire about ${product.name} priced at ₹${inrPrice.toLocaleString("en-IN")}. Is it available in stock?`
-  );
-
-  const handleActionClick = async () => {
-    if (isLockedByMe) {
-      openCheckout(product);
-    } else if (availableStock > 0) {
-      await lockProduct(product);
-    }
-  };
 
   return (
     <div
@@ -222,47 +207,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
             </div>
           </div>
 
-          {/* Stock Status Row */}
-          <div className="flex items-center justify-between text-xs py-1.5 px-3 rounded-xl bg-cream-100 border border-cream-300">
-            {isLockedByMe ? (
-              <div className="flex items-center gap-1.5 text-amber-800 font-bold w-full justify-between">
-                <span className="flex items-center gap-1">
-                  <Lock className="w-3.5 h-3.5 text-amber-700 animate-pulse" />
-                  Reserved for You
-                </span>
-                <span className="font-mono text-amber-900 bg-amber-200 px-2 py-0.5 rounded font-black">
-                  {formatTime(lockSeconds)}
-                </span>
-              </div>
-            ) : isHeldByOthers ? (
-              <div className="flex items-center gap-1.5 text-purple-700 font-semibold">
-                <Clock className="w-3.5 h-3.5 text-purple-600 animate-spin" />
-                <span>On hold in shopper&apos;s cart</span>
-              </div>
-            ) : isOutOfStock ? (
-              <div className="flex items-center gap-1.5 text-red-600 font-semibold">
-                <AlertCircle className="w-3.5 h-3.5" />
-                <span>Out of Stock</span>
-              </div>
-            ) : (
-              <div className="flex items-center gap-1.5 text-brand-700 font-semibold">
-                <span className="w-2 h-2 rounded-full bg-emerald-600" />
-                <span>In Stock</span>
-              </div>
-            )}
-          </div>
-
           {/* Action Buttons: WhatsApp Enquire + View Details */}
           <div className="grid grid-cols-2 gap-2">
-            <a
-              href={`https://wa.me/918928715729?text=${whatsappText}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-sm transition-all flex items-center justify-center gap-1.5"
+            <button
+              type="button"
+              onClick={() =>
+                openEnquiryModal({
+                  productName: `${product.brand} ${product.model} (₹${inrPrice.toLocaleString("en-IN")})`,
+                })
+              }
+              className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <MessageCircle className="w-3.5 h-3.5 fill-white" />
               <span>WhatsApp</span>
-            </a>
+            </button>
 
             <Link
               href={productHref}

@@ -6,7 +6,6 @@ import Link from "next/link";
 import { Product, BlogPost } from "@/types";
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductModal } from "@/components/store/ProductModal";
-import { QuickEnquiryForm } from "@/components/store/QuickEnquiryForm";
 import { useStockLock } from "@/context/LockContext";
 import {
   Laptop,
@@ -273,7 +272,7 @@ export default function HomePage() {
             <div className="relative z-10 w-full max-w-[420px] rounded-2xl bg-forest-900 border-8 border-slate-800 shadow-2xl p-10 text-center space-y-3">
               <div className="px-5 py-4 rounded-2xl bg-white/95 border border-white/70 inline-flex items-center justify-center mx-auto shadow-inner">
                 <Image
-                  src="/viraj-infotech-logo.jpeg"
+                  src="/viraj-infotech-logo.png"
                   alt="Viraj Infotech"
                   width={360}
                   height={120}
@@ -883,46 +882,6 @@ export default function HomePage() {
                 </a>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* QUICK INQUIRY SECTION (Name, Number, Location) */}
-      <section id="quick-enquiry" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 sm:p-12 rounded-[32px] bg-gradient-to-br from-brand-900 via-forest-900 to-slate-900 text-white shadow-2xl border border-white/10">
-          <div className="lg:col-span-6 space-y-4">
-            <span className="px-3 py-1 rounded-full bg-pink-400/20 text-pink-300 text-xs font-black uppercase tracking-wider inline-flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" />
-              Direct Store Callback Service
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
-              Looking for a Specific Laptop or Best Price Quote?
-            </h2>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-              Tell us what you need. Fill out this small inquiry form with your name, phone number, and location — our Kandivali West hardware technicians will check live inventory and call you with available stock and exclusive store pricing.
-            </p>
-            <div className="grid grid-cols-2 gap-3 pt-2 text-xs font-bold text-slate-200">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0" />
-                <span>Instant Phone / WhatsApp Quote</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0" />
-                <span>40-Point Hardware Tested</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0" />
-                <span>Warranty &amp; Free Accessories</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0" />
-                <span>Fast Mumbai Doorstep Delivery</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-6">
-            <QuickEnquiryForm />
           </div>
         </div>
       </section>

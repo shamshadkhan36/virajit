@@ -6,8 +6,8 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Product } from "@/types";
 import { useStockLock } from "@/context/LockContext";
+import { useEnquiryModal } from "@/context/EnquiryModalContext";
 import { ProductCard } from "@/components/store/ProductCard";
-import { QuickEnquiryForm } from "@/components/store/QuickEnquiryForm";
 import {
   Cpu,
   HardDrive,
@@ -34,6 +34,7 @@ export default function ProductDetailPage() {
   const slug = params?.slug as string;
   const { sessionToken, lockProduct, openCheckout, activeLocks, formatTime, isLoadingLock } =
     useStockLock();
+  const { openEnquiryModal } = useEnquiryModal();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
@@ -324,15 +325,18 @@ export default function ProductDetailPage() {
           {/* Customer Action: Enquire through WhatsApp, Phone, Store Visit */}
           <div className="space-y-3 pt-2">
             <div>
-              <a
-                href={`https://wa.me/918928715729?text=${whatsappText}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2.5 transition-all"
+              <button
+                type="button"
+                onClick={() =>
+                  openEnquiryModal({
+                    productName: `${product.brand} ${product.model} (₹${inrPrice.toLocaleString("en-IN")})`,
+                  })
+                }
+                className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2.5 transition-all cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5 fill-white" />
                 <span>Enquire on WhatsApp</span>
-              </a>
+              </button>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
@@ -357,14 +361,6 @@ export default function ProductDetailPage() {
           <div className="p-4 rounded-2xl bg-cream-50 border border-cream-200 text-xs sm:text-sm text-slate-600 leading-relaxed">
             {product.description}
           </div>
-
-          {/* Quick Callback Inquiry Form */}
-          <QuickEnquiryForm
-            compact={true}
-            productName={`${product.brand} ${product.model}`}
-            title="Request Instant Callback &amp; Best Price"
-            subtitle="Share your name, number &amp; location — our Kandivali team will call you back right away."
-          />
         </div>
       </div>
 

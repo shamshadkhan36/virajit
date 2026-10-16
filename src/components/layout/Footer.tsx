@@ -24,12 +24,12 @@ export const Footer: React.FC = () => {
             {/* Column 1: About VirajIT (Text, Address, Social Media Icons, YT | G Reviews) */}
             <div className="space-y-4">
               <Link href="/" className="flex items-center gap-3">
-                <div className="w-40 h-12 rounded-xl bg-white px-2 py-1 flex items-center justify-center shrink-0 shadow-md">
+                <div className="w-44 h-12 rounded-xl bg-white px-3 py-1.5 flex items-center justify-center shrink-0 shadow-md">
                   <Image
-                    src="/viraj-infotech-logo.jpeg"
+                    src="/viraj-infotech-logo.png"
                     alt="Viraj Infotech"
-                    width={320}
-                    height={96}
+                    width={240}
+                    height={80}
                     className="w-full h-full object-contain"
                   />
                 </div>

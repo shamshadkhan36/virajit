@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { Product } from "@/types";
 import { useStockLock } from "@/context/LockContext";
-import { QuickEnquiryForm } from "./QuickEnquiryForm";
+import { useEnquiryModal } from "@/context/EnquiryModalContext";
 import {
   X,
   Cpu,
@@ -26,6 +26,7 @@ interface ProductModalProps {
 
 export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) => {
   const { lockProduct, openCheckout, activeLocks, formatTime } = useStockLock();
+  const { openEnquiryModal } = useEnquiryModal();
 
   if (!product) return null;
 
@@ -173,16 +174,6 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
               <p className="text-slate-700 mt-0.5">{product.includedAccessories}</p>
             </div>
           </div>
-
-          {/* Quick Callback Inquiry Form */}
-          <div className="pt-2 border-t border-cream-200">
-            <QuickEnquiryForm
-              compact={true}
-              productName={`${product.brand} ${product.model}`}
-              title="Request a Phone Callback"
-              subtitle="Prefer a quick call? Share your details and our Kandivali West team will reach out:"
-            />
-          </div>
         </div>
 
         {/* Footer Actions */}
@@ -205,19 +196,19 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
               Close
             </button>
 
-            <a
-              href={`https://wa.me/918928715729?text=${encodeURIComponent(
-                `Hello Viraj Infotech, I am interested in ${product.name} (Price: ₹${product.price.toLocaleString(
-                  "en-IN"
-                )}). Is it currently available at your Kandivali West store?`
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm shadow-md shadow-emerald-600/20 transition-all flex items-center gap-2"
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                openEnquiryModal({
+                  productName: `${product.brand} ${product.model} (₹${inrPrice.toLocaleString("en-IN")})`,
+                });
+              }}
+              className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm shadow-md shadow-emerald-600/20 transition-all flex items-center gap-2 cursor-pointer"
             >
               <MessageCircle className="w-4 h-4 fill-white" />
               <span>Enquire on WhatsApp</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>

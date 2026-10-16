@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LockProvider } from "@/context/LockContext";
+import { EnquiryModalProvider } from "@/context/EnquiryModalContext";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { StickyHoldBar } from "@/components/layout/StickyHoldBar";
@@ -11,8 +12,9 @@ export const metadata: Metadata = {
   description:
     "Professionally tested refurbished laptops for work, study and gaming — backed by real warranty and local support with 10-minute stock locks.",
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: "/icon.png",
+    shortcut: "/favicon.ico",
+    apple: "/icon.png",
   },
 };
 
@@ -25,11 +27,13 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-cream-100 text-slate-900 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white antialiased">
         <LockProvider>
-          <Navbar />
-          <main className="flex-1 pb-16">{children}</main>
-          <StickyHoldBar />
-          <CheckoutModal />
-          <Footer />
+          <EnquiryModalProvider>
+            <Navbar />
+            <main className="flex-1 pb-16">{children}</main>
+            <StickyHoldBar />
+            <CheckoutModal />
+            <Footer />
+          </EnquiryModalProvider>
         </LockProvider>
       </body>
     </html>
