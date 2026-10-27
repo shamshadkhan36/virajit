@@ -180,11 +180,11 @@ export default function HomePage() {
     return true;
   });
 
-  // Popular Refurbished Laptops: Total 2 rows, Three laptops for each row (6 laptops total)
+  // Popular Refurbished Laptops: Total 2 rows, Four laptops for each row (8 laptops total)
   const sortedForPopular = [...priceRangeProducts].sort(
     (a, b) => (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0)
   );
-  const popularLaptops = sortedForPopular.slice(0, 6);
+  const popularLaptops = sortedForPopular.slice(0, 8);
 
   // Premium Refurbished Laptops: Between 2 to 4 laptops (50k plus or premium in terms of configuration)
   const premiumLaptops = products
@@ -552,8 +552,8 @@ export default function HomePage() {
           </div>
         ) : (
           <>
-            {/* 2 Rows x 3 Laptops Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* 2 Rows x 4 Laptops Grid (8 laptops total) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 refurbished-catalog-grid">
               {popularLaptops.map((product) => (
                 <ProductCard
                   key={product.id}
