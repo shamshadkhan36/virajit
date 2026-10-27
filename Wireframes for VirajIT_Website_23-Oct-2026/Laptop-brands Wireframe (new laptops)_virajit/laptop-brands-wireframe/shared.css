@@ -1,7 +1,7 @@
 :root {
   --ink: #0f0e17;
-  --muted: #1c1b26;
-  --muted-soft: #383647;
+  --muted: #0f0e17;
+  --muted-soft: #1c1b26;
   --violet: #32123b;
   --pink: #b30c7a;
   --pink-deep: #97086a;
@@ -18,7 +18,7 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 body {
@@ -26,7 +26,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: Manrope, Arial, sans-serif;
-  font-size: 1rem;
+  font-size: 1.06rem;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
@@ -67,8 +67,8 @@ h3 {
 
 p {
   line-height: 1.7;
-  color: var(--muted);
-  font-size: 1.02rem;
+  color: #0f0e17;
+  font-size: 1.08rem;
 }
 
 .shell {

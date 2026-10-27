@@ -6,8 +6,8 @@
   grid-template-columns: 1.15fr 0.85fr;
   align-items: center;
   gap: 50px;
-  padding-top: 60px;
-  padding-bottom: 25px; /* Reduced gap between Section 1 & Section 2 */
+  padding-top: 50px;
+  padding-bottom: 5px; /* Reduced gap between Section 1 & Section 2 */
 }
 .home-hero h1 {
   margin-bottom: 22px;
@@ -53,8 +53,8 @@
 }
 
 #offer.section {
-  padding-top: 30px; /* Reduced gap with Section 1 */
-  padding-bottom: 60px;
+  padding-top: 5px; /* Reduced gap with Section 1 */
+  padding-bottom: 55px;
 }
 
 .offer-grid {
