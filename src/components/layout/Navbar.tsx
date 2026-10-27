@@ -27,6 +27,7 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { label: "Laptops", href: "/refurbished-laptops-catalogue" },
+    { label: "Laptop Brands", href: "/laptop-brands" },
     { label: "Laptop Repair", href: "/laptop-repair-store-in-mumbai" },
     { label: "Laptop on Rent", href: "/laptop-on-rent-mumbai" },
     { label: "Visit Store", href: "/virajit-laptop-store-kandivali-west" },

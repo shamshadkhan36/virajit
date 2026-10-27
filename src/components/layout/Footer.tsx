@@ -128,6 +128,14 @@ export const Footer: React.FC = () => {
                 </li>
                 <li>
                   <Link
+                    href="/laptop-brands"
+                    className="hover:text-pink-300 transition-colors"
+                  >
+                    Laptop Brands (New Laptops)
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/laptop-on-rent-mumbai"
                     className="hover:text-pink-300 transition-colors"
                   >
