@@ -1,0 +1,718 @@
+@import url("shared.css");
+
+/* Overrides & Homepage Specific Layout */
+.home-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 50px;
+  padding-top: 60px;
+  padding-bottom: 25px; /* Reduced gap between Section 1 & Section 2 */
+}
+.home-hero h1 {
+  margin-bottom: 22px;
+}
+.home-hero h1 em {
+  font-style: normal;
+  color: var(--pink);
+}
+.home-hero .lead {
+  max-width: 670px;
+  color: var(--ink);
+  font-size: 1.18rem;
+  font-weight: 500;
+  line-height: 1.65;
+}
+.hero-trust {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.hero-trust span {
+  padding-inline: 8px;
+  color: var(--pink);
+}
+
+.home-hero-art {
+  min-height: 440px;
+  position: relative;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid #eaddeb;
+  background: #f8eff6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-hero-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#offer.section {
+  padding-top: 30px; /* Reduced gap with Section 1 */
+  padding-bottom: 60px;
+}
+
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.offer-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(39, 16, 46, 0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.offer-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+.offer-visual {
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  background: #f4ecf4;
+}
+.offer-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.visual-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: var(--violet);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  z-index: 2;
+}
+
+.offer-body {
+  padding: 24px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.offer-body h3 {
+  font-size: 1.45rem;
+  margin-bottom: 8px;
+  color: #0f0e17;
+}
+.offer-body p {
+  font-size: 0.98rem;
+  color: var(--muted);
+  flex: 1;
+  line-height: 1.6;
+}
+.offer-body a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-top: 12px;
+  color: var(--pink);
+  font-weight: 800;
+  font-size: 0.92rem;
+}
+
+/* Shop by budget & Refurbished catalog */
+.shop-section {
+  background: #faf8fa;
+  border-block: 1px solid var(--line);
+  padding-block: 70px;
+}
+.split {
+  display: grid;
+  grid-template-columns: 1fr 370px;
+  gap: 55px;
+  align-items: end;
+}
+.split > p {
+  margin-bottom: 7px;
+  font-size: 1.05rem;
+}
+
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 32px 0 50px;
+}
+.budget-grid a {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.budget-grid a:hover {
+  border-color: var(--pink);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(179, 12, 122, 0.08);
+}
+.budget-grid span {
+  color: var(--pink);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+}
+.budget-grid strong {
+  font-family: "Space Grotesk";
+  font-size: 1.45rem;
+  color: #0f0e17;
+}
+.budget-grid small {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--pink);
+}
+
+.products-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 24px;
+}
+.products-heading h3 {
+  font-size: 2.1rem;
+  margin: 0;
+  color: #0f0e17;
+}
+.products-heading .eyebrow {
+  margin-bottom: 8px;
+}
+.products-heading .text-cta {
+  margin: 0 0 6px;
+  white-space: nowrap;
+}
+
+/* 8 Refurbished Laptops Grid (4 per row x 2 rows) */
+.refurbished-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.laptop-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.laptop-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(39, 16, 46, 0.08);
+  border-color: #d1b8cc;
+}
+
+.laptop-card-image {
+  height: 180px;
+  background: #fbf9fb;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 14px;
+}
+.laptop-card-image img {
+  max-width: 90%;
+  max-height: 85%;
+  object-fit: contain;
+  transition: transform 0.25s;
+}
+.laptop-card:hover .laptop-card-image img {
+  transform: scale(1.04);
+}
+.badge-certified {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #111;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+
+.laptop-card-brand {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--pink);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.laptop-card-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: #0f0e17;
+  margin-bottom: 12px;
+  min-height: 44px;
+}
+
+.laptop-card-bubbles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.spec-bubble {
+  background: #f4ecf4;
+  color: #24222f;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.laptop-card-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: auto;
+  margin-bottom: 8px;
+}
+.price-current {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f0e17;
+}
+.price-original {
+  font-size: 0.95rem;
+  color: #777;
+  text-decoration: line-through;
+}
+.price-discount {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #15803d;
+  background: #dcfce7;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.laptop-card-warranty {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #15803d;
+  margin-bottom: 14px;
+}
+
+.laptop-card-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--pink);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.92rem;
+  padding: 12px;
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+.laptop-card-btn:hover {
+  background: var(--pink-deep);
+}
+
+/* Repair Section */
+.repair-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 7%;
+  padding-block: 70px;
+}
+.repair-photo {
+  height: 580px;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #f2ebf2;
+}
+.repair-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.repair-copy > p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+.repair-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+  margin: 22px 0;
+}
+.repair-list > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid var(--line);
+  padding: 16px 0;
+}
+.repair-list strong {
+  font-size: 0.98rem;
+  color: #0f0e17;
+}
+.repair-list span {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.under-link {
+  display: inline-block;
+  color: var(--pink);
+  font-weight: 800;
+  font-size: 0.92rem;
+  margin-top: 16px;
+}
+
+/* Rental Section */
+.rental-section {
+  padding-block: 26px;
+}
+.rental-inner {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 30px;
+  background: #f6f0f6;
+  border: 1px solid #eaddeb;
+  border-radius: 22px;
+  overflow: hidden;
+  min-height: 280px;
+}
+.rental-inner > div:first-child {
+  padding: 40px;
+}
+.rental-inner h2 {
+  font-size: clamp(2rem, 3vw, 2.7rem);
+  margin-bottom: 10px;
+}
+.rental-inner p:not(.eyebrow) {
+  color: var(--muted);
+  max-width: 600px;
+  font-size: 1.02rem;
+}
+.rental-visual {
+  height: 100%;
+  min-height: 280px;
+  overflow: hidden;
+}
+.rental-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Brand Grid with Logos */
+.brand-section .logo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 25px;
+}
+.brand-section .logo-grid > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 135px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #faf8fa;
+  padding: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.brand-section .logo-grid > div:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(39, 16, 46, 0.06);
+}
+.brand-section .logo-grid svg {
+  max-width: 140px;
+  max-height: 48px;
+}
+.brand-section .logo-grid span {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #111;
+  margin-top: 6px;
+}
+.brand-note {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 18px 0 0;
+}
+
+/* Trust Grid */
+.trust-section {
+  padding-block: 75px;
+  background: #f8f5f8;
+  border-block: 1px solid var(--line);
+}
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+.trust-grid > div {
+  border-top: 2px solid var(--pink);
+  padding-top: 18px;
+}
+.trust-grid span {
+  font-size: 0.8rem;
+  color: var(--pink);
+  font-weight: 800;
+}
+.trust-grid h3 {
+  font-size: 1.25rem;
+  margin: 14px 0 8px;
+  color: #0f0e17;
+}
+.trust-grid p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Customer Reviews */
+.customers-section {
+  padding-block: 70px;
+}
+.review-module {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 22px;
+  margin-top: 25px;
+}
+.review-summary {
+  background: var(--violet);
+  color: #fff;
+  border-radius: 18px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+.review-summary .stars-row {
+  display: flex;
+  gap: 4px;
+  color: #fbbf24;
+  font-size: 1.4rem;
+}
+.review-summary strong {
+  font-family: "Space Grotesk";
+  font-size: 2.2rem;
+  line-height: 1;
+}
+.review-summary span {
+  font-size: 0.95rem;
+  color: #e5d4e7;
+  font-weight: 600;
+}
+.review-summary a.btn-g-review {
+  display: inline-block;
+  background: var(--pink);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 10px 16px;
+  border-radius: 999px;
+  text-align: center;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+.review-summary a.btn-g-review:hover {
+  background: var(--pink-deep);
+}
+
+.review-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.review-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 15px rgba(39, 16, 46, 0.03);
+}
+.review-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.review-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--violet);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 1rem;
+}
+.review-author {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #0f0e17;
+}
+.review-meta {
+  font-size: 0.78rem;
+  color: #777;
+}
+.review-stars {
+  color: #eab308;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+.review-card p {
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0;
+  flex: 1;
+}
+
+/* Handover row */
+.handover-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+.handover-card {
+  height: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--line);
+}
+.handover-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.handover-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(15, 14, 23, 0.85));
+  color: #fff;
+  padding: 12px 10px 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Floating WA */
+.floating-wa {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 25;
+  background: #078c62;
+  color: #fff;
+  border-radius: 999px;
+  padding: 13px 20px;
+  box-shadow: 0 12px 25px rgba(0, 70, 50, 0.22);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+.floating-wa:hover {
+  background: #056e4d;
+}
+
+@media (max-width: 1100px) {
+  .refurbished-catalog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .review-module {
+    grid-template-columns: 1fr;
+  }
+  .review-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .handover-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    gap: 25px;
+  }
+  .offer-grid {
+    grid-template-columns: 1fr;
+  }
+  .refurbished-catalog-grid {
+    grid-template-columns: 1fr;
+  }
+  .repair-section {
+    grid-template-columns: 1fr;
+  }
+  .repair-photo {
+    height: 340px;
+    order: 2;
+  }
+  .repair-copy {
+    order: 1;
+  }
+  .rental-inner {
+    grid-template-columns: 1fr;
+  }
+  .review-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .handover-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
