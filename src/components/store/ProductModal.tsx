@@ -214,7 +214,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
                   productName: `${product.brand} ${product.model} (₹${inrPrice.toLocaleString("en-IN")})`,
                 });
               }}
-              className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm shadow-md shadow-emerald-600/20 transition-all flex items-center gap-2 cursor-pointer"
+              className="px-6 py-2.5 rounded-xl bg-[#b30c7a] hover:bg-[#97086a] text-white font-black text-sm shadow-md shadow-[#b30c7a]/25 transition-all flex items-center gap-2 cursor-pointer"
             >
               <MessageCircle className="w-4 h-4 fill-white" />
               <span>Enquire on WhatsApp</span>

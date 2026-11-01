@@ -355,7 +355,7 @@ export default function ProductDetailPage() {
                     productName: `${product.brand} ${product.model} (₹${inrPrice.toLocaleString("en-IN")})`,
                   })
                 }
-                className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2.5 transition-all cursor-pointer"
+                className="w-full py-4 px-6 rounded-2xl bg-[#b30c7a] hover:bg-[#97086a] text-white font-black text-base shadow-lg shadow-[#b30c7a]/25 flex items-center justify-center gap-2.5 transition-all cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5 fill-white" />
                 <span>Enquire on WhatsApp</span>
