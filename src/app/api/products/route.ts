@@ -5,6 +5,17 @@ import { FORMATTED_PRODUCTS, ensureProductsSeeded } from "@/lib/catalogue-data";
 
 export const dynamic = "force-dynamic";
 
+let hasAttemptedSeed = false;
+
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error(`Operation timed out after ${ms}ms`)), ms)
+    ),
+  ]);
+}
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -13,17 +24,17 @@ export async function GET(req: NextRequest) {
     const grade = searchParams.get("grade");
     const search = searchParams.get("search");
 
-    // Attempt to expire stale locks and seed if needed
-    try {
-      await expireStaleLocks();
-    } catch (e) {
-      // Ignored if DB table not yet created
+    // Only attempt seed once per server process, non-blocking
+    if (!hasAttemptedSeed) {
+      hasAttemptedSeed = true;
+      withTimeout(ensureProductsSeeded(), 1500).catch(() => {});
     }
 
+    // Attempt to expire stale locks with short timeout
     try {
-      await ensureProductsSeeded();
+      await withTimeout(expireStaleLocks(), 1000);
     } catch (e) {
-      // Ignored if running in serverless readonly
+      // Ignored if DB table not yet created or busy
     }
 
     const where: any = {};
@@ -44,23 +55,26 @@ export async function GET(req: NextRequest) {
 
     let products: any[] = [];
     try {
-      products = await prisma.product.findMany({
-        where,
-        orderBy: { createdAt: "desc" },
-        include: {
-          locks: {
-            where: {
-              status: "ACTIVE",
-              lockedUntil: { gt: new Date() },
+      products = await withTimeout(
+        prisma.product.findMany({
+          where,
+          orderBy: { createdAt: "desc" },
+          include: {
+            locks: {
+              where: {
+                status: "ACTIVE",
+                lockedUntil: { gt: new Date() },
+              },
             },
           },
-        },
-      });
+        }),
+        2000
+      );
     } catch (dbErr) {
-      console.warn("Prisma query failed, falling back to catalogue data:", dbErr);
+      console.warn("Prisma query timed out or failed, falling back to static catalogue");
     }
 
-    // If database returned no products, use built-in catalogue data
+    // If database returned no products or timed out, use built-in catalogue data
     if (!products || products.length === 0) {
       let filtered = [...FORMATTED_PRODUCTS];
       if (brand && brand !== "All") {

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Product } from "@/types";
+import { FORMATTED_PRODUCTS } from "@/lib/catalogue-data";
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductModal } from "@/components/store/ProductModal";
 import { useStockLock } from "@/context/LockContext";
@@ -25,9 +26,9 @@ export const CatalogueBrowser: React.FC<CatalogueBrowserProps> = ({
   initialOnlyTouch = false,
 }) => {
   const { sessionToken } = useStockLock();
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(FORMATTED_PRODUCTS);
   const [selectedProductForModal, setSelectedProductForModal] = useState<Product | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Filters
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,16 +52,23 @@ export const CatalogueBrowser: React.FC<CatalogueBrowserProps> = ({
   useEffect(() => {
     const loadProducts = async () => {
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3500);
+
         const url = sessionToken
           ? `/api/products?sessionToken=${encodeURIComponent(sessionToken)}`
           : "/api/products";
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data.success) {
-          setProducts(data.products || []);
+        const res = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && Array.isArray(data.products) && data.products.length > 0) {
+            setProducts(data.products);
+          }
         }
       } catch (err) {
-        console.error("Error loading catalogue:", err);
+        // Fallback to initial catalogue data
       } finally {
         setIsLoading(false);
       }

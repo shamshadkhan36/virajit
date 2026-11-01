@@ -41,6 +41,16 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) 
   } catch {
     images = ["https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80"];
   }
+  images = (Array.isArray(images) ? images : [])
+    .filter((img) => typeof img === "string" && !img.includes("1544716278"))
+    .map((img) => img || "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80");
+  if (images.length === 0) {
+    images = [
+      product.brand?.toUpperCase() === "HP"
+        ? "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80"
+        : "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80"
+    ];
+  }
 
   const inrPrice = Math.round(product.price);
   const inrOriginal = Math.round(product.originalPrice);

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Product } from "@/types";
+import { FORMATTED_PRODUCTS } from "@/lib/catalogue-data";
 import { useStockLock } from "@/context/LockContext";
 import { useEnquiryModal } from "@/context/EnquiryModalContext";
 import { ProductCard } from "@/components/store/ProductCard";
@@ -36,34 +37,46 @@ export default function ProductDetailPage() {
     useStockLock();
   const { openEnquiryModal } = useEnquiryModal();
 
-  const [product, setProduct] = useState<Product | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const initialProd = FORMATTED_PRODUCTS.find((p) => p.slug === slug || p.id === slug) || null;
+  const [product, setProduct] = useState<Product | null>(initialProd);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>(
+    FORMATTED_PRODUCTS.filter((p) => p.slug !== slug && p.id !== slug).slice(0, 3)
+  );
   const [activeImageIdx, setActiveImageIdx] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!initialProd);
 
   useEffect(() => {
     const loadProductData = async () => {
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3500);
+
         const url = sessionToken
           ? `/api/products/${encodeURIComponent(slug)}?sessionToken=${encodeURIComponent(sessionToken)}`
           : `/api/products/${encodeURIComponent(slug)}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data.success && data.product) {
-          setProduct(data.product);
+        const res = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.product) {
+            setProduct(data.product);
+          }
         }
 
         const allRes = await fetch("/api/products");
-        const allData = await allRes.json();
-        if (allData.success && allData.products) {
-          setRelatedProducts(
-            allData.products
-              .filter((p: Product) => p.slug !== slug && p.id !== slug)
-              .slice(0, 3)
-          );
+        if (allRes.ok) {
+          const allData = await allRes.json();
+          if (allData.success && Array.isArray(allData.products) && allData.products.length > 0) {
+            setRelatedProducts(
+              allData.products
+                .filter((p: Product) => p.slug !== slug && p.id !== slug)
+                .slice(0, 3)
+            );
+          }
         }
       } catch (err) {
-        console.error("Failed to load product:", err);
+        // Fallback to initial catalogue data
       } finally {
         setIsLoading(false);
       }
@@ -107,7 +120,17 @@ export default function ProductDetailPage() {
     images = JSON.parse(product.images);
   } catch {
     images = [
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1000&q=80",
+    ];
+  }
+  images = (Array.isArray(images) ? images : []).filter(
+    (img) => typeof img === "string" && !img.includes("1544716278")
+  );
+  if (images.length === 0) {
+    images = [
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=1000&q=80",
     ];
   }
   while (images.length < 3) {

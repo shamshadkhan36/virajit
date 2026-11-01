@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+// catalogue-data.ts - In-memory fallback and catalog source data
 
 export function makeSlug(brand: string, model: string, processor: string, display: string): string {
   const raw = `${brand}-${model}-${processor}-${display}-refurbished`;
@@ -207,9 +207,9 @@ export const CATALOGUE_PRODUCTS = [
     batteryHealth: 94,
     includedAccessories: "Original Adapter & Power Cord, Free Laptop Bag & Wireless Mouse, Viraj Infotech Warranty Card",
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=1000&q=80",
     ]),
   },
   {
@@ -236,9 +236,9 @@ export const CATALOGUE_PRODUCTS = [
     batteryHealth: 91,
     includedAccessories: "Original Adapter & Power Cord, Free Laptop Bag & Wireless Mouse, Viraj Infotech 3-Year Warranty Card",
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=1000&q=80",
     ]),
   },
   {
@@ -265,9 +265,9 @@ export const CATALOGUE_PRODUCTS = [
     batteryHealth: 93,
     includedAccessories: "Original Adapter & Power Cord, Free Laptop Bag & Wireless Mouse, Viraj Infotech 3-Year Warranty Card",
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=1000&q=80",
     ]),
   },
   {
@@ -323,7 +323,7 @@ export const CATALOGUE_PRODUCTS = [
     batteryHealth: 93,
     includedAccessories: "Original Adapter & Power Cord, Free Laptop Bag & Wireless Mouse, Viraj Infotech 3-Year Warranty Card",
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1000&q=80",
     ]),
@@ -352,8 +352,8 @@ export const CATALOGUE_PRODUCTS = [
     batteryHealth: 94,
     includedAccessories: "Original Adapter & Power Cord, Free Laptop Bag & Wireless Mouse, Viraj Infotech 3-Year Warranty Card",
     images: JSON.stringify([
+      "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=1000&q=80",
     ]),
   },
@@ -387,6 +387,7 @@ export const FORMATTED_PRODUCTS = CATALOGUE_PRODUCTS.map((row) => {
  */
 export async function ensureProductsSeeded(): Promise<void> {
   try {
+    const { prisma } = await import("@/lib/prisma");
     const count = await prisma.product.count();
     if (count === 0) {
       console.log("Database has 0 products. Auto-seeding initial catalogue...");

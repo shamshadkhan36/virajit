@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Viraj IT — All Wireframes Directory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f0e17;
+      --pink: #b30c7a;
+      --bg: #faf7fa;
+      --card-bg: #ffffff;
+      --border: #ded7e0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 18px; }
+    body {
+      font-family: Manrope, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--border);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--pink);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-family: 'Space Grotesk', Manrope, sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+    p.lead {
+      font-size: 1.05rem;
+      color: var(--ink);
+      font-weight: 500;
+      max-width: 720px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 22px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 18px rgba(15, 14, 23, 0.04);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(179, 12, 122, 0.12);
+      border-color: var(--pink);
+    }
+    .card-num {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--pink);
+      margin-bottom: 8px;
+    }
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 0.88rem;
+      color: var(--ink);
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    .card-checklist {
+      list-style: none;
+      font-size: 0.78rem;
+      color: var(--ink);
+      background: #fdfafd;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #f0e6f0;
+      margin-bottom: 20px;
+    }
+    .card-checklist li {
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-checklist li:last-child { margin-bottom: 0; }
+    .card-checklist svg {
+      color: #059669;
+      flex-shrink: 0;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--pink);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 13px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+    .btn:hover {
+      background: #97086a;
+    }
+    footer {
+      margin-top: 48px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--ink);
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">Viraj IT Kandivali West</span>
+      <h1>All Client Wireframes Directory</h1>
+      <p class="lead">Select any wireframe below to review pages updated strictly according to all instructions (high-contrast dark black typography #0f0e17, 18px base size, 6-field laptop cards, real customer photos &amp; reviews, and corrected store address).</p>
+    </header>
+
+    <div class="grid">
+      <!-- 1. Homepage -->
+      <article class="card">
+        <div>
+          <span class="card-num">PAGE 01</span>
+          <h2>Homepage Wireframe</h2>
+          <p>8 refurbished laptops (4×2 grid) with strictly 6 fields, 6 verified customer reviews with photo avatars, 4 handover photos, and embedded Google Map.</p>
+          <ul class="card-checklist">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 4×2 Laptop Grid (Strictly 6 Fields)</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Genuine Customer Handover Photos</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Google Map &amp; Direct Review Link</li>
+          </ul>
+        </div>
+        <a class="btn" href="Homepage%20Wireframes_virajIT/homepage-wireframe/index.html">Open Homepage Wireframe ↗</a>
+      </article>
+
+      <!-- 2. Laptop Brands -->
+      <article class="card">
+        <div>
+          <span class="card-num">PAGE 02</span>
+          <h2>Laptop Brands (New)</h2>
+          <p>Four official brand partner credentials (MSI Royal, Epson Certified, DELL Loyalty, Acer Dealer), hero strip removed, and Why Buy mom &amp; son photo fully visible without clipping.</p>
+          <ul class="card-checklist">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Authorised Partner Credentials &amp; Logos</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Mom &amp; Son Gaming Laptop Photo (Full Headroom)</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> High Contrast Dark Black Typography</li>
+          </ul>
+        </div>
+        <a class="btn" href="Laptop-brands%20Wireframe%20(new%20laptops)_virajit/laptop-brands-wireframe/index.html">Open Laptop Brands Wireframe ↗</a>
+      </article>
+
+      <!-- 3. Laptop Repair -->
+      <article class="card">
+        <div>
+          <span class="card-num">PAGE 03</span>
+          <h2>Laptop Repair Store</h2>
+          <p>Includes workshop technician inspection photos, chip-level motherboard diagnostics, and 3 case study photos (fan cooling, screen/hinge, SSD/RAM upgrade).</p>
+          <ul class="card-checklist">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Technician Motherboard Inspection Photo</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 3 Documented Repair Case Study Photos</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Correct Kandivali West Store Address</li>
+          </ul>
+        </div>
+        <a class="btn" href="Laptop%20repair%20Wireframe_virajit/laptop-repair-wireframe/index.html">Open Laptop Repair Wireframe ↗</a>
+      </article>
+
+      <!-- 4. Visit Store -->
+      <article class="card">
+        <div>
+          <span class="card-num">PAGE 04</span>
+          <h2>Visit Store Page</h2>
+          <p>Correct store address with 'Shanti lal,' removed, real storefront/interior photos, Google Reviews from Keshav Lad &amp; Karan K with authentic photo avatars.</p>
+          <ul class="card-checklist">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Corrected Address (Without 'Shanti lal,')</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Keshav Lad &amp; Karan K Photo Avatars</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Google Maps Embed &amp; Directions</li>
+          </ul>
+        </div>
+        <a class="btn" href="Visit%20store%20Wireframes_virajIT/visit-store-wireframe/index.html">Open Visit Store Wireframe ↗</a>
+      </article>
+
+      <!-- 5. Refurbished Catalogue -->
+      <article class="card">
+        <div>
+          <span class="card-num">PAGE 05</span>
+          <h2>Refurbished Catalogue</h2>
+          <p>Live inventory filtering, strictly 6-field laptop cards, actual reference device photo, and product detail view with 3 angles and similar model recommendations.</p>
+          <ul class="card-checklist">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Modern 6-Field Card Layout Across Grid</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Authentic Reference Unit Photo</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Instant WhatsApp Enquiry Pre-filled</li>
+          </ul>
+        </div>
+        <a class="btn" href="Refurbished%20Laptops%20Wireframes_virajit/refurbished-catalogue-wireframe/index.html">Open Refurbished Catalogue ↗</a>
+      </article>
+
+      <!-- 6. Laptop on Rent -->
+      <article class="card">
+        <div>
+          <span class="card-num">PAGE 06</span>
+          <h2>Laptop On Rent</h2>
+          <p>Flexible short &amp; long-term laptop rental plans, commercial &amp; student use cases, instant deposit terms, and high-contrast dark black typography.</p>
+          <ul class="card-checklist">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Rental Hero Visual &amp; Instant Quote Form</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 18px Base Font Size &amp; #0f0e17 Dark Text</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> WhatsApp &amp; Call Direct Actions</li>
+          </ul>
+        </div>
+        <a class="btn" href="Laptop%20on%20rent%20Wireframe_virajit/laptop-rent-wireframe/index.html">Open Laptop On Rent Wireframe ↗</a>
+      </article>
+    </div>
+
+    <footer>
+      Viraj IT Kandivali West · Wireframes &amp; Live Site Review Server · Port 8080 (Wireframes) &amp; Port 3000 (Live Next.js Site)
+    </footer>
+  </div>
+</body>
+</html>

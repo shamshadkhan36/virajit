@@ -16,6 +16,9 @@
 # archives & bundles
 *.tar.gz
 app-deploy.tar.gz
+*.zip
+Wireframes for VirajIT_Website_23-Oct-2026-20261030T144642Z-1-001/
+~$*
 
 # misc
 .DS_Store

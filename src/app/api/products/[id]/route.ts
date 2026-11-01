@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { getProductStockStatus } from "@/lib/stock-engine";
 import { FORMATTED_PRODUCTS } from "@/lib/catalogue-data";
 
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error(`Operation timed out after ${ms}ms`)), ms)
+    ),
+  ]);
+}
+
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -12,9 +21,9 @@ export async function GET(
     
     let product: any = null;
     try {
-      product = await getProductStockStatus(params.id, sessionToken);
+      product = await withTimeout(getProductStockStatus(params.id, sessionToken), 2000);
     } catch (e) {
-      console.warn("Stock status lookup warning:", e);
+      console.warn("Stock status lookup timed out or failed:", e);
     }
 
     if (!product) {

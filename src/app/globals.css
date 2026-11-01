@@ -4,9 +4,14 @@
 
 :root {
   --background: #fbf8fc;
-  --foreground: #111827;
+  --foreground: #0f0e17;
   --brand-pink: #d6298b;
   --brand-purple: #4c1d5f;
+}
+
+html {
+  font-size: 18px;
+  scroll-behavior: smooth;
 }
 
 body {

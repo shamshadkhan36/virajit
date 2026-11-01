@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Product, BlogPost } from "@/types";
+import { FORMATTED_PRODUCTS } from "@/lib/catalogue-data";
 import { ProductCard } from "@/components/store/ProductCard";
 import { ProductModal } from "@/components/store/ProductModal";
 import { useStockLock } from "@/context/LockContext";
@@ -32,68 +33,90 @@ import {
   IndianRupee,
 } from "lucide-react";
 
-const GOOGLE_REVIEWS = [
+interface ReviewItem {
+  name: string;
+  avatar?: string | null;
+  initial: string;
+  bg: string;
+  badge: string;
+  time: string;
+  isNew?: boolean;
+  text: string;
+}
+
+const GOOGLE_REVIEWS: ReviewItem[] = [
   {
-    name: "Sumit Saxena",
-    time: "1 year ago",
-    initial: "S",
-    bg: "bg-emerald-700",
-    text: "Myself Sumit and working in Bluedart purchased the laptop for my work and it is working flawless so happy with Viraj Infotech Kandivali store service and guidance.",
-  },
-  {
-    name: "Areeba Asim",
-    time: "1 year ago",
-    initial: "A",
-    bg: "bg-indigo-600",
-    text: "I had a great experience with Viraj Infotech. The laptop performs smoothly, has excellent battery life, and the team helped me pick the best Dell Latitude within my budget.",
-  },
-  {
-    name: "YAHYA",
-    time: "1 year ago",
-    initial: "Y",
-    bg: "bg-slate-800",
-    text: "I have purchased many laptops (for me as well as for my friends) from VirajIT and they are always good and reliable. Best refurbished laptop store in Mumbai!",
-  },
-  {
-    name: "Rohan Kulkarni",
-    time: "6 months ago",
-    initial: "R",
-    bg: "bg-amber-600",
-    text: "Bought a Dell Latitude 7420 Touch Screen from their Kandivali West store. Condition is literally like brand new and saved almost 45% compared to new price.",
-  },
-  {
-    name: "Priya Nair",
-    time: "3 months ago",
+    name: "Praful Kothari",
+    avatar: "/reviews/praful.png",
     initial: "P",
-    bg: "bg-rose-600",
-    text: "Very transparent pricing, genuine warranty included, and they also gave free bag and wireless mouse. Highly recommend visiting their Kandivali store.",
+    bg: "bg-amber-600",
+    badge: "Local Guide · 21 reviews",
+    time: "1 week ago",
+    isNew: true,
+    text: "Great experience here. My laptop had a power issue, but they repaired it within the same day. Fast turnaround time and very professional service. The team diagnosed the issue quickly and fixed it at a very reasonable price. Highly recommended!",
+  },
+  {
+    name: "Ram Manohar",
+    avatar: "/reviews/ram.png",
+    initial: "R",
+    bg: "bg-blue-600",
+    badge: "1 review · 0 photos",
+    time: "5 weeks ago",
+    isNew: false,
+    text: "I recently got my laptop repaired at Virajit Mumbai in Kandivali, and I had a very good experience. The staff was professional, polite, and explained the issue clearly. The repair was done properly and my laptop is working perfectly now. Overall, I’m happy with their service and would definitely recommend them for laptop repairs.",
+  },
+  {
+    name: "Kalpana",
+    avatar: "/reviews/kalpana.png",
+    initial: "K",
+    bg: "bg-purple-700",
+    badge: "1 review · 0 photos",
+    time: "1 week ago",
+    isNew: true,
+    text: "“Excellent long-term laptop rental service from Viraj Infotech!” Reliable Performance, Instant Deposit Return, Highly Trustworthy. I have been taking a laptop on rent from them for the last 1 year. It has been incredibly convenient and saved me a lot of money. The machine was clean, fast, and exactly matched the specifications I requested. Thanks to Vatsal sir for the smooth support. I highly recommend their rental service!",
+  },
+  {
+    name: "Sameer Duseja",
+    avatar: "/reviews/sameer.png",
+    initial: "S",
+    bg: "bg-slate-800",
+    badge: "6 reviews · 0 photos",
+    time: "1 week ago",
+    isNew: true,
+    text: "Very efficient service and at a very reasonable price. Mr Vatsal Shah is very knowledgeable and helpful. He put in great efforts to fix my system and at a fair price. I am fully satisfied with VirajIT",
+  },
+  {
+    name: "Raghavendra Patil",
+    avatar: "/reviews/raghavendra.png",
+    initial: "R",
+    bg: "bg-emerald-700",
+    badge: "2 reviews · 0 photos",
+    time: "5 weeks ago",
+    isNew: false,
+    text: "Best service no doubt reasonably priced. I came for Asus laptop regarding battery ssd upgrade fabrication adapter all things and service are excellent. Will definitely recommend 👍",
   },
 ];
 
 const CUSTOMER_GALLERY = [
   {
-    title: "Dell Latitude 7420 Handover",
-    caption: "Happy customer at our Kandivali West store with free accessories",
-    image:
-      "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=800&q=80",
+    title: "Customer with 3-Year Warranty Laptop",
+    caption: "Customer purchased Refurbished Laptop with 3 Years Warranty from VirajIT Kandivali",
+    image: "/customer-photos/customer-1-3yr-warranty.jpeg",
   },
   {
-    title: "Student Laptop Upgrade",
-    caption: "Dell Latitude 7480 picked up for college & coding under ₹25,000",
-    image:
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+    title: "Happy Customer Handover at Store",
+    caption: "Refurbished laptop handover with 40-point quality check and free accessories",
+    image: "/customer-photos/customer-2-handover.jpeg",
   },
   {
-    title: "Corporate Startup Batch",
-    caption: "HP EliteBook series delivered across Mumbai for an expanding team",
-    image:
-      "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+    title: "Customer Travelled from Virar",
+    caption: "Customer travelled from Virar for Refurbished Laptop at VirajIT Kandivali",
+    image: "/customer-photos/customer-3-from-virar.jpeg",
   },
   {
-    title: "In-Store Live Testing",
-    caption: "Every customer gets a complete 40-point live demo before billing",
-    image:
-      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80",
+    title: "Student Laptop Delivery at Store",
+    caption: "Student receiving laptop for college and coding with warranty and support",
+    image: "/customer-photos/customer-4-student.jpeg",
   },
 ];
 
@@ -124,26 +147,33 @@ const VIDEOS_AND_SHORTS = [
 export default function HomePage() {
   const { sessionToken } = useStockLock();
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(FORMATTED_PRODUCTS);
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [selectedProductForModal, setSelectedProductForModal] = useState<Product | null>(null);
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>("ALL");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [reviewStartIndex, setReviewStartIndex] = useState(0);
   const [expandedReviews, setExpandedReviews] = useState<Record<number, boolean>>({});
 
   const loadProducts = async () => {
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3500);
+
       const url = sessionToken
         ? `/api/products?sessionToken=${encodeURIComponent(sessionToken)}`
         : "/api/products";
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.success) {
-        setProducts(data.products || []);
+      const res = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && Array.isArray(data.products) && data.products.length > 0) {
+          setProducts(data.products);
+        }
       }
     } catch (err) {
-      console.error("Error loading products:", err);
+      // Keep static catalogue if live fetch is unavailable or slow
     } finally {
       setIsLoading(false);
     }
@@ -184,13 +214,19 @@ export default function HomePage() {
   const sortedForPopular = [...priceRangeProducts].sort(
     (a, b) => (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0)
   );
-  const popularLaptops = sortedForPopular.slice(0, 8);
+  const popularLaptops =
+    sortedForPopular.length > 0
+      ? sortedForPopular.slice(0, 8)
+      : FORMATTED_PRODUCTS.slice(0, 8);
 
   // Premium Refurbished Laptops: Between 2 to 4 laptops (50k plus or premium in terms of configuration)
-  const premiumLaptops = products
+  const filteredPremium = products
     .filter((p) => p.isPremium || p.price >= 37000 || p.touchScreen === "Yes")
-    .sort((a, b) => b.price - a.price)
-    .slice(0, 4);
+    .sort((a, b) => b.price - a.price);
+  const premiumLaptops =
+    filteredPremium.length > 0
+      ? filteredPremium.slice(0, 4)
+      : FORMATTED_PRODUCTS.filter((p) => p.isPremium || p.price >= 37000 || p.touchScreen === "Yes").slice(0, 4);
 
   const visibleReviews = [
     GOOGLE_REVIEWS[reviewStartIndex % GOOGLE_REVIEWS.length],
@@ -211,12 +247,12 @@ export default function HomePage() {
             </span>
 
             {/* Replaced Premium laptops. Smarter prices. with Laptop First-Class. Price Budget-Wala. */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.06]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#0f0e17] tracking-tight leading-[1.06]">
               Laptop First-Class. <br />
               <span className="bg-gradient-to-r from-brand-700 via-brand-600 to-fuchsia-500 bg-clip-text text-transparent">Price Budget-Wala.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl font-normal">
+            <p className="text-lg sm:text-xl text-[#0f0e17] leading-relaxed max-w-xl font-medium">
               Professionally tested corporate refurbished laptops for work, study and business — backed by real warranty, free accessories, and our Kandivali West store support.
             </p>
 
@@ -234,7 +270,7 @@ export default function HomePage() {
                 href="https://wa.me/918928715729?text=Hi%20Viraj%20Infotech,%20I'm%20looking%20for%20a%20refurbished%20laptop"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3.5 rounded-xl bg-white hover:bg-cream-50 text-slate-900 border border-slate-300 text-sm font-bold shadow-sm transition-colors flex items-center gap-2"
+                className="px-6 py-3.5 rounded-xl bg-white hover:bg-cream-50 text-[#0f0e17] border border-slate-300 text-sm font-bold shadow-sm transition-colors flex items-center gap-2"
               >
                 <MessageCircle className="w-4 h-4 text-emerald-600 fill-emerald-600" />
                 <span>Chat on WhatsApp</span>
@@ -244,20 +280,20 @@ export default function HomePage() {
             {/* Stats Row */}
             <div className="flex flex-wrap items-center gap-6 sm:gap-8 pt-6 border-t border-cream-300/80">
               <div>
-                <div className="text-2xl font-black text-slate-900">20+ Yrs</div>
-                <div className="text-xs text-slate-500 font-medium">Two decades of legacy</div>
+                <div className="text-2xl sm:text-3xl font-black text-[#0f0e17]">20+ Yrs</div>
+                <div className="text-sm font-bold text-[#0f0e17]">Two decades of legacy</div>
               </div>
               <div className="h-8 w-px bg-cream-300" />
               <div>
-                <div className="text-2xl font-black text-slate-900">Up to 50%</div>
-                <div className="text-xs text-slate-500 font-medium">Savings on MRP</div>
+                <div className="text-2xl sm:text-3xl font-black text-[#0f0e17]">Up to 50%</div>
+                <div className="text-sm font-bold text-[#0f0e17]">Savings on MRP</div>
               </div>
               <div className="h-8 w-px bg-cream-300" />
               <div>
-                <div className="text-2xl font-black text-slate-900 flex items-center gap-0.5">
+                <div className="text-2xl sm:text-3xl font-black text-[#0f0e17] flex items-center gap-0.5">
                   4.9<span className="text-amber-500 text-lg">★</span>
                 </div>
-                <div className="text-xs text-slate-500 font-medium">Google Verified Rating</div>
+                <div className="text-sm font-bold text-[#0f0e17]">Google Verified Rating</div>
               </div>
             </div>
           </div>
@@ -283,19 +319,19 @@ export default function HomePage() {
 
             {/* Floating Top-Right Card: Starting from ₹21,990 */}
             <div className="absolute -top-2 right-2 z-20 px-4 py-2.5 rounded-xl bg-white shadow-xl border border-cream-200 text-right">
-              <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+              <div className="text-xs text-[#0f0e17] font-bold uppercase tracking-wider">
                 Starting from
               </div>
-              <div className="text-lg font-black text-slate-900 font-sans">₹21,990</div>
+              <div className="text-xl font-black text-[#0f0e17] font-sans">₹21,990</div>
             </div>
 
             {/* Floating Bottom-Left Card: Warranty Included on every laptop */}
             <div className="absolute -bottom-4 left-2 z-20 px-4 py-3 rounded-xl bg-white shadow-xl border border-cream-200 text-left space-y-0.5">
-              <div className="text-xs font-black text-slate-900 flex items-center gap-1.5">
+              <div className="text-sm font-black text-[#0f0e17] flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                 <span>Warranty Included</span>
               </div>
-              <div className="text-[11px] text-slate-500 font-semibold">
+              <div className="text-xs text-[#0f0e17] font-bold">
                 On every laptop
               </div>
             </div>
@@ -398,16 +434,16 @@ export default function HomePage() {
               />
             </div>
             <div>
-              <h3 className="text-2xl sm:text-3xl font-black tracking-tight">Under Rs.25,000</h3>
+              <h3 className="text-2xl sm:text-3xl font-black text-[#0f0e17] tracking-tight">Under Rs.25,000</h3>
               <p
-                className={`text-xs mt-1 ${
-                  selectedPriceRange === "UNDER_25K" ? "text-cream-100" : "text-slate-500"
+                className={`text-sm sm:text-base font-semibold mt-1.5 ${
+                  selectedPriceRange === "UNDER_25K" ? "text-cream-100" : "text-[#0f0e17]"
                 }`}
               >
                 Dell Latitude i5 6th Gen, 8GB RAM, 256GB SSD starting at ₹22,299
               </p>
             </div>
-            <div className="flex items-center justify-between pt-2 border-t border-current/10 text-xs font-extrabold">
+            <div className="flex items-center justify-between pt-2 border-t border-current/10 text-sm font-extrabold">
               <Link
                 href="/refurbished-laptops-under-rs-20000"
                 onClick={(e) => e.stopPropagation()}
@@ -428,12 +464,12 @@ export default function HomePage() {
             className={`cursor-pointer group p-6 rounded-3xl border transition-all flex flex-col justify-between gap-4 ${
               selectedPriceRange === "25K_40K"
                 ? "bg-brand-600 text-white border-brand-600 shadow-xl"
-                : "bg-white hover:bg-cream-50 text-slate-900 border-cream-300 shadow-sm hover:shadow-md"
+                : "bg-white hover:bg-cream-50 text-[#0f0e17] border-cream-300 shadow-sm hover:shadow-md"
             }`}
           >
             <div className="flex items-center justify-between">
               <span
-                className={`px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider ${
+                className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
                   selectedPriceRange === "25K_40K"
                     ? "bg-white/20 text-white"
                     : "bg-amber-50 text-amber-800 border border-amber-200"
@@ -448,18 +484,18 @@ export default function HomePage() {
               />
             </div>
             <div>
-              <h3 className="text-2xl sm:text-3xl font-black tracking-tight">
+              <h3 className="text-2xl sm:text-3xl font-black text-[#0f0e17] tracking-tight">
                 Rs.25,000 - Rs.40,000
               </h3>
               <p
-                className={`text-xs mt-1 ${
-                  selectedPriceRange === "25K_40K" ? "text-cream-100" : "text-slate-500"
+                className={`text-sm sm:text-base font-semibold mt-1.5 ${
+                  selectedPriceRange === "25K_40K" ? "text-cream-100" : "text-[#0f0e17]"
                 }`}
               >
                 Rs.25k - Rs.40k • 8th–11th Gen i5, HP EliteBook &amp; Dell Touch Models
               </p>
             </div>
-            <div className="flex items-center justify-between pt-2 border-t border-current/10 text-xs font-extrabold">
+            <div className="flex items-center justify-between pt-2 border-t border-current/10 text-sm font-extrabold">
               <Link
                 href="/refurbished-laptops-under-rs-30000"
                 onClick={(e) => e.stopPropagation()}
@@ -480,12 +516,12 @@ export default function HomePage() {
             className={`cursor-pointer group p-6 rounded-3xl border transition-all flex flex-col justify-between gap-4 ${
               selectedPriceRange === "ABOVE_40K"
                 ? "bg-brand-600 text-white border-brand-600 shadow-xl"
-                : "bg-white hover:bg-cream-50 text-slate-900 border-cream-300 shadow-sm hover:shadow-md"
+                : "bg-white hover:bg-cream-50 text-[#0f0e17] border-cream-300 shadow-sm hover:shadow-md"
             }`}
           >
             <div className="flex items-center justify-between">
               <span
-                className={`px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider ${
+                className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
                   selectedPriceRange === "ABOVE_40K"
                     ? "bg-white/20 text-white"
                     : "bg-purple-50 text-purple-800 border border-purple-200"
@@ -500,16 +536,16 @@ export default function HomePage() {
               />
             </div>
             <div>
-              <h3 className="text-2xl sm:text-3xl font-black tracking-tight">Above Rs.40,000</h3>
+              <h3 className="text-2xl sm:text-3xl font-black text-[#0f0e17] tracking-tight">Above Rs.40,000</h3>
               <p
-                className={`text-xs mt-1 ${
-                  selectedPriceRange === "ABOVE_40K" ? "text-cream-100" : "text-slate-500"
+                className={`text-sm sm:text-base font-semibold mt-1.5 ${
+                  selectedPriceRange === "ABOVE_40K" ? "text-cream-100" : "text-[#0f0e17]"
                 }`}
               >
                 Intel Core i7 11th &amp; 12th Gen, up to 32GB RAM &amp; FHD Touch Displays
               </p>
             </div>
-            <div className="flex items-center justify-between pt-2 border-t border-current/10 text-xs font-extrabold">
+            <div className="flex items-center justify-between pt-2 border-t border-current/10 text-sm font-extrabold">
               <Link
                 href="/refurbished-laptops-under-rs-40000"
                 onClick={(e) => e.stopPropagation()}
@@ -531,14 +567,14 @@ export default function HomePage() {
             <span className="text-xs font-black uppercase tracking-widest text-brand-600 block mb-1">
               TOP SELLING MODELS IN MUMBAI
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0f0e17] tracking-tight">
               Popular Refurbished Laptops
             </h2>
           </div>
 
           <Link
             href="/refurbished-laptops-catalogue"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-black shadow-sm transition-all self-start sm:self-auto"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs sm:text-sm font-black shadow-sm transition-all self-start sm:self-auto"
           >
             <span>View All Laptops ({products.length})</span>
             <ArrowRight className="w-4 h-4" />
@@ -546,9 +582,9 @@ export default function HomePage() {
         </div>
 
         {isLoading ? (
-          <div className="p-16 text-center text-slate-400">
+          <div className="p-16 text-center text-[#0f0e17]">
             <RefreshCw className="w-8 h-8 animate-spin mx-auto text-brand-600 mb-2" />
-            <p className="text-sm font-medium">Loading popular refurbished laptops...</p>
+            <p className="text-base font-bold text-[#0f0e17]">Loading popular refurbished laptops...</p>
           </div>
         ) : (
           <>
@@ -567,7 +603,7 @@ export default function HomePage() {
             <div className="text-center pt-4">
               <Link
                 href="/refurbished-laptops-catalogue"
-                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-slate-900 hover:bg-brand-600 text-white font-black text-sm shadow-lg transition-all transform hover:scale-[1.02]"
+                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-slate-900 hover:bg-brand-600 text-white font-black text-sm sm:text-base shadow-lg transition-all transform hover:scale-[1.02]"
               >
                 <Laptop className="w-4 h-4" />
                 <span>View All Refurbished Laptops Catalogue</span>
@@ -583,14 +619,14 @@ export default function HomePage() {
         <div className="p-6 sm:p-10 rounded-[32px] bg-gradient-to-br from-cream-200 via-cream-100 to-emerald-50 border border-cream-300 space-y-8 shadow-sm">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cream-300 pb-5">
             <div>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-900 text-pink-300 text-[11px] font-black uppercase tracking-wider mb-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-900 text-pink-300 text-xs font-black uppercase tracking-wider mb-2">
                 <Sparkles className="w-3.5 h-3.5" />
                 High-Spec Touch Screen &amp; Core i7 Series
               </span>
-              <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              <h2 className="text-2xl sm:text-4xl font-black text-[#0f0e17] tracking-tight">
                 Premium Refurbished Laptops
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+              <p className="text-sm sm:text-base text-[#0f0e17] font-semibold mt-1.5">
                 Flagship corporate ultrabooks with 11th &amp; 12th Gen processors, up to 32GB RAM, and Full HD Touch Screen displays.
               </p>
             </div>
@@ -686,16 +722,35 @@ export default function HomePage() {
 
       {/* 7. HAPPY CUSTOMERS (Google Reviews matching screenshot + Photo Gallery + Videos & Shorts) */}
       <section id="happy-customers" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        {/* 7A. Google Reviews Widget (Matching Reference Screenshot in Project Brief) */}
+        {/* 7A. Google Reviews Widget (Matching Reference Screenshot in Project Brief & docx_images) */}
         <div className="bg-white rounded-[32px] border border-cream-300 p-6 sm:p-10 shadow-sm space-y-8">
-          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Hear It From Our Happy Customers
-          </h2>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <span className="text-xs font-black uppercase tracking-widest text-brand-600 block mb-1">
+                07 / REAL CUSTOMERS. REAL EXPERIENCES.
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black text-[#0f0e17] tracking-tight">
+                Trusted by Customers Across Mumbai
+              </h2>
+              <p className="text-sm sm:text-base text-[#0f0e17] font-semibold pt-1">
+                See what customers have to say about buying laptops and visiting Viraj IT.
+              </p>
+            </div>
+            <a
+              href="https://g.page/r/Ca3LSSyVus64EAI/review"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-pink-50 hover:bg-pink-100 text-[#b30c7a] font-bold text-xs sm:text-sm border border-pink-200 transition-colors shrink-0"
+            >
+              <span>Write a Google Review</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Google Rating Summary Column */}
-            <div className="lg:col-span-3 text-center space-y-2 py-4">
-              <div className="text-xl font-black tracking-wide text-slate-900 uppercase">
+            <div className="lg:col-span-3 text-center space-y-2 py-4 bg-cream-50/80 rounded-2xl border border-cream-200 p-4">
+              <div className="text-xl font-black tracking-wide text-[#0f0e17] uppercase">
                 EXCELLENT
               </div>
               <div className="flex items-center justify-center gap-1 text-amber-400 text-2xl">
@@ -705,8 +760,8 @@ export default function HomePage() {
                 <span>★</span>
                 <span>★</span>
               </div>
-              <div className="text-xs text-slate-700 font-medium">
-                Based on <strong className="font-black text-slate-900">259 reviews</strong>
+              <div className="text-sm text-[#0f0e17] font-bold">
+                Based on <strong className="font-black text-[#0f0e17]">259+ reviews</strong>
               </div>
               {/* Google Wordmark */}
               <div className="pt-1 text-2xl font-black tracking-tight select-none">
@@ -716,6 +771,16 @@ export default function HomePage() {
                 <span className="text-[#4285F4]">g</span>
                 <span className="text-[#34A853]">l</span>
                 <span className="text-[#EA4335]">e</span>
+              </div>
+              <div className="pt-2">
+                <a
+                  href="https://g.page/r/Ca3LSSyVus64EAI/review"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-bold text-[#b30c7a] hover:underline"
+                >
+                  Rate Us on Google ↗
+                </a>
               </div>
             </div>
 
@@ -728,7 +793,7 @@ export default function HomePage() {
                   )
                 }
                 aria-label="Previous reviews"
-                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center text-slate-500 hover:text-slate-900 shrink-0 -mr-3 z-10"
+                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center text-[#0f0e17] hover:text-[#b30c7a] shrink-0 -mr-3 z-10"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -745,17 +810,32 @@ export default function HomePage() {
                         {/* Reviewer Header */}
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2.5">
-                            <div
-                              className={`w-10 h-10 rounded-full ${rev.bg} text-white font-bold text-sm flex items-center justify-center shrink-0`}
-                            >
-                              {rev.initial}
-                            </div>
-                            <div>
-                              <div className="text-sm font-extrabold text-slate-900 leading-tight">
-                                {rev.name}
+                            {rev.avatar ? (
+                              <Image
+                                src={rev.avatar}
+                                alt={rev.name}
+                                width={44}
+                                height={44}
+                                className="w-11 h-11 rounded-full object-cover shrink-0 border border-slate-200"
+                              />
+                            ) : (
+                              <div
+                                className={`w-11 h-11 rounded-full ${rev.bg} text-white font-bold text-base flex items-center justify-center shrink-0`}
+                              >
+                                {rev.initial}
                               </div>
-                              <div className="text-[11px] text-slate-400 font-medium">
-                                {rev.time}
+                            )}
+                            <div>
+                              <div className="text-base font-black text-[#0f0e17] leading-tight flex items-center gap-1.5">
+                                <span>{rev.name}</span>
+                                {rev.isNew && (
+                                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 border border-slate-300 text-slate-800 font-bold uppercase">
+                                    NEW
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-[11px] text-[#0f0e17] font-semibold line-clamp-1">
+                                {rev.badge} • {rev.time}
                               </div>
                             </div>
                           </div>
@@ -771,7 +851,7 @@ export default function HomePage() {
 
                         {/* Review Text */}
                         <p
-                          className={`text-xs text-slate-700 leading-relaxed ${
+                          className={`text-sm sm:text-base text-[#0f0e17] font-medium leading-relaxed ${
                             isExpanded ? "" : "line-clamp-4"
                           }`}
                         >
@@ -783,7 +863,7 @@ export default function HomePage() {
                         onClick={() =>
                           setExpandedReviews((prev) => ({ ...prev, [idx]: !prev[idx] }))
                         }
-                        className="text-xs text-slate-400 hover:text-slate-700 font-semibold text-left pt-1"
+                        className="text-xs font-bold text-[#b30c7a] hover:underline text-left pt-1"
                       >
                         {isExpanded ? "Show less" : "Read more"}
                       </button>
@@ -797,7 +877,7 @@ export default function HomePage() {
                   setReviewStartIndex((prev) => (prev + 1) % GOOGLE_REVIEWS.length)
                 }
                 aria-label="Next reviews"
-                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center text-slate-500 hover:text-slate-900 shrink-0 -ml-3 z-10"
+                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center text-[#0f0e17] hover:text-[#b30c7a] shrink-0 -ml-3 z-10"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -822,15 +902,15 @@ export default function HomePage() {
               {CUSTOMER_GALLERY.map((item, idx) => (
                 <div
                   key={idx}
-                  className="group relative h-52 rounded-2xl overflow-hidden border border-cream-300 bg-slate-900 shadow-sm"
+                  className="group relative aspect-[4/5] rounded-2xl overflow-hidden border border-cream-300 bg-slate-900 shadow-sm"
                 >
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"
+                    className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent" />
                   <div className="absolute bottom-3 left-4 right-4 text-white">
                     <div className="text-sm font-black">{item.title}</div>
                     <div className="text-[11px] text-slate-300 line-clamp-1">{item.caption}</div>
@@ -886,16 +966,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 8. VISIT THE STORE (Kandivali West location | Store photograph | Opening hours | Call | WhatsApp | Get Directions) */}
+      {/* 8. VISIT THE STORE (Kandivali West location | Real Store photograph | Opening hours | Call | WhatsApp | Google Map Link & Embedded Map) */}
       <section id="contact" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2">
         <div className="rounded-[32px] bg-white border border-cream-300 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12">
-          {/* Left Store Photograph */}
-          <div className="lg:col-span-5 relative min-h-[280px] sm:min-h-[360px] bg-forest-900">
+          {/* Left Real Store Photograph */}
+          <div className="lg:col-span-5 relative min-h-[300px] sm:min-h-[420px] bg-forest-900">
             <Image
-              src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=80"
-              alt="Viraj Infotech Kandivali West Store"
+              src="/customer-photos/store-interior.jpg"
+              alt="Viraj Infotech Kandivali West Store Interior"
               fill
-              className="object-cover opacity-80"
+              className="object-cover opacity-90"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6 text-white space-y-1">
@@ -909,14 +989,14 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right Location Details, Opening Hours & 3 Action Buttons */}
+          {/* Right Location Details, Opening Hours, Map & 3 Action Buttons */}
           <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <div>
                 <span className="text-xs font-black uppercase tracking-widest text-brand-600 block mb-1">
                   WALK IN &amp; TEST IN PERSON
                 </span>
-                <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+                <h2 className="text-2xl sm:text-4xl font-black text-[#0f0e17] tracking-tight">
                   Visit The Store
                 </h2>
               </div>
@@ -925,12 +1005,12 @@ export default function HomePage() {
                 {/* Kandivali West Location */}
                 <div className="p-4 rounded-2xl bg-cream-100 border border-cream-300 flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-brand-600 shrink-0 mt-0.5" />
-                  <div className="text-xs space-y-1">
-                    <div className="font-black text-slate-900 uppercase tracking-wider">
+                  <div className="text-sm space-y-1">
+                    <div className="font-black text-[#0f0e17] uppercase tracking-wider text-xs">
                       Kandivali West Location
                     </div>
-                    <p className="text-slate-600 leading-relaxed">
-                      Viraj Infotech, Shop No. 4, Near Kandivali Railway Station, S.V. Road, Kandivali West, Mumbai – 400067
+                    <p className="text-[#0f0e17] leading-relaxed font-semibold">
+                      Shop no 31, Ground Floor, Shreeji Darshan Building, Shantilal Modi Road, Near Bata Showroom, Kandivali, Bhagat Colony, Kandivali West, Mumbai, Maharashtra 400067.
                     </p>
                   </div>
                 </div>
@@ -938,17 +1018,30 @@ export default function HomePage() {
                 {/* Opening Hours */}
                 <div className="p-4 rounded-2xl bg-cream-100 border border-cream-300 flex items-start gap-3">
                   <Clock className="w-5 h-5 text-brand-600 shrink-0 mt-0.5" />
-                  <div className="text-xs space-y-1">
-                    <div className="font-black text-slate-900 uppercase tracking-wider">
+                  <div className="text-sm space-y-1">
+                    <div className="font-black text-[#0f0e17] uppercase tracking-wider text-xs">
                       Opening Hours
                     </div>
-                    <p className="text-slate-600 leading-relaxed">
+                    <p className="text-[#0f0e17] leading-relaxed font-semibold">
                       <strong>Mon – Sat:</strong> 10:00 AM – 8:30 PM
                       <br />
                       <strong>Sunday:</strong> 11:00 AM – 6:00 PM
                     </p>
                   </div>
                 </div>
+              </div>
+
+              {/* Embedded Google Map Per Instructions */}
+              <div className="w-full rounded-2xl overflow-hidden border border-cream-300 shadow-sm mt-2">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.8641568220833!2d72.84362103670237!3d19.201134708472352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b7625f004dc9%3A0xb8ceba952c49cbad!2sVirajIT%20Mumbai%20%7C%20Laptop%20Repair%20and%20Refurbished%20Laptop%20Store!5e0!3m2!1sen!2sin!4v1792837979716!5m2!1sen!2sin"
+                  width="100%"
+                  height="220"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
               </div>
             </div>
 
@@ -973,7 +1066,7 @@ export default function HomePage() {
               </a>
 
               <a
-                href="https://share.google/SCAKjT9NThGEm3CPB"
+                href="https://maps.app.goo.gl/Ct4ewUbax8xj9UaB8"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="py-3.5 px-5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all"

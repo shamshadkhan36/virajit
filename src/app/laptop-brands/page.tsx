@@ -321,12 +321,14 @@ export default function LaptopBrandsPage() {
 
       {/* Section 03 / Why Buy from Viraj IT */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center py-4">
-        <div className="lg:col-span-6 relative h-[420px] sm:h-[480px] rounded-3xl overflow-hidden bg-cream-200 border border-cream-300 shadow-xl">
+        <div className="lg:col-span-6 rounded-3xl overflow-hidden border border-slate-200/90 shadow-xl bg-slate-50 flex items-center justify-center">
           <Image
             src="/brands/mom-son-gaming-laptop.png"
             alt="Customer purchasing MSI gaming laptop at Viraj IT Kandivali store"
-            fill
-            className="object-cover"
+            width={1344}
+            height={1792}
+            className="w-full h-auto object-cover object-top rounded-3xl"
+            priority
           />
         </div>
 
