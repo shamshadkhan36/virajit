@@ -25,11 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-cream-100 text-slate-900 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white antialiased">
+      <body className="bg-white text-[#0f0e17] min-h-screen flex flex-col antialiased">
         <LockProvider>
           <EnquiryModalProvider>
             <Navbar />
-            <main className="flex-1 pb-16">{children}</main>
+            <div className="flex-1">{children}</div>
             <StickyHoldBar />
             <CheckoutModal />
             <Footer />

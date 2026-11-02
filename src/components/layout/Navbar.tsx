@@ -1,188 +1,70 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useStockLock } from "@/context/LockContext";
-import {
-  Lock,
-  Heart,
-  Layers,
-  Menu,
-  X,
-  Wrench,
-  Laptop,
-  MapPin,
-  Sparkles,
-  Phone,
-} from "lucide-react";
 
 export const Navbar: React.FC = () => {
-  const { activeLocks, openCheckout, formatTime } = useStockLock();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const hasActiveLocks = activeLocks.length > 0;
-  const primaryLock = activeLocks[0];
 
   const navLinks = [
-    { label: "Laptops", href: "/refurbished-laptops-catalogue" },
-    { label: "Laptop Brands", href: "/laptop-brands" },
+    { label: "Refurbished Laptops", href: "/#shop" },
     { label: "Laptop Repair", href: "/laptop-repair-store-in-mumbai" },
     { label: "Laptop on Rent", href: "/laptop-on-rent-mumbai" },
+    { label: "Laptop Brands", href: "/laptop-brands" },
     { label: "Visit Store", href: "/virajit-laptop-store-kandivali-west" },
   ];
 
-  const marqueeItems = [
-    "Refurbished Laptop Store in Mumbai",
-    "Laptop Repair Store in Kandivali",
-    "Warranty Included on Every Laptop",
-    "Delivery Across Mumbai • Free Accessories Included",
-    "Starting from ₹21,990 • Laptop on Loan Available",
-  ];
-
   return (
-    <header className="sticky top-0 z-40 w-full">
-      {/* Top Moving Banner (Marquee Strip from Project Brief) */}
-      <div className="bg-forest-900 text-white overflow-hidden py-2 border-b border-forest-800 text-xs font-bold tracking-wide">
-        <div className="animate-marquee flex items-center gap-10 whitespace-nowrap">
-          {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, idx) => (
-            <Link
-              key={idx}
-              href={
-                item.includes("Repair")
-                  ? "/laptop-repair-store-in-mumbai"
-                  : "/refurbished-laptops-catalogue"
-              }
-              className="inline-flex items-center gap-2.5 hover:text-pink-300 transition-colors"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-pink-300 shrink-0" />
-              <span>{item}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
+    <header className="site-header">
+      <div className="shell header-inner">
+        {/* Brand */}
+        <Link className="brand" href="/" aria-label="Viraj IT home">
+          <span className="brand-symbol" aria-hidden="true">
+            V<span>·</span>
+          </span>
+          <span>
+            VIRAJ<span className="brand-pink">INFOTECH</span>
+          </span>
+        </Link>
 
-      {/* Main Header Navigation (Matching Nav Menu_Sitemap_VirajIT_Website.xlsx) */}
-      <div className="backdrop-blur-md bg-cream-50/95 border-b border-cream-300/80 text-slate-900 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          {/* LOGO - Viraj Infotech */}
-          <Link href="/" className="flex items-center group shrink-0 py-1">
-            <div className="relative h-12 w-36 sm:w-48 flex items-center transition-transform group-hover:scale-[1.02]">
-              <Image
-                src="/viraj-infotech-logo.png"
-                alt="Viraj Infotech"
-                width={240}
-                height={80}
-                priority
-                className="w-full h-full object-contain object-left"
-              />
-            </div>
-          </Link>
-
-          {/* Desktop Navigation Links: LOGO | Laptops | Laptop Repair | Laptop on Rent | Visit Store */}
-          <nav className="hidden md:flex items-center gap-7 text-sm font-bold text-slate-700">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`transition-colors py-1 border-b-2 ${
-                    isActive
-                      ? "text-brand-600 border-brand-600 font-black"
-                      : "border-transparent hover:text-brand-600"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-            <Link
-              href="/admin"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cream-200 hover:bg-cream-300 text-slate-800 text-xs font-bold transition-all border border-cream-300"
-            >
-              <Layers className="w-3.5 h-3.5 text-brand-600" />
-              Admin
-            </Link>
-          </nav>
-
-          {/* Right Actions: Call Store / Shortlist / Active Lock */}
-          <div className="flex items-center gap-2.5">
-            <a
-              href="tel:+918928715729"
-              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 text-xs font-extrabold transition-colors"
-            >
-              <Phone className="w-3.5 h-3.5" />
-              <span>Call Store</span>
-            </a>
-
-            {hasActiveLocks && primaryLock ? (
-              <button
-                onClick={() => primaryLock.product && openCheckout(primaryLock.product)}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/15 border border-amber-500/50 text-amber-900 hover:bg-amber-500/25 transition-all text-xs font-bold animate-pulse shadow-sm"
-              >
-                <Lock className="w-3.5 h-3.5 text-amber-700" />
-                <span>
-                  Reserved:{" "}
-                  <strong className="text-amber-800 font-mono">
-                    {formatTime(primaryLock.secondsRemaining)}
-                  </strong>
-                </span>
-              </button>
-            ) : (
+        {/* Desktop Nav */}
+        <nav className="desktop-nav" aria-label="Main navigation">
+          {navLinks.map((link) => {
+            const isCurrent =
+              pathname === link.href ||
+              (link.href === "/#shop" && (pathname === "/" || pathname === "/refurbished-laptops-catalogue"));
+            return (
               <Link
-                href="/refurbished-laptops-catalogue"
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-600 hover:bg-brand-500 text-white text-xs font-black shadow-sm transition-all"
-              >
-                <Laptop className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Shop Catalogue</span>
-                <span className="sm:hidden">Shop</span>
-              </Link>
-            )}
-
-            {/* Mobile Hamburger Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl bg-white border border-cream-300 text-slate-800"
-              aria-label="Toggle Menu"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Dropdown Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-b border-cream-300 px-4 py-4 space-y-2 shadow-xl">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-cream-100 hover:text-brand-600"
+                className={isCurrent ? "current" : ""}
+                aria-current={isCurrent ? "page" : undefined}
               >
                 {link.label}
               </Link>
-            ))}
-            <div className="pt-2 border-t border-cream-200 flex items-center justify-between px-4">
-              <Link
-                href="/admin"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-xs font-bold text-slate-600 flex items-center gap-1.5"
-              >
-                <Layers className="w-3.5 h-3.5 text-brand-600" />
-                Admin Studio
+            );
+          })}
+        </nav>
+
+        {/* Header CTA */}
+        <a className="header-cta" href="tel:+918928715729">
+          Call Store <span aria-hidden="true">↗</span>
+        </a>
+
+        {/* Mobile Menu */}
+        <details className="mobile-menu">
+          <summary aria-label="Open navigation">
+            Menu <span aria-hidden="true">☰</span>
+          </summary>
+          <nav aria-label="Mobile navigation">
+            {navLinks.map((link) => (
+              <Link key={link.label} href={link.href}>
+                {link.label}
               </Link>
-              <a
-                href="tel:+918928715729"
-                className="text-xs font-black text-brand-600 flex items-center gap-1"
-              >
-                <Phone className="w-3.5 h-3.5" /> +91 89287 15729
-              </a>
-            </div>
-          </div>
-        )}
+            ))}
+          </nav>
+        </details>
       </div>
     </header>
   );

@@ -1,1089 +1,813 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Product, BlogPost } from "@/types";
-import { FORMATTED_PRODUCTS } from "@/lib/catalogue-data";
-import { ProductCard } from "@/components/store/ProductCard";
-import { ProductModal } from "@/components/store/ProductModal";
-import { useStockLock } from "@/context/LockContext";
-import {
-  Laptop,
-  ShieldCheck,
-  Sparkles,
-  ArrowRight,
-  CheckCircle2,
-  RefreshCw,
-  Award,
-  MessageCircle,
-  Truck,
-  Wrench,
-  Gift,
-  MapPin,
-  Phone,
-  Clock,
-  Navigation,
-  Star,
-  ChevronLeft,
-  ChevronRight,
-  Play,
-  Store,
-  Users,
-  IndianRupee,
-} from "lucide-react";
+import { useEnquiryModal } from "@/context/EnquiryModalContext";
 
-interface ReviewItem {
-  name: string;
-  avatar?: string | null;
-  initial: string;
-  bg: string;
-  badge: string;
-  time: string;
-  isNew?: boolean;
-  text: string;
+interface LaptopItem {
+  id: string;
+  image: string;
+  title: string;
+  bubbles: string[];
+  currentPrice: string;
+  originalPrice: string;
+  discount: string;
+  category: "under-25k" | "25k-40k" | "above-40k";
 }
 
-const GOOGLE_REVIEWS: ReviewItem[] = [
+const LAPTOPS: LaptopItem[] = [
+  {
+    id: "dell-7480",
+    image: "/customer-photos/ref-laptop-card-ref.png",
+    title: 'Refurbished DELL Latitude 7480 | Intel Core i5 6th Gen | 14" FHD',
+    bubbles: ["Intel Core i5 6th Gen", "8GB RAM", "256GB SSD"],
+    currentPrice: "₹ 42,999",
+    originalPrice: "₹ 79,999",
+    discount: "46% off",
+    category: "above-40k",
+  },
+  {
+    id: "dell-5440",
+    image: "/customer-photos/ref-laptop-card-ref.png",
+    title: 'Dell Latitude 5440 | Intel i3 13th Gen | 14" FHD',
+    bubbles: ["Intel Core i3 13th Gen", "16GB RAM", "512GB SSD"],
+    currentPrice: "₹ 42,999",
+    originalPrice: "₹ 79,999",
+    discount: "46% off",
+    category: "above-40k",
+  },
+  {
+    id: "lenovo-t480",
+    image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=500&q=80",
+    title: 'Refurbished Lenovo ThinkPad T480 | Intel Core i5 8th Gen | 14" FHD',
+    bubbles: ["Intel Core i5 8th Gen", "16GB RAM", "512GB SSD"],
+    currentPrice: "₹ 24,999",
+    originalPrice: "₹ 55,000",
+    discount: "54% off",
+    category: "under-25k",
+  },
+  {
+    id: "hp-840-g5",
+    image: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=500&q=80",
+    title: 'Refurbished HP EliteBook 840 G5 | Intel Core i5 8th Gen | 14" FHD',
+    bubbles: ["Intel Core i5 8th Gen", "16GB RAM", "256GB SSD"],
+    currentPrice: "₹ 23,499",
+    originalPrice: "₹ 52,000",
+    discount: "55% off",
+    category: "under-25k",
+  },
+  {
+    id: "dell-7490",
+    image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=500&q=80",
+    title: 'Refurbished DELL Latitude 7490 | Intel Core i7 8th Gen | 14" FHD',
+    bubbles: ["Intel Core i7 8th Gen", "16GB RAM", "512GB SSD"],
+    currentPrice: "₹ 27,999",
+    originalPrice: "₹ 65,000",
+    discount: "57% off",
+    category: "25k-40k",
+  },
+  {
+    id: "lenovo-x1c6",
+    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=500&q=80",
+    title: 'Lenovo ThinkPad X1 Carbon Gen 6 | Intel Core i7 | 14" FHD',
+    bubbles: ["Intel Core i7 8th Gen", "16GB RAM", "512GB SSD"],
+    currentPrice: "₹ 34,999",
+    originalPrice: "₹ 85,000",
+    discount: "59% off",
+    category: "25k-40k",
+  },
+  {
+    id: "hp-440-g8",
+    image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=500&q=80",
+    title: 'Refurbished HP ProBook 440 G8 | Intel Core i5 11th Gen | 14" FHD',
+    bubbles: ["Intel Core i5 11th Gen", "16GB RAM", "512GB SSD"],
+    currentPrice: "₹ 36,999",
+    originalPrice: "₹ 72,000",
+    discount: "49% off",
+    category: "25k-40k",
+  },
+  {
+    id: "dell-3530",
+    image: "https://images.unsplash.com/photo-1588797384632-ca1132731a33?auto=format&fit=crop&w=500&q=80",
+    title: 'Dell Precision 3530 Workstation | Intel Core i7 | 15.6" FHD',
+    bubbles: ["Intel Core i7 8th Gen", "32GB RAM", "512GB SSD"],
+    currentPrice: "₹ 44,999",
+    originalPrice: "₹ 95,000",
+    discount: "53% off",
+    category: "above-40k",
+  },
+];
+
+const REVIEWS = [
   {
     name: "Praful Kothari",
     avatar: "/reviews/praful.png",
-    initial: "P",
-    bg: "bg-amber-600",
-    badge: "Local Guide · 21 reviews",
-    time: "1 week ago",
-    isNew: true,
-    text: "Great experience here. My laptop had a power issue, but they repaired it within the same day. Fast turnaround time and very professional service. The team diagnosed the issue quickly and fixed it at a very reasonable price. Highly recommended!",
+    meta: "Local Guide · 21 reviews · 1 week ago",
+    text: "“Great experience here. My laptop had a power issue, but they repaired it within the same day. Fast turnaround time and very professional service. The team diagnosed the issue quickly and fixed it at a very reasonable price. Highly recommended!”",
   },
   {
     name: "Ram Manohar",
     avatar: "/reviews/ram.png",
-    initial: "R",
-    bg: "bg-blue-600",
-    badge: "1 review · 0 photos",
-    time: "5 weeks ago",
-    isNew: false,
-    text: "I recently got my laptop repaired at Virajit Mumbai in Kandivali, and I had a very good experience. The staff was professional, polite, and explained the issue clearly. The repair was done properly and my laptop is working perfectly now. Overall, I’m happy with their service and would definitely recommend them for laptop repairs.",
+    meta: "5 weeks ago",
+    text: "“I recently got my laptop repaired at Virajit Mumbai in Kandivali, and I had a very good experience. The staff was professional, polite, and explained the issue clearly. The repair was done properly and my laptop is working perfectly now.”",
   },
   {
     name: "Kalpana",
     avatar: "/reviews/kalpana.png",
-    initial: "K",
-    bg: "bg-purple-700",
-    badge: "1 review · 0 photos",
-    time: "1 week ago",
-    isNew: true,
-    text: "“Excellent long-term laptop rental service from Viraj Infotech!” Reliable Performance, Instant Deposit Return, Highly Trustworthy. I have been taking a laptop on rent from them for the last 1 year. It has been incredibly convenient and saved me a lot of money. The machine was clean, fast, and exactly matched the specifications I requested. Thanks to Vatsal sir for the smooth support. I highly recommend their rental service!",
+    meta: "1 week ago",
+    text: "“Excellent long-term laptop rental service from Viraj Infotech! Reliable performance, instant deposit return, highly trustworthy. The machine was clean, fast, and exactly matched my specifications. Thanks to Vatsal sir for smooth support!”",
   },
   {
     name: "Sameer Duseja",
     avatar: "/reviews/sameer.png",
-    initial: "S",
-    bg: "bg-slate-800",
-    badge: "6 reviews · 0 photos",
-    time: "1 week ago",
-    isNew: true,
-    text: "Very efficient service and at a very reasonable price. Mr Vatsal Shah is very knowledgeable and helpful. He put in great efforts to fix my system and at a fair price. I am fully satisfied with VirajIT",
+    meta: "6 reviews · 1 week ago",
+    text: "“Very efficient service and at a very reasonable price. Mr Vatsal Shah is very knowledgeable and helpful. He put in great efforts to fix my system and at a fair price. I am fully satisfied with VirajIT.”",
   },
   {
     name: "Raghavendra Patil",
     avatar: "/reviews/raghavendra.png",
-    initial: "R",
-    bg: "bg-emerald-700",
-    badge: "2 reviews · 0 photos",
-    time: "5 weeks ago",
-    isNew: false,
-    text: "Best service no doubt reasonably priced. I came for Asus laptop regarding battery ssd upgrade fabrication adapter all things and service are excellent. Will definitely recommend 👍",
+    meta: "2 reviews · 5 weeks ago",
+    text: "“Best service no doubt reasonably priced. I came for Asus laptop regarding battery, SSD upgrade, fabrication, adapter - all things and service are excellent. Will definitely recommend 👍”",
+  },
+  {
+    name: "Keshav Lad",
+    avatar: "/reviews/keshav.png",
+    meta: "2 reviews · Recent",
+    text: "“We bought all hardware from Viraj Infotech for our school KES International. They keep all products ready and service is very fast. Highly recommended for laptops and accessories!”",
   },
 ];
 
-const CUSTOMER_GALLERY = [
+const HANDOVERS = [
   {
-    title: "Customer with 3-Year Warranty Laptop",
-    caption: "Customer purchased Refurbished Laptop with 3 Years Warranty from VirajIT Kandivali",
     image: "/customer-photos/customer-1-3yr-warranty.jpeg",
+    caption: "Customer with 3-Year Warranty Laptop",
+    alt: "Customer purchased Refurbished Laptop with 3 Years Warranty from VirajIT Kandivali",
   },
   {
-    title: "Happy Customer Handover at Store",
-    caption: "Refurbished laptop handover with 40-point quality check and free accessories",
     image: "/customer-photos/customer-2-handover.jpeg",
+    caption: "Happy Customer Handover at Store",
+    alt: "Customer with Refurbished Laptop at VirajIT Mumbai",
   },
   {
-    title: "Customer Travelled from Virar",
-    caption: "Customer travelled from Virar for Refurbished Laptop at VirajIT Kandivali",
     image: "/customer-photos/customer-3-from-virar.jpeg",
+    caption: "Customer Travelled from Virar",
+    alt: "Customer travelled from Virar for Refurbished Laptop at VirajIT Kandivali",
   },
   {
-    title: "Student Laptop Delivery at Store",
-    caption: "Student receiving laptop for college and coding with warranty and support",
     image: "/customer-photos/customer-4-student.jpeg",
-  },
-];
-
-const VIDEOS_AND_SHORTS = [
-  {
-    title: "Why Refurbished Business Laptops Beat New Budget Laptops",
-    duration: "0:58",
-    tag: "YouTube Short",
-    thumbnail:
-      "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    title: "Inside Viraj Infotech Kandivali Store • Stock Tour",
-    duration: "1:45",
-    tag: "Store Tour",
-    thumbnail:
-      "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    title: "Dell Latitude 7420 i7 Touch Screen Review & Price Reveal",
-    duration: "0:49",
-    tag: "YouTube Short",
-    thumbnail:
-      "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=800&q=80",
+    caption: "Student Laptop Delivery at Store",
+    alt: "Student receiving laptop at VirajIT",
   },
 ];
 
 export default function HomePage() {
-  const { sessionToken } = useStockLock();
+  const { openEnquiryModal } = useEnquiryModal();
+  const [activeFilter, setActiveFilter] = useState<string>("all");
 
-  const [products, setProducts] = useState<Product[]>(FORMATTED_PRODUCTS);
-  const [blogs, setBlogs] = useState<BlogPost[]>([]);
-  const [selectedProductForModal, setSelectedProductForModal] = useState<Product | null>(null);
-  const [selectedPriceRange, setSelectedPriceRange] = useState<string>("ALL");
-  const [isLoading, setIsLoading] = useState(false);
-  const [reviewStartIndex, setReviewStartIndex] = useState(0);
-  const [expandedReviews, setExpandedReviews] = useState<Record<number, boolean>>({});
-
-  const loadProducts = async () => {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3500);
-
-      const url = sessionToken
-        ? `/api/products?sessionToken=${encodeURIComponent(sessionToken)}`
-        : "/api/products";
-      const res = await fetch(url, { signal: controller.signal });
-      clearTimeout(timeoutId);
-
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success && Array.isArray(data.products) && data.products.length > 0) {
-          setProducts(data.products);
-        }
-      }
-    } catch (err) {
-      // Keep static catalogue if live fetch is unavailable or slow
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const loadBlogs = async () => {
-    try {
-      const res = await fetch("/api/blogs");
-      const data = await res.json();
-      if (data.success) {
-        setBlogs(data.blogs || []);
-      }
-    } catch (err) {
-      console.error("Error loading blogs:", err);
-    }
-  };
-
-  useEffect(() => {
-    loadProducts();
-    loadBlogs();
-
-    const interval = setInterval(() => {
-      loadProducts();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [sessionToken]);
-
-  // Price Range Filtering for Popular Section
-  const priceRangeProducts = products.filter((p) => {
-    if (selectedPriceRange === "UNDER_25K") return p.price <= 25000;
-    if (selectedPriceRange === "25K_40K") return p.price > 25000 && p.price <= 40000;
-    if (selectedPriceRange === "ABOVE_40K") return p.price > 40000;
-    return true;
-  });
-
-  // Popular Refurbished Laptops: Total 2 rows, Four laptops for each row (8 laptops total)
-  const sortedForPopular = [...priceRangeProducts].sort(
-    (a, b) => (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0)
-  );
-  const popularLaptops =
-    sortedForPopular.length > 0
-      ? sortedForPopular.slice(0, 8)
-      : FORMATTED_PRODUCTS.slice(0, 8);
-
-  // Premium Refurbished Laptops: Between 2 to 4 laptops (50k plus or premium in terms of configuration)
-  const filteredPremium = products
-    .filter((p) => p.isPremium || p.price >= 37000 || p.touchScreen === "Yes")
-    .sort((a, b) => b.price - a.price);
-  const premiumLaptops =
-    filteredPremium.length > 0
-      ? filteredPremium.slice(0, 4)
-      : FORMATTED_PRODUCTS.filter((p) => p.isPremium || p.price >= 37000 || p.touchScreen === "Yes").slice(0, 4);
-
-  const visibleReviews = [
-    GOOGLE_REVIEWS[reviewStartIndex % GOOGLE_REVIEWS.length],
-    GOOGLE_REVIEWS[(reviewStartIndex + 1) % GOOGLE_REVIEWS.length],
-    GOOGLE_REVIEWS[(reviewStartIndex + 2) % GOOGLE_REVIEWS.length],
-  ];
+  const filteredLaptops =
+    activeFilter === "all"
+      ? LAPTOPS
+      : LAPTOPS.filter((item) => item.category === activeFilter);
 
   return (
-    <div className="space-y-16">
-      {/* 1. HERO SECTION (Updated per Project Brief_VirajIT_Website.docx) */}
-      <section className="relative overflow-hidden pt-8 pb-14 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-cream-50 to-cream-100">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
-          {/* Left Hero Content */}
-          <div className="max-w-2xl space-y-6 text-left">
-            {/* Replaced MUMBAI'S TRUSTED LAPTOP STORE with MUMBAI’S TRUSTED REFURBISHED LAPTOP STORE */}
-            <span className="text-xs sm:text-sm font-black uppercase tracking-widest text-brand-600 block">
-              MUMBAI’S TRUSTED REFURBISHED LAPTOP STORE
-            </span>
+    <>
+      {/* SECTION 1: HERO */}
+      <section className="home-hero shell" aria-labelledby="home-title">
+        <div className="home-hero-copy">
+          <p className="eyebrow">
+            <span className="eyebrow-line"></span>Refurbished Laptops in Kandivali West
+          </p>
+          <h1 id="home-title">
+            Laptop First-Class.<br />
+            <em>Price Budget-Wala.</em>
+          </h1>
+          <p className="lead">
+            Professionally tested refurbished laptops for work, study and business. Explore top quality laptops with up to 3 years warranty, reliable chip-level repair services and personalised assistance at our Kandivali West store.
+          </p>
+          <div className="actions">
+            <a className="button primary" href="#shop">
+              Shop Refurbished Laptops <span aria-hidden="true">↗</span>
+            </a>
+            <Link className="button outline" href="/laptop-repair-store-in-mumbai">
+              Laptop Repair Services <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+          <p className="hero-trust">
+            Visit &amp; test in-store <span>·</span> 3 Years Warranty Available <span>·</span> Local team in Kandivali West
+          </p>
+        </div>
+        <div className="home-hero-art" role="img" aria-label="Refurbished Laptop Store banner">
+          <Image
+            src="/customer-photos/Home page banner image _ laptop.png"
+            alt="Viraj IT Refurbished Laptop Store Kandivali West"
+            width={720}
+            height={500}
+            priority
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </section>
 
-            {/* Replaced Premium laptops. Smarter prices. with Laptop First-Class. Price Budget-Wala. */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#0f0e17] tracking-tight leading-[1.06]">
-              Laptop First-Class. <br />
-              <span className="bg-gradient-to-r from-brand-700 via-brand-600 to-fuchsia-500 bg-clip-text text-transparent">Price Budget-Wala.</span>
-            </h1>
-
-            <p className="text-lg sm:text-xl text-[#0f0e17] leading-relaxed max-w-xl font-medium">
-              Professionally tested corporate refurbished laptops for work, study and business — backed by real warranty, free accessories, and our Kandivali West store support.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <Link
-                href="/refurbished-laptops-catalogue"
-                className="px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-black text-sm shadow-md transition-all flex items-center gap-2 transform hover:scale-[1.02]"
-              >
-                <span>Browse Refurbished Laptops</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-
-              <a
-                href="https://wa.me/918928715729?text=Hi%20Viraj%20Infotech,%20I'm%20looking%20for%20a%20refurbished%20laptop"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3.5 rounded-xl bg-white hover:bg-cream-50 text-[#0f0e17] border border-slate-300 text-sm font-bold shadow-sm transition-colors flex items-center gap-2"
-              >
-                <MessageCircle className="w-4 h-4 text-emerald-600 fill-emerald-600" />
-                <span>Chat on WhatsApp</span>
+      {/* SECTION 2: WHAT WE OFFER */}
+      <section className="section shell" id="offer" aria-labelledby="offer-title">
+        <div className="section-heading narrow">
+          <p className="eyebrow">01 / WHAT WE OFFER</p>
+          <h2 id="offer-title">Your Laptop Needs, Covered.</h2>
+          <p>
+            Looking to buy a certified refurbished laptop, get an existing one repaired, or explore new multi-brand laptops and printers? Find the right solution at Viraj IT.
+          </p>
+        </div>
+        <div className="offer-grid">
+          {/* Card 1: Refurbished Laptops */}
+          <article className="offer-card">
+            <div className="offer-visual refurbished">
+              <span className="visual-badge">CERTIFIED REFURBISHED</span>
+              <Image
+                src="/customer-photos/Copy of Customer purchased Refurbished Laptop with 3 Years Warranty from VirajIT Kandivali.jpeg"
+                alt="Certified refurbished laptops at Viraj IT"
+                width={400}
+                height={220}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="offer-body">
+              <h3>Refurbished Laptops</h3>
+              <p>
+                Professionally tested laptops for work, study and coding, with warranty coverage and unbeatable prices.
+              </p>
+              <a href="#shop">
+                Shop Laptops <span aria-hidden="true">↗</span>
               </a>
             </div>
+          </article>
 
-            {/* Stats Row */}
-            <div className="flex flex-wrap items-center gap-6 sm:gap-8 pt-6 border-t border-cream-300/80">
-              <div>
-                <div className="text-2xl sm:text-3xl font-black text-[#0f0e17]">20+ Yrs</div>
-                <div className="text-sm font-bold text-[#0f0e17]">Two decades of legacy</div>
-              </div>
-              <div className="h-8 w-px bg-cream-300" />
-              <div>
-                <div className="text-2xl sm:text-3xl font-black text-[#0f0e17]">Up to 50%</div>
-                <div className="text-sm font-bold text-[#0f0e17]">Savings on MRP</div>
-              </div>
-              <div className="h-8 w-px bg-cream-300" />
-              <div>
-                <div className="text-2xl sm:text-3xl font-black text-[#0f0e17] flex items-center gap-0.5">
-                  4.9<span className="text-amber-500 text-lg">★</span>
-                </div>
-                <div className="text-sm font-bold text-[#0f0e17]">Google Verified Rating</div>
-              </div>
+          {/* Card 2: Laptop Repair */}
+          <article className="offer-card">
+            <div className="offer-visual repair">
+              <span className="visual-badge">CHIP-LEVEL REPAIR</span>
+              <Image
+                src="/customer-photos/homepage_laptop repair_ sub section.png"
+                alt="Laptop repair technician at Viraj IT"
+                width={400}
+                height={220}
+                className="w-full h-full object-cover"
+              />
             </div>
-          </div>
-
-          {/* Right Hero Laptop Graphic with Orbs & Floating Badges */}
-          <div className="relative w-full max-w-lg flex items-center justify-center py-6">
-            {/* Soft brand-color glow */}
-            <div className="w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-fuchsia-200/70 blur-2xl absolute -z-0" />
-            <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-full bg-gradient-to-tr from-brand-300 to-violet-200 absolute -z-0" />
-
-            {/* Laptop Mockup Box: Replaced VI with Viraj Infotech & Removed Built for what's next. */}
-            <div className="relative z-10 w-full max-w-[420px] rounded-2xl bg-forest-900 border-8 border-slate-800 shadow-2xl p-10 text-center space-y-3">
-              <div className="px-5 py-4 rounded-2xl bg-white/95 border border-white/70 inline-flex items-center justify-center mx-auto shadow-inner">
-                <Image
-                  src="/viraj-infotech-logo.png"
-                  alt="Viraj Infotech"
-                  width={360}
-                  height={120}
-                  className="w-64 sm:w-72 h-auto object-contain"
-                />
-              </div>
+            <div className="offer-body">
+              <h3>Laptop Repair &amp; Upgrades</h3>
+              <p>
+                Startup issues, motherboard diagnosis, screen/hinge repair, and same-day SSD or RAM upgrades.
+              </p>
+              <Link href="/laptop-repair-store-in-mumbai">
+                Explore Repair Services <span aria-hidden="true">↗</span>
+              </Link>
             </div>
+          </article>
 
-            {/* Floating Top-Right Card: Starting from ₹21,990 */}
-            <div className="absolute -top-2 right-2 z-20 px-4 py-2.5 rounded-xl bg-white shadow-xl border border-cream-200 text-right">
-              <div className="text-xs text-[#0f0e17] font-bold uppercase tracking-wider">
-                Starting from
-              </div>
-              <div className="text-xl font-black text-[#0f0e17] font-sans">₹21,990</div>
+          {/* Card 3: Multi-Brand New */}
+          <article className="offer-card">
+            <div className="offer-visual brands">
+              <span className="visual-badge">AUTHORISED PARTNER</span>
+              <Image
+                src="/customer-photos/homepage_laptop & printer_sub section.png"
+                alt="New multi-brand laptops and printers"
+                width={400}
+                height={220}
+                className="w-full h-full object-cover"
+              />
             </div>
-
-            {/* Floating Bottom-Left Card: Warranty Included on every laptop */}
-            <div className="absolute -bottom-4 left-2 z-20 px-4 py-3 rounded-xl bg-white shadow-xl border border-cream-200 text-left space-y-0.5">
-              <div className="text-sm font-black text-[#0f0e17] flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>Warranty Included</span>
-              </div>
-              <div className="text-xs text-[#0f0e17] font-bold">
-                On every laptop
-              </div>
+            <div className="offer-body">
+              <h3>New Laptops &amp; Printers</h3>
+              <p>
+                Official dealer and authorised partner for Dell, Acer, MSI gaming laptops, and Epson ink tank printers.
+              </p>
+              <Link href="/laptop-brands">
+                Explore Brands <span aria-hidden="true">↗</span>
+              </Link>
             </div>
-          </div>
+          </article>
         </div>
       </section>
 
-      {/* 2. TRUST STRIP (Delivery across Mumbai | Laptop on Loan | Skilled Technicians | Free Accessories) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5 sm:p-6 rounded-3xl bg-forest-900 text-white shadow-xl border border-forest-800">
-          <div className="flex items-center gap-3.5 p-2">
-            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-pink-300 shrink-0">
-              <Truck className="w-6 h-6" />
-            </div>
+      {/* SECTION 3: SHOP BY BUDGET & 8 REFURBISHED LAPTOPS */}
+      <section className="shop-section" id="shop" aria-labelledby="shop-title">
+        <div className="shell">
+          <div className="section-heading split">
             <div>
-              <h3 className="text-sm font-black text-white">Delivery across Mumbai</h3>
-              <p className="text-xs text-slate-300">Fast &amp; safe doorstep delivery</p>
+              <p className="eyebrow">02 / QUALITY LAPTOPS. SMARTER BUDGETS.</p>
+              <h2 id="shop-title">Find Your Next Refurbished Laptop</h2>
             </div>
+            <p>
+              Explore professionally tested Grade-A refurbished business laptops with warranty, pre-loaded Windows, and original adapters.
+            </p>
           </div>
 
-          <div className="flex items-center gap-3.5 p-2">
-            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-pink-300 shrink-0">
-              <Laptop className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-sm font-black text-white">Laptop on Loan</h3>
-              <p className="text-xs text-slate-300">Backup laptop during service</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3.5 p-2">
-            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-pink-300 shrink-0">
-              <Wrench className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-sm font-black text-white">Skilled Technicians</h3>
-              <p className="text-xs text-slate-300">Expert chip-level QA &amp; support</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3.5 p-2">
-            <div className="w-12 h-12 rounded-2xl bg-forest-800 border border-white/10 flex items-center justify-center text-pink-300 shrink-0">
-              <Gift className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-sm font-black text-white">Free Accessories</h3>
-              <p className="text-xs text-slate-300">Complimentary bag &amp; mouse</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. SHOP BY PRICE RANGE (Under Rs.25,000 | Rs.25,000 - Rs.40,000 | Above Rs.40,000) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-          <div>
-            <span className="text-xs font-black uppercase tracking-widest text-brand-600 block mb-1">
-              FIND BY BUDGET
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              Shop By Price Range
-            </h2>
-          </div>
-          {selectedPriceRange !== "ALL" && (
-            <button
-              onClick={() => setSelectedPriceRange("ALL")}
-              className="text-xs font-black text-brand-600 hover:underline"
+          <div className="budget-grid" aria-label="Shop by budget">
+            <a
+              href="#shop"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveFilter(activeFilter === "under-25k" ? "all" : "under-25k");
+              }}
+              style={activeFilter === "under-25k" ? { borderColor: "#b30c7a", background: "#fff6fb" } : {}}
             >
-              Show All Price Ranges ✕
-            </button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Under Rs.25,000 */}
-          <div
-            onClick={() =>
-              setSelectedPriceRange(selectedPriceRange === "UNDER_25K" ? "ALL" : "UNDER_25K")
-            }
-            className={`cursor-pointer group p-6 rounded-3xl border transition-all flex flex-col justify-between gap-4 ${
-              selectedPriceRange === "UNDER_25K"
-                ? "bg-brand-600 text-white border-brand-600 shadow-xl"
-                : "bg-white hover:bg-cream-50 text-slate-900 border-cream-300 shadow-sm hover:shadow-md"
-            }`}
-          >
-            <div className="flex items-center justify-between">
-              <span
-                className={`px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider ${
-                  selectedPriceRange === "UNDER_25K"
-                    ? "bg-white/20 text-white"
-                    : "bg-brand-50 text-brand-700 border border-brand-200"
-                }`}
-              >
-                Student &amp; Office Savers
-              </span>
-              <IndianRupee
-                className={`w-5 h-5 ${
-                  selectedPriceRange === "UNDER_25K" ? "text-pink-200" : "text-brand-600"
-                }`}
-              />
-            </div>
-            <div>
-              <h3 className="text-2xl sm:text-3xl font-black text-[#0f0e17] tracking-tight">Under Rs.25,000</h3>
-              <p
-                className={`text-sm sm:text-base font-semibold mt-1.5 ${
-                  selectedPriceRange === "UNDER_25K" ? "text-cream-100" : "text-[#0f0e17]"
-                }`}
-              >
-                Dell Latitude i5 6th Gen, 8GB RAM, 256GB SSD starting at ₹22,299
-              </p>
-            </div>
-            <div className="flex items-center justify-between pt-2 border-t border-current/10 text-sm font-extrabold">
-              <Link
-                href="/refurbished-laptops-under-rs-20000"
-                onClick={(e) => e.stopPropagation()}
-                className="hover:underline flex items-center gap-1"
-              >
-                <span>Explore Under ₹25k</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-              <span>Filter Below</span>
-            </div>
-          </div>
-
-          {/* Rs.25,000 - Rs.40,000 (Rs.25k - Rs.40k) */}
-          <div
-            onClick={() =>
-              setSelectedPriceRange(selectedPriceRange === "25K_40K" ? "ALL" : "25K_40K")
-            }
-            className={`cursor-pointer group p-6 rounded-3xl border transition-all flex flex-col justify-between gap-4 ${
-              selectedPriceRange === "25K_40K"
-                ? "bg-brand-600 text-white border-brand-600 shadow-xl"
-                : "bg-white hover:bg-cream-50 text-[#0f0e17] border-cream-300 shadow-sm hover:shadow-md"
-            }`}
-          >
-            <div className="flex items-center justify-between">
-              <span
-                className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
-                  selectedPriceRange === "25K_40K"
-                    ? "bg-white/20 text-white"
-                    : "bg-amber-50 text-amber-800 border border-amber-200"
-                }`}
-              >
-                Most Popular Bracket
-              </span>
-              <IndianRupee
-                className={`w-5 h-5 ${
-                  selectedPriceRange === "25K_40K" ? "text-pink-200" : "text-brand-600"
-                }`}
-              />
-            </div>
-            <div>
-              <h3 className="text-2xl sm:text-3xl font-black text-[#0f0e17] tracking-tight">
-                Rs.25,000 - Rs.40,000
-              </h3>
-              <p
-                className={`text-sm sm:text-base font-semibold mt-1.5 ${
-                  selectedPriceRange === "25K_40K" ? "text-cream-100" : "text-[#0f0e17]"
-                }`}
-              >
-                Rs.25k - Rs.40k • 8th–11th Gen i5, HP EliteBook &amp; Dell Touch Models
-              </p>
-            </div>
-            <div className="flex items-center justify-between pt-2 border-t border-current/10 text-sm font-extrabold">
-              <Link
-                href="/refurbished-laptops-under-rs-30000"
-                onClick={(e) => e.stopPropagation()}
-                className="hover:underline flex items-center gap-1"
-              >
-                <span>Explore ₹25k – ₹40k</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-              <span>Filter Below</span>
-            </div>
-          </div>
-
-          {/* Above Rs.40,000 */}
-          <div
-            onClick={() =>
-              setSelectedPriceRange(selectedPriceRange === "ABOVE_40K" ? "ALL" : "ABOVE_40K")
-            }
-            className={`cursor-pointer group p-6 rounded-3xl border transition-all flex flex-col justify-between gap-4 ${
-              selectedPriceRange === "ABOVE_40K"
-                ? "bg-brand-600 text-white border-brand-600 shadow-xl"
-                : "bg-white hover:bg-cream-50 text-[#0f0e17] border-cream-300 shadow-sm hover:shadow-md"
-            }`}
-          >
-            <div className="flex items-center justify-between">
-              <span
-                className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
-                  selectedPriceRange === "ABOVE_40K"
-                    ? "bg-white/20 text-white"
-                    : "bg-purple-50 text-purple-800 border border-purple-200"
-                }`}
-              >
-                Power &amp; Touch Screen
-              </span>
-              <IndianRupee
-                className={`w-5 h-5 ${
-                  selectedPriceRange === "ABOVE_40K" ? "text-pink-200" : "text-brand-600"
-                }`}
-              />
-            </div>
-            <div>
-              <h3 className="text-2xl sm:text-3xl font-black text-[#0f0e17] tracking-tight">Above Rs.40,000</h3>
-              <p
-                className={`text-sm sm:text-base font-semibold mt-1.5 ${
-                  selectedPriceRange === "ABOVE_40K" ? "text-cream-100" : "text-[#0f0e17]"
-                }`}
-              >
-                Intel Core i7 11th &amp; 12th Gen, up to 32GB RAM &amp; FHD Touch Displays
-              </p>
-            </div>
-            <div className="flex items-center justify-between pt-2 border-t border-current/10 text-sm font-extrabold">
-              <Link
-                href="/refurbished-laptops-under-rs-40000"
-                onClick={(e) => e.stopPropagation()}
-                className="hover:underline flex items-center gap-1"
-              >
-                <span>Explore Above ₹40k</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-              <span>Filter Below</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. POPULAR REFURBISHED LAPTOPS (Total 2 rows. Three laptops for each row + View All Laptop Button) */}
-      <section id="catalog" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-cream-300 pb-5">
-          <div>
-            <span className="text-xs font-black uppercase tracking-widest text-brand-600 block mb-1">
-              TOP SELLING MODELS IN MUMBAI
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-[#0f0e17] tracking-tight">
-              Popular Refurbished Laptops
-            </h2>
-          </div>
-
-          <Link
-            href="/refurbished-laptops-catalogue"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs sm:text-sm font-black shadow-sm transition-all self-start sm:self-auto"
-          >
-            <span>View All Laptops ({products.length})</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-
-        {isLoading ? (
-          <div className="p-16 text-center text-[#0f0e17]">
-            <RefreshCw className="w-8 h-8 animate-spin mx-auto text-brand-600 mb-2" />
-            <p className="text-base font-bold text-[#0f0e17]">Loading popular refurbished laptops...</p>
-          </div>
-        ) : (
-          <>
-            {/* 2 Rows x 4 Laptops Grid (8 laptops total) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 refurbished-catalog-grid">
-              {popularLaptops.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onViewDetails={(p) => setSelectedProductForModal(p)}
-                />
-              ))}
-            </div>
-
-            {/* Bottom View All Laptops Button */}
-            <div className="text-center pt-4">
-              <Link
-                href="/refurbished-laptops-catalogue"
-                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-slate-900 hover:bg-brand-600 text-white font-black text-sm sm:text-base shadow-lg transition-all transform hover:scale-[1.02]"
-              >
-                <Laptop className="w-4 h-4" />
-                <span>View All Refurbished Laptops Catalogue</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </>
-        )}
-      </section>
-
-      {/* 5. PREMIUM REFURBISHED LAPTOPS (Between 2 to 4 laptops • 50k plus or premium in configuration) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-6 sm:p-10 rounded-[32px] bg-gradient-to-br from-cream-200 via-cream-100 to-emerald-50 border border-cream-300 space-y-8 shadow-sm">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-cream-300 pb-5">
-            <div>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-900 text-pink-300 text-xs font-black uppercase tracking-wider mb-2">
-                <Sparkles className="w-3.5 h-3.5" />
-                High-Spec Touch Screen &amp; Core i7 Series
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black text-[#0f0e17] tracking-tight">
-                Premium Refurbished Laptops
-              </h2>
-              <p className="text-sm sm:text-base text-[#0f0e17] font-semibold mt-1.5">
-                Flagship corporate ultrabooks with 11th &amp; 12th Gen processors, up to 32GB RAM, and Full HD Touch Screen displays.
-              </p>
-            </div>
-
-            <Link
-              href="/refurbished-laptops-catalogue?tier=premium"
-              className="text-xs font-black text-brand-700 hover:text-brand-900 flex items-center gap-1 shrink-0"
+              <span>01 / SHOP BY BUDGET</span>
+              <strong>Under ₹25,000</strong>
+              <small>{activeFilter === "under-25k" ? "Showing Under ₹25k (Click to reset)" : "Explore laptops ↗"}</small>
+            </a>
+            <a
+              href="#shop"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveFilter(activeFilter === "25k-40k" ? "all" : "25k-40k");
+              }}
+              style={activeFilter === "25k-40k" ? { borderColor: "#b30c7a", background: "#fff6fb" } : {}}
             >
-              <span>Explore All Premium Models</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>02 / SHOP BY BUDGET</span>
+              <strong>₹25,000 – ₹40,000</strong>
+              <small>{activeFilter === "25k-40k" ? "Showing ₹25k-₹40k (Click to reset)" : "Explore laptops ↗"}</small>
+            </a>
+            <a
+              href="#shop"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveFilter(activeFilter === "above-40k" ? "all" : "above-40k");
+              }}
+              style={activeFilter === "above-40k" ? { borderColor: "#b30c7a", background: "#fff6fb" } : {}}
+            >
+              <span>03 / SHOP BY BUDGET</span>
+              <strong>Above ₹40,000</strong>
+              <small>{activeFilter === "above-40k" ? "Showing Above ₹40k (Click to reset)" : "Explore laptops ↗"}</small>
+            </a>
+          </div>
+
+          <div className="products-heading">
+            <div>
+              <p className="eyebrow">CURRENTLY AVAILABLE</p>
+              <h3>Popular Refurbished Laptops</h3>
+            </div>
+            <Link className="text-cta" href="/refurbished-laptops-catalogue">
+              View Full Live Catalogue <span aria-hidden="true">↗</span>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {premiumLaptops.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onViewDetails={(p) => setSelectedProductForModal(p)}
-              />
+          {/* 8 LAPTOPS: 4 PER ROW x 2 ROWS (STRICT FORMAT PER INSTRUCTION) */}
+          <div className="refurbished-catalog-grid">
+            {filteredLaptops.map((laptop) => (
+              <article key={laptop.id} className="laptop-card">
+                <div className="laptop-card-image">
+                  <Image
+                    src={laptop.image}
+                    alt={laptop.title}
+                    width={320}
+                    height={190}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="laptop-card-title">{laptop.title}</div>
+                <div className="laptop-card-bubbles">
+                  {laptop.bubbles.map((b, idx) => (
+                    <span key={idx} className="spec-bubble">
+                      {b}
+                    </span>
+                  ))}
+                </div>
+                <div className="laptop-card-price-row">
+                  <span className="price-current">{laptop.currentPrice}</span>
+                  <span className="price-original">{laptop.originalPrice}</span>
+                  <span className="price-discount">{laptop.discount}</span>
+                </div>
+                <div className="laptop-card-warranty">
+                  <span aria-hidden="true">✓</span> Warranty Included
+                </div>
+                <button
+                  type="button"
+                  className="laptop-card-btn"
+                  onClick={() =>
+                    openEnquiryModal({
+                      productName: `${laptop.title} (${laptop.currentPrice})`,
+                    })
+                  }
+                >
+                  View Details
+                </button>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 6. WHY VIRAJIT (Local Store | Two Decades of legacy | Rated 4.9 on Google | Authorised Partner MSI, DELL, EPSON, ACER) */}
-      <section id="why-us" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-14 rounded-[32px] bg-forest-900 text-white shadow-2xl space-y-10">
-          <div className="max-w-2xl space-y-2">
-            <span className="text-xs font-black uppercase tracking-widest text-pink-300 block">
-              THE VIRAJ INFOTECH ADVANTAGE
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-              Why Choose VirajIT?
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300">
-              Unlike anonymous online portals, Viraj Infotech is a real brick-and-mortar store in Mumbai with over 20 years of customer trust.
+      {/* SECTION 4: LAPTOP REPAIR SERVICES */}
+      <section className="section shell repair-section" id="repair" aria-labelledby="repair-title">
+        <div className="repair-photo" role="img" aria-label="Viraj IT Laptop Repair Technician">
+          <Image
+            src="/customer-photos/homepage-laptop repair vertical image.png"
+            alt="Viraj IT expert technician diagnosing laptop motherboard"
+            width={520}
+            height={600}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="repair-copy">
+          <p className="eyebrow">03 / LAPTOP REPAIR SERVICES</p>
+          <h2 id="repair-title">Laptop Giving You Trouble?</h2>
+          <p>
+            Laptop not turning on, overheating, shutting down or running sluggish? Our in-house certified technicians perform thorough chip-level diagnostics and same-day repairs.
+          </p>
+          <div className="repair-list">
+            <div>
+              <strong>Laptop Not Starting</strong>
+              <span>Power failures, blue-screen errors, and motherboard repair.</span>
+            </div>
+            <div>
+              <strong>Screen &amp; Hinge Repair</strong>
+              <span>Broken displays, cracked bezels, and loose hinges.</span>
+            </div>
+            <div>
+              <strong>Battery &amp; Charging Issues</strong>
+              <span>Original replacement batteries, adapters, and DC jack repair.</span>
+            </div>
+            <div>
+              <strong>Slow Laptop &amp; Overheating</strong>
+              <span>Thermal paste servicing, fan repair, SSD &amp; RAM speed upgrades.</span>
+            </div>
+          </div>
+          <div className="actions">
+            <a
+              className="button primary"
+              href="https://wa.me/918928715729?text=Hi%20Viraj%20IT%2C%20I%27d%20like%20to%20get%20my%20laptop%20checked.%20Please%20guide%20me%20on%20the%20next%20step."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Get Your Laptop Checked <span aria-hidden="true">↗</span>
+            </a>
+            <Link className="button outline" href="/laptop-repair-store-in-mumbai">
+              View Repair Services <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5: RENTAL SERVICES */}
+      <section className="rental-section" id="rent" aria-labelledby="rent-title">
+        <div className="shell rental-inner">
+          <div>
+            <p className="eyebrow">04 / LAPTOP RENTAL SERVICES</p>
+            <h2 id="rent-title">Need Laptops on Rent?</h2>
+            <p>
+              Explore flexible laptop rental options for startups, corporate teams, student training batches, and temporary events. Get pre-configured Intel Core i5/i7 machines with instant support.
+            </p>
+            <Link className="button primary" href="/laptop-on-rent-mumbai">
+              Enquire About Laptop Rentals <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+          <div className="rental-visual" role="img" aria-label="Business laptops on rent">
+            <Image
+              src="/rental/rental-hero.webp"
+              alt="Laptops on Rent in Mumbai"
+              width={540}
+              height={360}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 6: BRAND ASSOCIATION & PARTNERSHIPS */}
+      <section className="section shell brand-section" id="brands" aria-labelledby="brand-title">
+        <div className="section-heading split">
+          <div>
+            <p className="eyebrow">05 / LEADING TECHNOLOGY BRANDS</p>
+            <h2 id="brand-title">Trusted Brands. One Local Store.</h2>
+          </div>
+          <p>
+            Official dealer and authorised partner for leading laptop and printer brands. Buy brand new devices with official manufacturer warranty in Kandivali West.
+          </p>
+        </div>
+
+        <div className="logo-grid">
+          {/* DELL */}
+          <div>
+            <svg viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text
+                x="50%"
+                y="36"
+                fontFamily="'Space Grotesk', Arial, sans-serif"
+                fontWeight="900"
+                fontSize="36"
+                fill="#0076CE"
+                textAnchor="middle"
+                letterSpacing="-0.03em"
+              >
+                DELL
+              </text>
+            </svg>
+            <span>Authorised Loyalty Partner</span>
+          </div>
+          {/* ACER */}
+          <div>
+            <svg viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text
+                x="50%"
+                y="36"
+                fontFamily="'Space Grotesk', Arial, sans-serif"
+                fontWeight="800"
+                fontSize="36"
+                fill="#83B81A"
+                textAnchor="middle"
+                letterSpacing="-0.02em"
+              >
+                acer
+              </text>
+            </svg>
+            <span>Authorised Laptop Dealer</span>
+          </div>
+          {/* MSI */}
+          <div>
+            <svg viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(24, 6)">
+                <path d="M12 2C6 5 2 12 2 18C2 28 12 36 12 36C12 36 22 28 22 18C22 12 18 5 12 2Z" fill="#ED1C24" />
+                <text
+                  x="64"
+                  y="27"
+                  fontFamily="'Space Grotesk', Arial, sans-serif"
+                  fontWeight="900"
+                  fontStyle="italic"
+                  fontSize="32"
+                  fill="#111"
+                  textAnchor="middle"
+                >
+                  msi
+                </text>
+              </g>
+            </svg>
+            <span>Authorised Royal Partner</span>
+          </div>
+          {/* EPSON */}
+          <div>
+            <svg viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text
+                x="50%"
+                y="36"
+                fontFamily="'Space Grotesk', Arial, sans-serif"
+                fontWeight="900"
+                fontSize="34"
+                fill="#003399"
+                textAnchor="middle"
+                letterSpacing="-0.01em"
+              >
+                EPSON
+              </text>
+            </svg>
+            <span>Certified Channel Partner</span>
+          </div>
+        </div>
+        <p className="brand-note">
+          Official dealer and authorised partner for leading laptop and printer brands.
+        </p>
+        <Link className="text-cta" href="/laptop-brands">
+          Explore Laptop &amp; Printer Brands <span aria-hidden="true">↗</span>
+        </Link>
+      </section>
+
+      {/* SECTION 7: THE VIRAJ IT ADVANTAGE */}
+      <section className="trust-section" id="trust" aria-labelledby="trust-title">
+        <div className="shell">
+          <div className="section-heading narrow">
+            <p className="eyebrow">06 / THE VIRAJ IT ADVANTAGE</p>
+            <h2 id="trust-title">More Than Just a Laptop Store</h2>
+            <p>
+              From choosing a laptop to getting help after your purchase, Viraj IT combines product options with the convenience of a local store.
             </p>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Pillar 1: Local Store */}
-            <div className="p-6 rounded-2xl bg-forest-800/90 border border-white/10 space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-pink-300/15 text-pink-300 flex items-center justify-center">
-                <Store className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-black text-white">Local Store in Mumbai</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Walk into our Kandivali West store, inspect and test the exact laptop in person, and get instant face-to-face support whenever you need it.
-              </p>
+          <div className="trust-grid">
+            <div>
+              <span>01</span>
+              <h3>Visit &amp; Test In-Store</h3>
+              <p>Explore available laptops in person before deciding.</p>
             </div>
-
-            {/* Pillar 2: Two Decades of Legacy */}
-            <div className="p-6 rounded-2xl bg-forest-800/90 border border-white/10 space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-pink-300/15 text-pink-300 flex items-center justify-center">
-                <Award className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-black text-white">Two Decades of Legacy</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Serving Mumbai since over 20 years with honest advice, corporate-grade refurbished laptops, and expert chip-level repairs.
-              </p>
+            <div>
+              <span>02</span>
+              <h3>Brand Associations</h3>
+              <p>Official dealer and authorised partner for leading laptop and printer brands.</p>
             </div>
-
-            {/* Pillar 3: Rated 4.9 on Google */}
-            <div className="p-6 rounded-2xl bg-forest-800/90 border border-white/10 space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-pink-300/15 text-amber-400 flex items-center justify-center">
-                <Star className="w-6 h-6 fill-amber-400" />
-              </div>
-              <h3 className="text-lg font-black text-white">
-                Rated 4.9★ on Google
-              </h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Rated 4.9 on Google by hundreds of verified users across Mumbai for laptop quality, transparent pricing, and after-sales care.
-              </p>
+            <div>
+              <span>03</span>
+              <h3>Experienced Technical Team</h3>
+              <p>Ask for practical help with diagnosis, repairs and upgrades.</p>
             </div>
-
-            {/* Pillar 4: Authorised Partner */}
-            <div className="p-6 rounded-2xl bg-forest-800/90 border border-white/10 space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-pink-300/15 text-pink-300 flex items-center justify-center">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-black text-white">
-                Authorised Brand Partner
-              </h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Authorised Partner and Distributors of leading global brands including{" "}
-                <strong className="text-pink-300">MSI, DELL, EPSON, and ACER</strong>.
-              </p>
+            <div>
+              <span>04</span>
+              <h3>Local After-Sales Assistance</h3>
+              <p>Contact the Kandivali West team when you need support.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 7. HAPPY CUSTOMERS (Google Reviews matching screenshot + Photo Gallery + Videos & Shorts) */}
-      <section id="happy-customers" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        {/* 7A. Google Reviews Widget (Matching Reference Screenshot in Project Brief & docx_images) */}
-        <div className="bg-white rounded-[32px] border border-cream-300 p-6 sm:p-10 shadow-sm space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <span className="text-xs font-black uppercase tracking-widest text-brand-600 block mb-1">
-                07 / REAL CUSTOMERS. REAL EXPERIENCES.
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black text-[#0f0e17] tracking-tight">
-                Trusted by Customers Across Mumbai
-              </h2>
-              <p className="text-sm sm:text-base text-[#0f0e17] font-semibold pt-1">
-                See what customers have to say about buying laptops and visiting Viraj IT.
-              </p>
+      {/* SECTION 8: REAL CUSTOMER REVIEWS & HANDOVER PHOTOS */}
+      <section className="section shell customers-section" id="customers" aria-labelledby="customers-title">
+        <div className="section-heading split">
+          <div>
+            <p className="eyebrow">07 / REAL CUSTOMERS. REAL EXPERIENCES.</p>
+            <h2 id="customers-title">Trusted by Customers Across Mumbai</h2>
+          </div>
+          <p>See what customers have to say about buying laptops and visiting Viraj IT.</p>
+        </div>
+
+        <div className="review-module">
+          <div className="review-summary">
+            <div className="stars-row" aria-label="5 stars rating">
+              ★★★★★
             </div>
+            <strong>4.9 / 5.0</strong>
+            <span>Based on verified Google Reviews</span>
             <a
+              className="btn-g-review"
               href="https://g.page/r/Ca3LSSyVus64EAI/review"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-pink-50 hover:bg-pink-100 text-[#b30c7a] font-bold text-xs sm:text-sm border border-pink-200 transition-colors shrink-0"
             >
-              <span>Write a Google Review</span>
-              <ArrowRight className="w-4 h-4" />
+              Rate Us on Google ↗
             </a>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Google Rating Summary Column */}
-            <div className="lg:col-span-3 text-center space-y-2 py-4 bg-cream-50/80 rounded-2xl border border-cream-200 p-4">
-              <div className="text-xl font-black tracking-wide text-[#0f0e17] uppercase">
-                EXCELLENT
-              </div>
-              <div className="flex items-center justify-center gap-1 text-amber-400 text-2xl">
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-              </div>
-              <div className="text-sm text-[#0f0e17] font-bold">
-                Based on <strong className="font-black text-[#0f0e17]">259+ reviews</strong>
-              </div>
-              {/* Google Wordmark */}
-              <div className="pt-1 text-2xl font-black tracking-tight select-none">
-                <span className="text-[#4285F4]">G</span>
-                <span className="text-[#EA4335]">o</span>
-                <span className="text-[#FBBC05]">o</span>
-                <span className="text-[#4285F4]">g</span>
-                <span className="text-[#34A853]">l</span>
-                <span className="text-[#EA4335]">e</span>
-              </div>
-              <div className="pt-2">
-                <a
-                  href="https://g.page/r/Ca3LSSyVus64EAI/review"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-bold text-[#b30c7a] hover:underline"
-                >
-                  Rate Us on Google ↗
-                </a>
-              </div>
-            </div>
-
-            {/* Right 3 Review Cards with Carousel Arrows */}
-            <div className="lg:col-span-9 relative flex items-center">
-              <button
-                onClick={() =>
-                  setReviewStartIndex(
-                    (prev) => (prev - 1 + GOOGLE_REVIEWS.length) % GOOGLE_REVIEWS.length
-                  )
-                }
-                aria-label="Previous reviews"
-                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center text-[#0f0e17] hover:text-[#b30c7a] shrink-0 -mr-3 z-10"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full px-2">
-                {visibleReviews.map((rev, idx) => {
-                  const isExpanded = !!expandedReviews[idx];
-                  return (
-                    <div
-                      key={`${rev.name}-${idx}`}
-                      className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between space-y-3"
-                    >
-                      <div className="space-y-2.5">
-                        {/* Reviewer Header */}
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2.5">
-                            {rev.avatar ? (
-                              <Image
-                                src={rev.avatar}
-                                alt={rev.name}
-                                width={44}
-                                height={44}
-                                className="w-11 h-11 rounded-full object-cover shrink-0 border border-slate-200"
-                              />
-                            ) : (
-                              <div
-                                className={`w-11 h-11 rounded-full ${rev.bg} text-white font-bold text-base flex items-center justify-center shrink-0`}
-                              >
-                                {rev.initial}
-                              </div>
-                            )}
-                            <div>
-                              <div className="text-base font-black text-[#0f0e17] leading-tight flex items-center gap-1.5">
-                                <span>{rev.name}</span>
-                                {rev.isNew && (
-                                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 border border-slate-300 text-slate-800 font-bold uppercase">
-                                    NEW
-                                  </span>
-                                )}
-                              </div>
-                              <div className="text-[11px] text-[#0f0e17] font-semibold line-clamp-1">
-                                {rev.badge} • {rev.time}
-                              </div>
-                            </div>
-                          </div>
-                          {/* Google 'G' Icon */}
-                          <span className="text-lg font-black text-[#4285F4]">G</span>
-                        </div>
-
-                        {/* 5 Stars + Blue Verified Badge */}
-                        <div className="flex items-center gap-1">
-                          <div className="flex text-amber-400 text-sm">★★★★★</div>
-                          <CheckCircle2 className="w-4 h-4 text-blue-500 fill-blue-500 text-white" />
-                        </div>
-
-                        {/* Review Text */}
-                        <p
-                          className={`text-sm sm:text-base text-[#0f0e17] font-medium leading-relaxed ${
-                            isExpanded ? "" : "line-clamp-4"
-                          }`}
-                        >
-                          {rev.text}
-                        </p>
-                      </div>
-
-                      <button
-                        onClick={() =>
-                          setExpandedReviews((prev) => ({ ...prev, [idx]: !prev[idx] }))
-                        }
-                        className="text-xs font-bold text-[#b30c7a] hover:underline text-left pt-1"
-                      >
-                        {isExpanded ? "Show less" : "Read more"}
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <button
-                onClick={() =>
-                  setReviewStartIndex((prev) => (prev + 1) % GOOGLE_REVIEWS.length)
-                }
-                aria-label="Next reviews"
-                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center text-[#0f0e17] hover:text-[#b30c7a] shrink-0 -ml-3 z-10"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
+          <div className="review-cards-grid">
+            {REVIEWS.map((rev, idx) => (
+              <article key={idx} className="review-card">
+                <div className="review-card-header">
+                  <div className="review-avatar">
+                    <Image
+                      src={rev.avatar}
+                      alt={rev.name}
+                      width={44}
+                      height={44}
+                      className="review-avatar-img"
+                    />
+                  </div>
+                  <div>
+                    <div className="review-author">{rev.name}</div>
+                    <div className="review-meta">{rev.meta}</div>
+                  </div>
+                </div>
+                <div className="review-stars">★★★★★</div>
+                <p>{rev.text}</p>
+              </article>
+            ))}
           </div>
         </div>
 
-        {/* 7B. Photo Gallery of Customers & Videos and Shorts */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Customer Photo Gallery (7 cols) */}
-          <div className="lg:col-span-7 space-y-4">
-            <div>
-              <span className="text-xs font-black uppercase tracking-widest text-brand-600 block">
-                COMMUNITY &amp; STORE HANDOVERS
-              </span>
-              <h3 className="text-2xl font-black text-slate-900">
-                Photo Gallery of Happy Customers
-              </h3>
+        {/* CUSTOMER HANDOVER PHOTOGRAPHS */}
+        <div className="handover-row" aria-label="Customer purchase handovers at Viraj IT">
+          {HANDOVERS.map((h, idx) => (
+            <div key={idx} className="handover-card">
+              <Image
+                src={h.image}
+                alt={h.alt}
+                width={300}
+                height={375}
+                className="w-full h-full object-cover object-top"
+              />
+              <div className="handover-caption">{h.caption}</div>
             </div>
+          ))}
+        </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {CUSTOMER_GALLERY.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="group relative aspect-[4/5] rounded-2xl overflow-hidden border border-cream-300 bg-slate-900 shadow-sm"
-                >
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent" />
-                  <div className="absolute bottom-3 left-4 right-4 text-white">
-                    <div className="text-sm font-black">{item.title}</div>
-                    <div className="text-[11px] text-slate-300 line-clamp-1">{item.caption}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Videos and Shorts (5 cols) */}
-          <div className="lg:col-span-5 space-y-4">
-            <div>
-              <span className="text-xs font-black uppercase tracking-widest text-brand-600 block">
-                WATCH IN ACTION
-              </span>
-              <h3 className="text-2xl font-black text-slate-900">Videos &amp; Shorts</h3>
-            </div>
-
-            <div className="space-y-3">
-              {VIDEOS_AND_SHORTS.map((vid, idx) => (
-                <a
-                  key={idx}
-                  href="https://youtube.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-4 p-3 rounded-2xl bg-white border border-cream-300 hover:border-brand-600 shadow-sm transition-all"
-                >
-                  <div className="relative w-28 h-20 rounded-xl overflow-hidden bg-slate-900 shrink-0">
-                    <Image
-                      src={vid.thumbnail}
-                      alt={vid.title}
-                      fill
-                      className="object-cover opacity-80 group-hover:scale-105 transition-transform"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center shadow-md">
-                        <Play className="w-3.5 h-3.5 fill-white ml-0.5" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-y-1">
-                    <span className="inline-block px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200 text-[10px] font-black uppercase">
-                      {vid.tag} • {vid.duration}
-                    </span>
-                    <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 group-hover:text-brand-600 line-clamp-2">
-                      {vid.title}
-                    </h4>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
+        <div style={{ marginTop: "24px" }}>
+          <a
+            className="text-cta"
+            href="https://g.page/r/Ca3LSSyVus64EAI/review"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Read All Reviews on Google Reviews ↗
+          </a>
         </div>
       </section>
 
-      {/* 8. VISIT THE STORE (Kandivali West location | Real Store photograph | Opening hours | Call | WhatsApp | Google Map Link & Embedded Map) */}
-      <section id="contact" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2">
-        <div className="rounded-[32px] bg-white border border-cream-300 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12">
-          {/* Left Real Store Photograph */}
-          <div className="lg:col-span-5 relative min-h-[300px] sm:min-h-[420px] bg-forest-900">
-            <Image
-              src="/customer-photos/store-interior.jpg"
-              alt="Viraj Infotech Kandivali West Store Interior"
-              fill
-              className="object-cover opacity-90"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 text-white space-y-1">
-              <span className="px-3 py-1 rounded-full bg-pink-300 text-slate-950 text-[10px] font-black uppercase tracking-wider">
-                Experience In-Store
-              </span>
-              <h3 className="text-xl font-black pt-1">Viraj Infotech • Kandivali West</h3>
-              <p className="text-xs text-slate-300">
-                Try any laptop hands-on before you buy with our expert technicians.
-              </p>
-            </div>
-          </div>
+      {/* SECTION 9: VISIT VIRAJ IT */}
+      <section className="visit-section" id="visit" aria-labelledby="visit-title">
+        <div className="shell visit-grid">
+          <div>
+            <p className="eyebrow light">08 / VISIT VIRAJ IT</p>
+            <h2 id="visit-title">Your Local Laptop Store in Kandivali West</h2>
+            <p>
+              Visit Viraj IT to explore available refurbished laptops, buy authorized brand new models, or discuss your laptop repair requirements directly with our technicians.
+            </p>
 
-          {/* Right Location Details, Opening Hours, Map & 3 Action Buttons */}
-          <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-between space-y-6">
-            <div className="space-y-4">
-              <div>
-                <span className="text-xs font-black uppercase tracking-widest text-brand-600 block mb-1">
-                  WALK IN &amp; TEST IN PERSON
-                </span>
-                <h2 className="text-2xl sm:text-4xl font-black text-[#0f0e17] tracking-tight">
-                  Visit The Store
-                </h2>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                {/* Kandivali West Location */}
-                <div className="p-4 rounded-2xl bg-cream-100 border border-cream-300 flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-brand-600 shrink-0 mt-0.5" />
-                  <div className="text-sm space-y-1">
-                    <div className="font-black text-[#0f0e17] uppercase tracking-wider text-xs">
-                      Kandivali West Location
-                    </div>
-                    <p className="text-[#0f0e17] leading-relaxed font-semibold">
-                      Shop no 31, Ground Floor, Shreeji Darshan Building, Shantilal Modi Road, Near Bata Showroom, Kandivali, Bhagat Colony, Kandivali West, Mumbai, Maharashtra 400067.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Opening Hours */}
-                <div className="p-4 rounded-2xl bg-cream-100 border border-cream-300 flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-brand-600 shrink-0 mt-0.5" />
-                  <div className="text-sm space-y-1">
-                    <div className="font-black text-[#0f0e17] uppercase tracking-wider text-xs">
-                      Opening Hours
-                    </div>
-                    <p className="text-[#0f0e17] leading-relaxed font-semibold">
-                      <strong>Mon – Sat:</strong> 10:00 AM – 8:30 PM
-                      <br />
-                      <strong>Sunday:</strong> 11:00 AM – 6:00 PM
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Embedded Google Map Per Instructions */}
-              <div className="w-full rounded-2xl overflow-hidden border border-cream-300 shadow-sm mt-2">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.8641568220833!2d72.84362103670237!3d19.201134708472352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b7625f004dc9%3A0xb8ceba952c49cbad!2sVirajIT%20Mumbai%20%7C%20Laptop%20Repair%20and%20Refurbished%20Laptop%20Store!5e0!3m2!1sen!2sin!4v1792837979716!5m2!1sen!2sin"
-                  width="100%"
-                  height="220"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
-              </div>
+            <div className="visit-detail">
+              <span>STORE ADDRESS</span>
+              <strong>Viraj IT (Viraj Infotech)</strong>
+              <small>
+                Shop no 31, Ground Floor, Shreeji Darshan Building, Shantilal Modi Road, Near Bata Showroom, Kandivali, Bhagat Colony, Kandivali West, Mumbai, Maharashtra 400067.
+              </small>
             </div>
 
-            {/* Call Button | WhatsApp Button | Get Directions Button */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-              <a
-                href="tel:+918928715729"
-                className="py-3.5 px-5 rounded-2xl bg-brand-600 hover:bg-brand-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all"
-              >
-                <Phone className="w-4 h-4" />
-                <span>Call: +91 89287 15729</span>
-              </a>
+            <div className="visit-detail">
+              <span>PHONE &amp; WHATSAPP</span>
+              <strong>+91 89287 15729</strong>
+            </div>
 
-              <a
-                href="https://wa.me/918928715729?text=Hi%20Viraj%20Infotech,%20I%20would%20like%20to%20visit%20your%20Kandivali%20West%20store"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-3.5 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all"
-              >
-                <MessageCircle className="w-4 h-4 fill-white" />
-                <span>WhatsApp</span>
-              </a>
+            <div className="visit-detail">
+              <span>STORE TIMINGS</span>
+              <small>Mon–Sat: 10:00 AM – 8:30 PM &nbsp;|&nbsp; Sun: 11:00 AM – 6:00 PM</small>
+            </div>
 
+            <div className="actions">
               <a
+                className="button white"
                 href="https://maps.app.goo.gl/Ct4ewUbax8xj9UaB8"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-3.5 px-5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all"
               >
-                <Navigation className="w-4 h-4" />
-                <span>Get Directions</span>
+                Get Directions <span aria-hidden="true">↗</span>
+              </a>
+              <a className="button dark-outline" href="tel:+918928715729">
+                Call Store <span aria-hidden="true">↗</span>
               </a>
             </div>
+          </div>
+
+          {/* EMBEDDED GOOGLE MAP */}
+          <div className="map-placeholder">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.8641568220833!2d72.84362103670237!3d19.201134708472352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b7625f004dc9%3A0xb8ceba952c49cbad!2sVirajIT%20Mumbai%20%7C%20Laptop%20Repair%20and%20Refurbished%20Laptop%20Store!5e0!3m2!1sen!2sin!4v1792837979716!5m2!1sen!2sin"
+              width="100%"
+              height="400"
+              style={{ border: 0 }}
+              allowFullScreen={false}
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
           </div>
         </div>
       </section>
 
-      {/* Product Quick View Modal */}
-      <ProductModal
-        product={selectedProductForModal}
-        onClose={() => setSelectedProductForModal(null)}
-      />
-    </div>
+      {/* SECTION 10: FAQS */}
+      <section className="section faq shell" id="faq" aria-labelledby="faq-title">
+        <div className="section-heading narrow">
+          <p className="eyebrow">09 / GOOD TO KNOW</p>
+          <h2 id="faq-title">Frequently Asked Questions</h2>
+        </div>
+        <div className="faq-list">
+          <details>
+            <summary>Does Viraj IT sell refurbished laptops with a warranty?</summary>
+            <p>
+              Yes. Every refurbished laptop undergoes rigorous multi-point hardware testing and comes with included warranty (with extended warranty up to 3 years available). Each device includes original charger, bill, and test report.
+            </p>
+          </details>
+          <details>
+            <summary>Can I visit the store before buying a laptop?</summary>
+            <p>
+              Yes! We warmly invite you to visit our store at Kandivali West to test the laptop screen, battery backup, keyboard, and performance in person before deciding.
+            </p>
+          </details>
+          <details>
+            <summary>Which new laptop and printer brands are available?</summary>
+            <p>
+              Viraj IT is an official partner for Dell, Acer, and MSI gaming laptops, as well as Epson ink tank printers. All new products come with official brand warranty.
+            </p>
+          </details>
+          <details>
+            <summary>Does Viraj IT repair laptops from different brands?</summary>
+            <p>
+              Yes. Our in-house engineers diagnose and service laptops from Dell, HP, Lenovo, Asus, Acer, Apple MacBook, and MSI, covering screen replacement, motherboard chip-level repair, battery replacement, and SSD/RAM upgrades.
+            </p>
+          </details>
+          <details>
+            <summary>Are laptops available on rent?</summary>
+            <p>
+              Yes, we provide flexible corporate and personal laptop rentals for projects, teams, learning courses, and events.{" "}
+              <Link href="/laptop-on-rent-mumbai">Learn more about our rental options</Link>.
+            </p>
+          </details>
+          <details>
+            <summary>How can I check laptop availability or request a repair?</summary>
+            <p>
+              Call us directly at <a href="tel:+918928715729">+91 89287 15729</a> or{" "}
+              <a
+                href="https://wa.me/918928715729?text=Hi%20Viraj%20IT%2C%20I%27d%20like%20to%20ask%20about%20a%20laptop%20or%20repair."
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp our team
+              </a>{" "}
+              with your requirement.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      {/* Floating WhatsApp Us Button */}
+      <a
+        className="floating-wa"
+        href="https://wa.me/918928715729?text=Hi%20Viraj%20IT%2C%20I%27d%20like%20to%20ask%20about%20your%20products%20or%20services."
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        WhatsApp Us ↗
+      </a>
+    </>
   );
 }

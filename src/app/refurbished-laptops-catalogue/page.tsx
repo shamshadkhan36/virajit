@@ -1,18 +1,16 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { CatalogueBrowser } from "@/components/store/CatalogueBrowser";
 
 export const metadata = {
-  title: "Refurbished Laptops Catalogue | Viraj Infotech Mumbai",
+  title: "Shop Refurbished Laptops | Viraj IT — Wireframe",
   description:
-    "Browse certified refurbished Dell Latitude and HP EliteBook/ProBook laptops in Mumbai with warranty included and starting from ₹21,990.",
+    "Explore tested refurbished laptops from leading brands. Compare specifications, prices and warranty options to find a laptop suited to your needs.",
 };
 
 export default function RefurbishedLaptopsCataloguePage() {
   return (
-    <CatalogueBrowser
-      badge="MUMBAI'S TRUSTED REFURBISHED LAPTOP STORE"
-      title="Refurbished Laptops Catalogue"
-      subtitle="Compare Dell Latitude and HP commercial refurbished laptops. Filter by budget, processor, or Touch Screen, and inspect full specifications."
-    />
+    <Suspense fallback={<div className="shell py-24 text-center">Loading catalogue...</div>}>
+      <CatalogueBrowser />
+    </Suspense>
   );
 }
