@@ -725,3 +725,8 @@
     grid-template-columns: 1fr 1fr;
   }
 }
+
+
+.offer-visual.refurbished img {
+  object-position: center top;
+}

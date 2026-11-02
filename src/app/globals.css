@@ -102,3 +102,8 @@ a.button.dark-outline:hover *,
 .dark-outline-btn:hover * {
   color: #ffffff !important;
 }
+
+
+.offer-visual.refurbished img {
+  object-position: center top !important;
+}

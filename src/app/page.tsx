@@ -228,7 +228,8 @@ export default function HomePage() {
                 alt="Certified refurbished laptops at Viraj IT"
                 width={400}
                 height={220}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
+                style={{ objectPosition: "center top" }}
               />
             </div>
             <div className="offer-body">
@@ -617,17 +618,25 @@ export default function HomePage() {
         </div>
 
         <div className="review-module">
-          <div className="review-summary">
-            <div className="stars-row" aria-label="5 stars rating">
+          <div className="review-summary !text-white flex flex-col items-center justify-center text-center p-8 gap-3">
+            <span className="text-[11px] uppercase tracking-widest font-black text-[#f3abd7] bg-white/10 px-3 py-1 rounded-full border border-white/15">
+              Google Verified
+            </span>
+            <div className="stars-row text-amber-400 text-2xl tracking-widest justify-center" aria-label="5 stars rating">
               ★★★★★
             </div>
-            <strong>4.9 / 5.0</strong>
-            <span>Based on verified Google Reviews</span>
+            <strong className="!text-white text-5xl font-black tracking-tight" style={{ color: "#ffffff" }}>
+              4.9 / 5.0
+            </strong>
+            <span className="!text-white/90 text-sm font-semibold" style={{ color: "#ffffff" }}>
+              Based on verified Google Reviews
+            </span>
             <a
-              className="btn-g-review"
+              className="btn-g-review w-full max-w-[210px] !text-white"
               href="https://g.page/r/Ca3LSSyVus64EAI/review"
               target="_blank"
               rel="noopener noreferrer"
+              style={{ color: "#ffffff" }}
             >
               Rate Us on Google ↗
             </a>
