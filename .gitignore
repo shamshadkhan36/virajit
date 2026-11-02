@@ -52,3 +52,10 @@ prisma/dev.db
 prisma/dev.db-journal
 dev.db
 dev.db-journal
+
+# deployment scripts and packages
+deploy_package/
+download_server.py
+upload_website.py
+verify_live.py
+
