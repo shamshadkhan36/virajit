@@ -29,7 +29,12 @@ export async function GET(
     if (!product) {
       // Fallback to in-memory catalogue
       const found = FORMATTED_PRODUCTS.find(
-        (p) => p.id === params.id || p.slug === params.id
+        (p) =>
+          p.id === params.id ||
+          p.slug === params.id ||
+          p.id === `prod-${params.id}` ||
+          p.slug.includes(params.id) ||
+          params.id.includes(p.id.replace("prod-", ""))
       );
       if (found) {
         return NextResponse.json({ success: true, product: found });
@@ -44,7 +49,12 @@ export async function GET(
   } catch (error: any) {
     console.error("Error fetching product:", error);
     const fallback = FORMATTED_PRODUCTS.find(
-      (p) => p.id === params.id || p.slug === params.id
+      (p) =>
+        p.id === params.id ||
+        p.slug === params.id ||
+        p.id === `prod-${params.id}` ||
+        p.slug.includes(params.id) ||
+        params.id.includes(p.id.replace("prod-", ""))
     );
     if (fallback) {
       return NextResponse.json({ success: true, product: fallback });

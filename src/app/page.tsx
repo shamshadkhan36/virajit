@@ -7,6 +7,7 @@ import { useEnquiryModal } from "@/context/EnquiryModalContext";
 
 interface LaptopItem {
   id: string;
+  slug: string;
   image: string;
   title: string;
   bubbles: string[];
@@ -19,6 +20,7 @@ interface LaptopItem {
 const LAPTOPS: LaptopItem[] = [
   {
     id: "dell-7480",
+    slug: "dell-latitude-7480-intel-core-i5-6th-gen-14-fhd-refurbished",
     image: "/customer-photos/ref-laptop-card-ref.png",
     title: 'Refurbished DELL Latitude 7480 | Intel Core i5 6th Gen | 14" FHD',
     bubbles: ["Intel Core i5 6th Gen", "8GB RAM", "256GB SSD"],
@@ -29,6 +31,7 @@ const LAPTOPS: LaptopItem[] = [
   },
   {
     id: "dell-5440",
+    slug: "dell-latitude-5440-intel-core-i3-13th-gen-14-fhd-refurbished",
     image: "/customer-photos/ref-laptop-card-ref.png",
     title: 'Dell Latitude 5440 | Intel i3 13th Gen | 14" FHD',
     bubbles: ["Intel Core i3 13th Gen", "16GB RAM", "512GB SSD"],
@@ -39,6 +42,7 @@ const LAPTOPS: LaptopItem[] = [
   },
   {
     id: "lenovo-t480",
+    slug: "lenovo-thinkpad-t480-intel-core-i5-8th-gen-14-fhd-refurbished",
     image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=500&q=80",
     title: 'Refurbished Lenovo ThinkPad T480 | Intel Core i5 8th Gen | 14" FHD',
     bubbles: ["Intel Core i5 8th Gen", "16GB RAM", "512GB SSD"],
@@ -49,6 +53,7 @@ const LAPTOPS: LaptopItem[] = [
   },
   {
     id: "hp-840-g5",
+    slug: "hp-elitebook-840-g5-intel-core-i5-8th-gen-14-fhd-refurbished",
     image: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=500&q=80",
     title: 'Refurbished HP EliteBook 840 G5 | Intel Core i5 8th Gen | 14" FHD',
     bubbles: ["Intel Core i5 8th Gen", "16GB RAM", "256GB SSD"],
@@ -59,6 +64,7 @@ const LAPTOPS: LaptopItem[] = [
   },
   {
     id: "dell-7490",
+    slug: "dell-latitude-7490-intel-core-i7-8th-gen-14-fhd-refurbished",
     image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=500&q=80",
     title: 'Refurbished DELL Latitude 7490 | Intel Core i7 8th Gen | 14" FHD',
     bubbles: ["Intel Core i7 8th Gen", "16GB RAM", "512GB SSD"],
@@ -69,6 +75,7 @@ const LAPTOPS: LaptopItem[] = [
   },
   {
     id: "lenovo-x1c6",
+    slug: "lenovo-thinkpad-x1-carbon-gen-6-intel-core-i7-8th-gen-14-fhd-refurbished",
     image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=500&q=80",
     title: 'Lenovo ThinkPad X1 Carbon Gen 6 | Intel Core i7 | 14" FHD',
     bubbles: ["Intel Core i7 8th Gen", "16GB RAM", "512GB SSD"],
@@ -79,6 +86,7 @@ const LAPTOPS: LaptopItem[] = [
   },
   {
     id: "hp-440-g8",
+    slug: "hp-probook-440-g8-intel-core-i5-11th-gen-14-fhd-refurbished",
     image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=500&q=80",
     title: 'Refurbished HP ProBook 440 G8 | Intel Core i5 11th Gen | 14" FHD',
     bubbles: ["Intel Core i5 11th Gen", "16GB RAM", "512GB SSD"],
@@ -89,6 +97,7 @@ const LAPTOPS: LaptopItem[] = [
   },
   {
     id: "dell-3530",
+    slug: "dell-precision-3530-workstation-intel-core-i7-8th-gen-15-6-fhd-refurbished",
     image: "https://images.unsplash.com/photo-1588797384632-ca1132731a33?auto=format&fit=crop&w=500&q=80",
     title: 'Dell Precision 3530 Workstation | Intel Core i7 | 15.6" FHD',
     bubbles: ["Intel Core i7 8th Gen", "32GB RAM", "512GB SSD"],
@@ -355,46 +364,46 @@ export default function HomePage() {
 
           {/* 8 LAPTOPS: 4 PER ROW x 2 ROWS (STRICT FORMAT PER INSTRUCTION) */}
           <div className="refurbished-catalog-grid">
-            {filteredLaptops.map((laptop) => (
-              <article key={laptop.id} className="laptop-card">
-                <div className="laptop-card-image">
-                  <Image
-                    src={laptop.image}
-                    alt={laptop.title}
-                    width={320}
-                    height={190}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div className="laptop-card-title">{laptop.title}</div>
-                <div className="laptop-card-bubbles">
-                  {laptop.bubbles.map((b, idx) => (
-                    <span key={idx} className="spec-bubble">
-                      {b}
-                    </span>
-                  ))}
-                </div>
-                <div className="laptop-card-price-row">
-                  <span className="price-current">{laptop.currentPrice}</span>
-                  <span className="price-original">{laptop.originalPrice}</span>
-                  <span className="price-discount">{laptop.discount}</span>
-                </div>
-                <div className="laptop-card-warranty">
-                  <span aria-hidden="true">✓</span> Warranty Included
-                </div>
-                <button
-                  type="button"
-                  className="laptop-card-btn"
-                  onClick={() =>
-                    openEnquiryModal({
-                      productName: `${laptop.title} (${laptop.currentPrice})`,
-                    })
-                  }
-                >
-                  View Details
-                </button>
-              </article>
-            ))}
+            {filteredLaptops.map((laptop) => {
+              const productHref = `/products/${laptop.slug || laptop.id}`;
+              return (
+                <article key={laptop.id} className="laptop-card">
+                  <Link href={productHref} className="laptop-card-image block">
+                    <Image
+                      src={laptop.image}
+                      alt={laptop.title}
+                      width={320}
+                      height={190}
+                      className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
+                    />
+                  </Link>
+                  <Link href={productHref} className="laptop-card-title hover:underline block">
+                    {laptop.title}
+                  </Link>
+                  <div className="laptop-card-bubbles">
+                    {laptop.bubbles.map((b, idx) => (
+                      <span key={idx} className="spec-bubble">
+                        {b}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="laptop-card-price-row">
+                    <span className="price-current">{laptop.currentPrice}</span>
+                    <span className="price-original">{laptop.originalPrice}</span>
+                    <span className="price-discount">{laptop.discount}</span>
+                  </div>
+                  <div className="laptop-card-warranty">
+                    <span aria-hidden="true">✓</span> Warranty Included
+                  </div>
+                  <Link
+                    href={productHref}
+                    className="laptop-card-btn"
+                  >
+                    View Details
+                  </Link>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

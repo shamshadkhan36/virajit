@@ -19,7 +19,14 @@ export default function ProductDetailPage() {
   const slug = params?.slug as string;
 
   const initialProd =
-    FORMATTED_PRODUCTS.find((p) => p.slug === slug || p.id === slug) || null;
+    FORMATTED_PRODUCTS.find(
+      (p) =>
+        p.slug === slug ||
+        p.id === slug ||
+        p.id === `prod-${slug}` ||
+        (slug && p.slug?.includes(slug)) ||
+        (slug && slug.includes(p.id?.replace("prod-", "")))
+    ) || null;
   const [product, setProduct] = useState<Product | null>(initialProd);
   const [allProducts, setAllProducts] = useState<Product[]>(FORMATTED_PRODUCTS);
   const [angleIndex, setAngleIndex] = useState(0);

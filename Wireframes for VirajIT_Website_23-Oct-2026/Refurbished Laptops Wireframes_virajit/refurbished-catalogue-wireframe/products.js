@@ -1,6 +1,11 @@
 // Illustrative wireframe records adapted from the earlier local Viraj IT prototype.
 // Replace with approved inventory records before any public deployment.
 window.catalogueProducts = [
+ {id:'dell-7480',brand:'Dell',model:'Latitude 7480',cpu:'Intel Core i5 6th Gen',processor:'Core i5',ram:'8GB',storage:'256GB SSD',screen:'14-inch',price:22299,warranty:'1 Month',stock:'In stock',rank:1,added:1},
+ {id:'dell-5440',brand:'Dell',model:'Latitude 5440',cpu:'Intel Core i3 13th Gen',processor:'Core i3',ram:'16GB',storage:'512GB SSD',screen:'14-inch',price:42999,warranty:'1 Month',stock:'In stock',rank:1,added:2},
+ {id:'hp-440-g8',brand:'HP',model:'ProBook 440 G8',cpu:'Intel Core i5 11th Gen',processor:'Core i5',ram:'16GB',storage:'512GB SSD',screen:'14-inch',price:36999,warranty:'1 Month',stock:'In stock',rank:2,added:3},
+ {id:'dell-3530',brand:'Dell',model:'Precision 3530',cpu:'Intel Core i7 8th Gen',processor:'Core i7',ram:'32GB',storage:'512GB SSD',screen:'15.6-inch',price:44999,warranty:'1 Month',stock:'In stock',rank:3,added:4},
+
  {id:'dell-7490',brand:'Dell',model:'Latitude 7490',cpu:'Intel Core i5 8th Gen',processor:'Core i5',ram:'8GB',storage:'256GB SSD',screen:'14-inch',price:27990,warranty:'6 Months',stock:'In stock',rank:1,added:12},
  {id:'hp-840-g5',brand:'HP',model:'EliteBook 840 G5',cpu:'Intel Core i5 8th Gen',processor:'Core i5',ram:'8GB',storage:'256GB SSD',screen:'14-inch',price:28990,warranty:'6 Months',stock:'In stock',rank:2,added:11},
  {id:'lenovo-t480',brand:'Lenovo',model:'ThinkPad T480',cpu:'Intel Core i5 8th Gen',processor:'Core i5',ram:'16GB',storage:'512GB SSD',screen:'14-inch',price:33990,warranty:'6 Months',stock:'Limited stock',rank:3,added:10},
