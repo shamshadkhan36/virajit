@@ -538,10 +538,11 @@ export default function LaptopRepairPage() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-between gap-3 min-h-[50px] px-6 py-3 rounded-full border border-white/40 hover:border-white text-white font-black text-sm transition-all transform hover:-translate-y-0.5"
+                className="button dark-outline dark-outline-btn inline-flex items-center justify-between gap-3 min-h-[50px] px-6 py-3 rounded-full border border-white/60 hover:border-white !text-white hover:!text-white font-black text-sm transition-all transform hover:-translate-y-0.5 hover:bg-white/10"
+                style={{ color: "#ffffff", borderColor: "rgba(255, 255, 255, 0.6)" }}
               >
-                <span>WhatsApp Repair Enquiry</span>
-                <span aria-hidden="true" className="text-lg leading-none">↗</span>
+                <span style={{ color: "#ffffff" }}>WhatsApp Repair Enquiry</span>
+                <span aria-hidden="true" className="text-lg leading-none" style={{ color: "#ffffff" }}>↗</span>
               </a>
             </div>
 

@@ -514,10 +514,11 @@ export default function LaptopBrandsPage() {
                 </a>
                 <a
                   href="tel:+918928715729"
-                  className="px-7 py-3 rounded-full bg-transparent hover:bg-white/10 text-white font-extrabold text-[0.95rem] border-[1.5px] border-white/40 transition-all flex items-center gap-1.5"
+                  className="button dark-outline dark-outline-btn px-7 py-3 rounded-full bg-transparent hover:bg-white/10 !text-white font-extrabold text-[0.95rem] border-[1.5px] border-white/60 hover:border-white transition-all flex items-center gap-1.5"
+                  style={{ color: "#ffffff", borderColor: "rgba(255, 255, 255, 0.6)" }}
                 >
-                  <span>Call Store</span>
-                  <span aria-hidden="true">↗</span>
+                  <span style={{ color: "#ffffff" }}>Call Store</span>
+                  <span aria-hidden="true" style={{ color: "#ffffff" }}>↗</span>
                 </a>
               </div>
             </div>

@@ -723,7 +723,7 @@ export default function HomePage() {
               >
                 Get Directions <span aria-hidden="true">↗</span>
               </a>
-              <a className="button dark-outline" href="tel:+918928715729">
+              <a className="button dark-outline" href="tel:+918928715729" style={{ color: "#ffffff" }}>
                 Call Store <span aria-hidden="true">↗</span>
               </a>
             </div>

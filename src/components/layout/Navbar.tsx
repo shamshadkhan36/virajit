@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export const Navbar: React.FC = () => {
@@ -18,14 +19,18 @@ export const Navbar: React.FC = () => {
   return (
     <header className="site-header">
       <div className="shell header-inner">
-        {/* Brand */}
-        <Link className="brand" href="/" aria-label="Viraj IT home">
-          <span className="brand-symbol" aria-hidden="true">
-            V<span>·</span>
-          </span>
-          <span>
-            VIRAJ<span className="brand-pink">INFOTECH</span>
-          </span>
+        {/* Real Viraj Infotech Brand Logo */}
+        <Link href="/" className="flex items-center group shrink-0 py-1" aria-label="Viraj Infotech">
+          <div className="relative h-12 w-40 sm:w-52 flex items-center transition-transform group-hover:scale-[1.02]">
+            <Image
+              src="/viraj-infotech-logo.png"
+              alt="Viraj Infotech"
+              width={280}
+              height={98}
+              priority
+              className="w-full h-full object-contain object-left"
+            />
+          </div>
         </Link>
 
         {/* Desktop Nav */}

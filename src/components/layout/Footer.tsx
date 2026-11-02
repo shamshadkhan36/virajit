@@ -2,19 +2,24 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export const Footer: React.FC = () => {
   return (
     <footer className="site-footer">
       <div className="shell footer-grid">
         <div>
-          <Link className="brand" href="/" aria-label="Viraj IT home">
-            <span className="brand-symbol" aria-hidden="true">
-              V<span>·</span>
-            </span>
-            <span>
-              VIRAJ<span className="brand-pink">INFOTECH</span>
-            </span>
+          {/* Real Viraj Infotech Brand Logo */}
+          <Link href="/" className="inline-flex items-center group mb-4" aria-label="Viraj Infotech">
+            <div className="relative h-11 w-40 sm:w-48 flex items-center transition-transform group-hover:scale-[1.02]">
+              <Image
+                src="/viraj-infotech-logo.png"
+                alt="Viraj Infotech"
+                width={260}
+                height={90}
+                className="w-full h-full object-contain object-left"
+              />
+            </div>
           </Link>
           <p>
             Refurbished laptops, repairs and technology assistance in Kandivali West, Mumbai.

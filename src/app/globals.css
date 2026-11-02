@@ -72,3 +72,33 @@ body {
   animation-play-state: paused;
 }
 
+
+
+/* Ensure dark-outline buttons in dark purple/plum sections are always bright white and clearly visible */
+.button.dark-outline,
+a.button.dark-outline,
+.dark-outline-btn {
+  border: 1.5px solid rgba(255, 255, 255, 0.65) !important;
+  color: #ffffff !important;
+  background: transparent !important;
+}
+
+.button.dark-outline *,
+a.button.dark-outline *,
+.dark-outline-btn * {
+  color: #ffffff !important;
+}
+
+.button.dark-outline:hover,
+a.button.dark-outline:hover,
+.dark-outline-btn:hover {
+  border-color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+.button.dark-outline:hover *,
+a.button.dark-outline:hover *,
+.dark-outline-btn:hover * {
+  color: #ffffff !important;
+}
