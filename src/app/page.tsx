@@ -98,7 +98,7 @@ const LAPTOPS: LaptopItem[] = [
   {
     id: "dell-3530",
     slug: "dell-precision-3530-workstation-intel-core-i7-8th-gen-15-6-fhd-refurbished",
-    image: "https://images.unsplash.com/photo-1588797384632-ca1132731a33?auto=format&fit=crop&w=500&q=80",
+    image: "/customer-photos/ref-laptop-card-ref.png",
     title: 'Dell Precision 3530 Workstation | Intel Core i7 | 15.6" FHD',
     bubbles: ["Intel Core i7 8th Gen", "32GB RAM", "512GB SSD"],
     currentPrice: "₹ 44,999",
@@ -180,7 +180,7 @@ export default function HomePage() {
       : LAPTOPS.filter((item) => item.category === activeFilter);
 
   return (
-    <>
+    <main className="homepage">
       {/* SECTION 1: HERO */}
       <section className="home-hero shell" aria-labelledby="home-title">
         <div className="home-hero-copy">
@@ -826,6 +826,6 @@ export default function HomePage() {
       >
         WhatsApp Us ↗
       </a>
-    </>
+    </main>
   );
 }

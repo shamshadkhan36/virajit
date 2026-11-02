@@ -107,3 +107,261 @@ a.button.dark-outline:hover *,
 .offer-visual.refurbished img {
   object-position: center top !important;
 }
+
+/* Homepage type scale and visual rhythm */
+.homepage {
+  color: #17131b;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.homepage h1,
+.homepage h2,
+.homepage h3 {
+  color: #17131b;
+  font-family: "Space Grotesk", Manrope, sans-serif;
+  font-weight: 700;
+  line-height: 1.12;
+  margin-top: 0;
+}
+
+.homepage h1 {
+  margin-bottom: 22px;
+  font-size: clamp(42px, 4.7vw, 62px);
+  letter-spacing: -0.055em;
+}
+
+.homepage h2 {
+  margin-bottom: 14px;
+  font-size: clamp(32px, 3.6vw, 48px);
+  letter-spacing: -0.045em;
+}
+
+.homepage h3 {
+  font-size: clamp(21px, 2vw, 25px);
+  letter-spacing: -0.03em;
+}
+
+.homepage p {
+  margin-top: 0;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.homepage .home-hero {
+  width: min(1240px, calc(100% - 64px));
+  margin-block: 32px 12px;
+  padding: 36px 40px;
+  gap: clamp(28px, 4vw, 54px);
+  border: 1px solid #eee3ed;
+  border-radius: 28px;
+  background: linear-gradient(115deg, #fcf7fb 0%, #f8f0f8 100%);
+}
+
+.homepage .home-hero h1 em {
+  color: var(--pink);
+  font-style: normal;
+}
+
+.homepage .home-hero .lead {
+  max-width: 620px;
+  margin-bottom: 0;
+  color: #514852;
+  font-size: clamp(17px, 1.35vw, 19px);
+  font-weight: 500;
+  line-height: 1.65;
+}
+
+.homepage .home-hero-art {
+  min-height: 390px;
+  border-color: #e9dce9;
+  border-radius: 22px;
+  box-shadow: 0 16px 38px rgba(50, 18, 59, 0.08);
+}
+
+.homepage .eyebrow {
+  margin-bottom: 14px;
+  font-size: 12px;
+  letter-spacing: 0.13em;
+}
+
+.homepage .hero-trust {
+  margin-top: 22px;
+  color: #5a505b;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.homepage .section,
+.homepage .trust-section {
+  padding-block: clamp(48px, 6vw, 76px);
+}
+
+.homepage #offer.section {
+  padding-top: 42px;
+  padding-bottom: 68px;
+}
+
+.homepage .section-heading p:not(.eyebrow),
+.homepage .split > p,
+.homepage .repair-copy > p:not(.eyebrow),
+.homepage .rental-inner p:not(.eyebrow) {
+  color: #5b535d;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.homepage .offer-grid {
+  gap: 20px;
+}
+
+.homepage .offer-card,
+.homepage .laptop-card,
+.homepage .review-card {
+  border-color: #e9e2eb;
+  box-shadow: 0 8px 26px rgba(39, 16, 46, 0.045);
+}
+
+.homepage .offer-card {
+  border-radius: 18px;
+}
+
+.homepage .offer-visual {
+  height: 210px;
+}
+
+.homepage .offer-body {
+  padding: 22px 22px 20px;
+}
+
+.homepage .offer-body h3 {
+  margin-bottom: 8px;
+  font-size: 22px;
+}
+
+.homepage .offer-body p,
+.homepage .repair-list span,
+.homepage .trust-grid p,
+.homepage .review-card p {
+  color: #5b535d;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.homepage .shop-section {
+  padding-block: clamp(52px, 6vw, 76px);
+  background: #faf8fb;
+}
+
+.homepage .budget-grid a {
+  min-height: 142px;
+  justify-content: center;
+  border-color: #e8e0e9;
+  box-shadow: 0 5px 18px rgba(39, 16, 46, 0.035);
+}
+
+.homepage .budget-grid strong {
+  font-size: clamp(21px, 2.1vw, 28px);
+  letter-spacing: -0.035em;
+}
+
+.homepage .laptop-card {
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.homepage .laptop-card-title {
+  min-height: 44px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.homepage .spec-bubble {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.homepage .price-current {
+  font-size: 23px;
+}
+
+.homepage .price-original,
+.homepage .laptop-card-warranty {
+  font-size: 13px;
+}
+
+.homepage .laptop-card-btn,
+.homepage .button {
+  font-size: 14px;
+}
+
+.homepage .floating-wa {
+  padding: 12px 17px;
+  font-size: 14px;
+}
+
+@media (max-width: 760px) {
+  .homepage .home-hero {
+    width: min(100% - 32px, 560px);
+    margin-block: 18px 8px;
+    padding: 26px 22px 22px;
+    gap: 22px;
+    border-radius: 22px;
+  }
+
+  .homepage h1 {
+    margin-bottom: 15px;
+    font-size: clamp(38px, 10vw, 48px);
+    line-height: 1.08;
+  }
+
+  .homepage h2 {
+    font-size: clamp(30px, 8vw, 38px);
+  }
+
+  .homepage .home-hero .lead {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .homepage .hero-trust {
+    margin-top: 16px;
+    font-size: 13px;
+  }
+
+  .homepage .home-hero-art {
+    min-height: 0;
+    height: 260px;
+  }
+
+  .homepage .section,
+  .homepage .trust-section {
+    padding-block: 48px;
+  }
+
+  .homepage #offer.section {
+    padding-top: 34px;
+    padding-bottom: 48px;
+  }
+
+  .homepage .floating-wa {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .homepage .home-hero {
+    padding: 23px 18px 18px;
+  }
+
+  .homepage h1 {
+    font-size: 38px;
+  }
+
+  .homepage .home-hero-art {
+    height: 220px;
+  }
+}
